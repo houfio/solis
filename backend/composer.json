@@ -1,0 +1,30 @@
+{
+  "name": "jnl/backend",
+  "description": "Jong Nederland backend",
+  "license": "unlicensed",
+  "authors": [
+    {
+      "name": "Raul de Heer",
+      "email": "contact@rauldeheer.nl",
+      "homepage": "https://rauldeheer.nl",
+      "role": "Developer"
+    },
+    {
+      "name": "Lex Houf",
+      "email": "lex@houf.io",
+      "homepage": "https://houf.io",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "doctrine/orm": "^2.5",
+    "league/container": "^2.4",
+    "league/route": "^3.0",
+    "zendframework/zend-diactoros": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "JNL\\": "src/"
+    }
+  }
+}
