@@ -19,7 +19,7 @@ class RunServerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $host = $input->getOption('address') . ":" . $input->getOption('port');
+        $host = $input->getOption('address') . ':' . $input->getOption('port');
         $docRoot = __DIR__ . '/../../public';
         $output->writeln('Server running on http://' . $host);
 
