@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+use JNL\Provider\CommandProvider;
+use Symfony\Component\Console\Application;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$container = require __DIR__ . '/src/container.php';
+$console = new Application();
+$console->setHelperSet(ConsoleRunner::createHelperSet($container->get('entityManager')));
+
+foreach (CommandProvider::COMMANDS as $command) {
+    $console->add($container->get($command));
+}
+
+$console->run();
