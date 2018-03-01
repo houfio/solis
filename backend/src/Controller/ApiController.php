@@ -16,7 +16,7 @@ class ApiController extends Controller
 
     public function getApi()
     {
-        return $this->getContainer()->get('routes');
+        return $this->getContainer()->get('pages');
     }
 
     public function optionsApi()

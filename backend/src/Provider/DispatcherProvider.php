@@ -15,7 +15,7 @@ class DispatcherProvider extends AbstractServiceProvider
 {
     protected $provides = [
         'dispatcher',
-        'routes'
+        'pages'
     ];
 
     public function provides($alias = null)
@@ -69,7 +69,7 @@ class DispatcherProvider extends AbstractServiceProvider
                 }
             }
 
-            $this->getContainer()->share('routes', function () use ($routes) {
+            $this->getContainer()->share('pages', function () use ($routes) {
                 return $routes;
             });
         });
