@@ -7,7 +7,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
     page_id: 1,
     type: 'text',
     data: {
-      text: 'Home'
+      text: '# Home\n## Home\n### Home'
     },
     children: [],
     visible: true
