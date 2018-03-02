@@ -13,6 +13,7 @@ import { ContentPage } from './ContentPage';
 import { GUARDS } from '../constants';
 import { Navigation } from './Navigation';
 import { Footer } from './Footer';
+import { Container } from './Container';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -65,17 +66,19 @@ export const Root = connect(class extends Component<typeof props> {
       <div className={css(styleSheet.body)}>
         <Navigation/>
         <main className={css(styleSheet.main)}>
-          <Switch location={location || createLocation(window.location.href)}>
-            {pages.map((page, index) => {
-              const redirect = this.getRedirect(page.guards);
+          <Container>
+            <Switch location={location || createLocation(window.location.href)}>
+              {pages.map((page, index) => {
+                const redirect = this.getRedirect(page.guards);
 
-              return (
-                <Route key={index} path={page.path} exact={true}>
-                  {redirect || <ContentPage pageId={page.id}/>}
-                </Route>
-              );
-            })}
-          </Switch>
+                return (
+                  <Route key={index} path={page.path} exact={true}>
+                    {redirect || <ContentPage pageId={page.id}/>}
+                  </Route>
+                );
+              })}
+            </Switch>
+          </Container>
         </main>
         <Footer/>
       </div>
