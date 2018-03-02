@@ -1,4 +1,4 @@
-export type MenuType = 'header' | 'footer';
+export type MenuType = 'header';
 
 export type Menus = {
   [T in MenuType]: MenuItem[]

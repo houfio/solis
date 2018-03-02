@@ -12,6 +12,7 @@ import { findById } from '../utils/findById';
 import { ContentPage } from './ContentPage';
 import { GUARDS } from '../constants';
 import { Navigation } from './Navigation';
+import { Footer } from './Footer';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -49,13 +50,19 @@ export const Root = connect(class extends Component<typeof props> {
     }
 
     const styleSheet = StyleSheet.create({
+      body: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      },
       main: {
+        flex: '1',
         marginTop: '5rem'
       }
     });
 
     return (
-      <>
+      <div className={css(styleSheet.body)}>
         <Navigation/>
         <main className={css(styleSheet.main)}>
           <Switch location={location || createLocation(window.location.href)}>
@@ -70,7 +77,8 @@ export const Root = connect(class extends Component<typeof props> {
             })}
           </Switch>
         </main>
-      </>
+        <Footer/>
+      </div>
     );
   }
 

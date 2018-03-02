@@ -61,6 +61,5 @@ export const getMockMenus = () => createMockResponse<Menus>({
         }
       ]
     }
-  ],
-  footer: []
+  ]
 });

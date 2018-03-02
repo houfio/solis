@@ -7,10 +7,7 @@ import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { Container } from './Container';
 import { Page } from '../api/Page';
-import { Row } from './Row';
-import { Column } from './Column';
-import { Heading } from './Heading';
-import { PHONE, TABLET_LANDSCAPE } from '../constants';
+import { Menu } from './Menu';
 
 type LocalState = {
   openMenu?: number,
@@ -94,20 +91,6 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         width: '100%',
         padding: '2rem 0 0 0',
         backgroundColor: '#1976D2'
-      },
-      heading: {
-        marginBottom: '.5rem'
-      },
-      category: {
-        display: 'flex',
-        marginBottom: '2rem',
-        flexDirection: 'column'
-      },
-      link: {
-        ':hover': {
-          cursor: 'pointer',
-          opacity: '.5'
-        }
       }
     });
 
@@ -136,30 +119,9 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
             onMouseEnter={() => this.setState({ hovering: true })}
             onMouseLeave={() => this.setState({ hovering: false })}
           >
-            {menus.header.filter((menu, index) => index === openMenu).map((menu, index) => (
-              <Container key={index}>
-                <Row>
-                  {menu.rows.map((row, index) => (
-                    <Column
-                      key={index}
-                      breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
-                      styles={[styleSheet.category]}
-                    >
-                      <Heading text={row.name} breakpoints={{ [PHONE]: 4 }} styles={[styleSheet.heading]}/>
-                      {row.items.map(item => (
-                        <a
-                          key={item}
-                          className={css(styleSheet.link)}
-                          onClick={this.navigateTo(indexedPages[item])}
-                        >
-                          {indexedPages[item].name}
-                        </a>
-                      ))}
-                    </Column>
-                  ))}
-                </Row>
-              </Container>
-            ))}
+            <Container>
+              <Menu menu={menus.header[openMenu!]} onClick={this.navigateTo}/>
+            </Container>
           </div>
         )}
       </nav>
