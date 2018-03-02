@@ -42,6 +42,11 @@ export type ApiResponse<T> = {
   message?: string
 };
 
+export type RendererProps<T extends keyof ContentBlockTypes> = {
+  data: ContentBlockTypes[T],
+  children: ContentBlockChild[]
+}
+
 export type ContentBlockRenderer<T extends keyof ContentBlockTypes> =
   (block: ContentBlock<T>, key: number) => ReactNode;
 
