@@ -84,3 +84,5 @@ export type CreateAction<S> = <P>(type: string) =>
 export type UnboxPromise<A> = A extends { promise: Promise<infer E> } ? Omit<A, 'promise'> & E : A;
 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
+
+export type ButtonTypes = 'primary' | 'secondary';

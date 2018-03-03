@@ -1,5 +1,6 @@
 import { Identifiable } from './Identifiable';
 import { Hidable } from './Hidable';
+import { ButtonTypes } from '../types';
 
 export type ContentBlockTypes = {
   text: {
@@ -7,7 +8,7 @@ export type ContentBlockTypes = {
   },
   button: {
     text: string,
-    type: 'primary' | 'secondary'
+    type: ButtonTypes
   },
   column: {}
 }

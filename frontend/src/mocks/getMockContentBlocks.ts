@@ -47,7 +47,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
     page_id: 1,
     type: 'column',
     data: {
-      size: 2,
+      size: 3,
       breakpoint: 'md'
     },
     children: [
@@ -68,10 +68,32 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
           text: 'World'
         },
         children: [],
-        parent_data: 8,
+        parent_data: 4,
+        visible: true
+      },
+      {
+        id: 8,
+        type: 'button',
+        data: {
+          text: 'Test',
+          type: 'primary'
+        },
+        children: [],
+        parent_data: 4,
         visible: true
       }
     ],
+    visible: true
+  },
+  {
+    id: 9,
+    page_id: 1,
+    type: 'button',
+    data: {
+      text: 'Test',
+      type: 'secondary'
+    },
+    children: [],
     visible: true
   }
 ].filter(item => item.visible && item.page_id === pageId));
