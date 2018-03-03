@@ -105,7 +105,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
             <span
               key={index}
               className={css(styleSheet.item)}
-              onClick={this.navigateTo(indexedPages[menu.page_id])}
+              onClick={() => this.navigateTo(indexedPages[menu.page_id])}
               onMouseEnter={() => this.setState({ openMenu: index, hovering: true })}
               onMouseLeave={() => this.setState({ hovering: false })}
             >
@@ -128,7 +128,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
     );
   }
 
-  private navigateTo = (page: Page) => () => {
+  private navigateTo = (page: Page) => {
     const { push } = this.props;
 
     push(page.path);
