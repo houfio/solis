@@ -75,8 +75,9 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
         id: 8,
         type: 'button',
         data: {
-          text: 'Test',
-          type: 'primary'
+          text: 'Register',
+          type: 'primary',
+          target: 3
         },
         children: [],
         parent_data: 4,
@@ -90,8 +91,9 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
     page_id: 1,
     type: 'button',
     data: {
-      text: 'Test',
-      type: 'secondary'
+      text: 'Login',
+      type: 'secondary',
+      target: 2
     },
     children: [],
     visible: true

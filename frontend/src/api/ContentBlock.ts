@@ -8,7 +8,8 @@ export type ContentBlockTypes = {
   },
   button: {
     text: string,
-    type: ButtonTypes
+    type: ButtonTypes,
+    target: number
   },
   column: {}
 }
