@@ -15,7 +15,7 @@ export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
     heading: {
       display: 'block',
       ...forBreakpoints(breakpoints, (breakpoint, value) => ({
-        fontSize: `${5 - value}.5rem`
+        fontSize: `${5 - value / 2}.5rem`
       }))
     }
   });
