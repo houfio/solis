@@ -57,7 +57,7 @@ export const Menu = connect(class extends Component<typeof props> {
             breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
             styles={[styleSheet.category]}
           >
-            <Heading text={row.name} breakpoints={{ [PHONE]: 8 }} styles={[styleSheet.heading]}/>
+            <Heading text={row.name} breakpoints={{ [PHONE]: 4 }} styles={[styleSheet.heading]}/>
             {row.items.map(item => {
               const page = findById(item, pages);
 
