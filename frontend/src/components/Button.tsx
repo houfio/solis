@@ -28,6 +28,7 @@ const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
 export const Button = ({ text, type = 'primary', onClick }: Props) => {
   const styleSheet = StyleSheet.create({
     button: {
+      display: 'inline-block',
       padding: '1rem',
       color: 'white',
       cursor: 'default',
