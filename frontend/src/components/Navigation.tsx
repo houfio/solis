@@ -8,6 +8,8 @@ import { State } from '../types';
 import { Container } from './Container';
 import { Page } from '../api/Page';
 import { Menu } from './Menu';
+import { forBreakpoint } from '../utils/forBreakpoint';
+import { TABLET_LANDSCAPE } from '../constants';
 
 type LocalState = {
   openMenu?: number,
@@ -71,10 +73,14 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         margin: '1rem 0'
       },
       text: {
+        display: 'none',
         position: 'absolute',
         top: '2rem',
         left: '4rem',
-        lineHeight: '1'
+        lineHeight: '1',
+        ...forBreakpoint(TABLET_LANDSCAPE, {
+          display: 'block'
+        })
       },
       item: {
         padding: '2rem 1rem',
