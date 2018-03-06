@@ -89,7 +89,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       menu: {
         position: 'absolute',
         width: '100%',
-        padding: '2rem 0 0 0',
+        padding: '1rem 0 0 0',
         backgroundColor: '#1976D2'
       }
     });

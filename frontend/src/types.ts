@@ -86,3 +86,5 @@ export type UnboxPromise<A> = A extends { promise: Promise<infer E> } ? Omit<A, 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
 export type ButtonTypes = 'primary' | 'secondary';
+
+export type HeadingTypes = 'bold' | 'thin' | 'subtle';

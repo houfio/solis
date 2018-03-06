@@ -38,9 +38,6 @@ export const Menu = connect(class extends Component<typeof props> {
         marginBottom: '2rem',
         flexDirection: 'column'
       },
-      heading: {
-        marginBottom: '.5rem'
-      },
       link: {
         ':hover': {
           cursor: 'pointer',
@@ -57,7 +54,7 @@ export const Menu = connect(class extends Component<typeof props> {
             breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
             styles={[styleSheet.category]}
           >
-            <Heading text={row.name} breakpoints={{ [PHONE]: 4 }} styles={[styleSheet.heading]}/>
+            <Heading text={row.name} breakpoints={{ [PHONE]: 'thin' }}/>
             {row.items.map(item => {
               const page = findById(item, pages);
 

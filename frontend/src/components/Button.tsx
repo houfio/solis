@@ -29,9 +29,10 @@ export const Button = ({ text, type = 'primary', onClick }: Props) => {
   const styleSheet = StyleSheet.create({
     button: {
       display: 'inline-block',
-      padding: '1rem',
+      padding: '.75rem',
       color: 'white',
       cursor: 'default',
+      borderRadius: '.25rem',
       transition: 'background-color .2s ease',
       ...buttonStyles[type]
     }
