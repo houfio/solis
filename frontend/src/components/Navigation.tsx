@@ -61,8 +61,12 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         display: 'flex'
       },
       brand: {
-        position: 'relative',
-        flex: '1'
+        display: 'flex',
+        alignItems: 'center',
+        ':hover': {
+          cursor: 'pointer',
+          opacity: '.5'
+        }
       },
       logo: {
         display: 'block',
@@ -74,13 +78,14 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       },
       text: {
         display: 'none',
-        position: 'absolute',
-        top: '2rem',
-        left: '4rem',
+        marginLeft: '1rem',
         lineHeight: '1',
         ...forBreakpoint(TABLET_LANDSCAPE, {
           display: 'block'
         })
+      },
+      push: {
+        flex: '1'
       },
       item: {
         padding: '2rem 1rem',
@@ -107,6 +112,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
             <div className={css(styleSheet.logo)}/>
             <span className={css(styleSheet.text)}>Jong Nederland</span>
           </div>
+          <div className={css(styleSheet.push)}/>
           {menus.header.map((menu, index) => (
             <span
               key={index}
