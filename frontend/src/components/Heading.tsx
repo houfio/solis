@@ -9,7 +9,7 @@ import { HeadingTypes } from '../types';
 type Props = {
   text: string,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
-  styles?: any[]
+  styles?: CSSProperties[]
 }
 
 const headingSizes: { [T in HeadingTypes]: CSSProperties } = {

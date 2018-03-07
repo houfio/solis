@@ -10,7 +10,7 @@ export const http = createModule(
     increaseQueue: createAction<Queue>('INCREASE_QUEUE')(
       payload => payload,
       (action, state) => {
-        const current = (state.queue as any)[action.queue] || 0;
+        const current = state.queue[action.queue] || 0;
 
         return {
           queue: {
@@ -23,7 +23,7 @@ export const http = createModule(
     decreaseQueue: createAction<Queue>('DECREASE_QUEUE')(
       payload => payload,
       (action, state) => {
-        const current = (state.queue as any)[action.queue] || 0;
+        const current = state.queue[action.queue] || 0;
 
         return {
           queue: {

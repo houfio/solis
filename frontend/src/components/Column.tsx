@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
 import { BREAKPOINTS } from '../constants';
@@ -9,7 +9,7 @@ import { isNumber } from 'util';
 type Props = {
   children: ReactNode,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: { size?: number, offset?: number } | number },
-  styles?: any[],
+  styles?: CSSProperties[],
   tag?: string
 }
 

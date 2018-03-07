@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
 import { BREAKPOINTS } from '../constants';
@@ -7,7 +7,7 @@ import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   children: ReactNode,
-  styles?: any[],
+  styles?: CSSProperties[],
   tag?: string
 };
 
