@@ -7,6 +7,7 @@ export const getMockPages = () => createMockResponse<Page[]>([
     name: 'Home',
     path: '/',
     guards: {},
+    type: 'home',
     visible: true
   },
   {
@@ -43,4 +44,4 @@ export const getMockPages = () => createMockResponse<Page[]>([
     guards: {},
     visible: true
   }
-].filter(page => page.visible));
+]);

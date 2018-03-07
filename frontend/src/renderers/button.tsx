@@ -6,7 +6,7 @@ import { createRenderer } from '../utils/createRenderer';
 import { RendererProps, State } from '../types';
 import { Button } from '../components/Button';
 import { withProps } from '../utils/withProps';
-import { findById } from '../utils/findById';
+import { findByKey } from '../utils/findByKey';
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages
@@ -36,7 +36,7 @@ export const button = createRenderer(connect(class extends Component<typeof prop
       return;
     }
 
-    const page = findById(target, pages);
+    const page = findByKey(target, 'id', pages);
 
     if (!page) {
       return;

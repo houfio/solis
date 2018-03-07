@@ -8,7 +8,7 @@ import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { content } from '../modules/content';
 import { RouteGuard, RouteGuards } from '../api/RouteGuard';
-import { findById } from '../utils/findById';
+import { findByKey } from '../utils/findByKey';
 import { ContentPage } from './ContentPage';
 import { GUARDS } from '../constants';
 import { Navigation } from './Navigation';
@@ -99,7 +99,7 @@ export const Root = connect(class extends Component<typeof props> {
         const guard = GUARDS[guardName];
 
         if (!guard(state) && guardTarget) {
-          const page = findById(guardTarget, pages);
+          const page = findByKey(guardTarget, 'id', pages);
 
           return (
             <Redirect to={page ? page.path : '/'}/>

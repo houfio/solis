@@ -98,4 +98,4 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
     children: [],
     visible: true
   }
-].filter(item => item.visible && item.page_id === pageId));
+].filter(item => item.page_id === pageId));

@@ -5,5 +5,6 @@ import { Hidable } from './Hidable';
 export type Page = Identifiable & Hidable & {
   name: string,
   path: string,
-  guards: RouteGuards
+  guards: RouteGuards,
+  type?: 'home'
 };

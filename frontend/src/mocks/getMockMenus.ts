@@ -4,17 +4,6 @@ import { Menus } from '../api/Menu';
 export const getMockMenus = () => createMockResponse<Menus>({
   header: [
     {
-      page_id: 1,
-      rows: [
-        {
-          name: 'Test 1',
-          items: [
-            2
-          ]
-        }
-      ]
-    },
-    {
       page_id: 4,
       rows: [
         {

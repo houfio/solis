@@ -10,6 +10,7 @@ import { Page } from '../api/Page';
 import { Menu } from './Menu';
 import { forBreakpoint } from '../utils/forBreakpoint';
 import { TABLET_LANDSCAPE } from '../constants';
+import { findByKey } from '../utils/findByKey';
 
 type LocalState = {
   openMenu?: number,
@@ -105,10 +106,16 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       }
     });
 
+    const homePage = findByKey('home', 'type', pages);
+
+    if (!homePage) {
+      return false;
+    }
+
     return (
       <nav className={css(styleSheet.navigation)}>
         <Container styles={[styleSheet.container]}>
-          <div className={css(styleSheet.brand)}>
+          <div className={css(styleSheet.brand)} onClick={() => this.navigateTo(homePage)}>
             <div className={css(styleSheet.logo)}/>
             <span className={css(styleSheet.text)}>Jong Nederland</span>
           </div>

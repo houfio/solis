@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { content } from '../modules/content';
-import { findById } from '../utils/findById';
+import { findByKey } from '../utils/findByKey';
 import { findRenderer } from '../utils/findRenderer';
 
 type Props = {
@@ -47,7 +47,7 @@ export const ContentPage = connect(class extends Component<typeof props> {
       return false;
     }
 
-    const page = findById(pageId, pages);
+    const page = findByKey(pageId, 'id', pages);
 
     if (!page) {
       return false;
