@@ -9,7 +9,7 @@ export const forBreakpoint = (breakpoint: keyof typeof BREAKPOINTS, style: CSSPr
     return {
       ['@media (min-width: ' + size + ')']: style
     };
-  } else {
-    return style;
   }
+
+  return style;
 };

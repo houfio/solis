@@ -35,7 +35,7 @@ export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
   const styleSheet = StyleSheet.create({
     heading: {
       display: 'block',
-      ...forBreakpoints(breakpoints, (breakpoint, value) => headingSizes[value])
+      ...forBreakpoints(breakpoints, value => headingSizes[value])
     }
   });
 

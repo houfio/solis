@@ -16,7 +16,7 @@ export const Container = ({ children, styles = [], tag: Tag = 'div' }: Props) =>
     container: {
       margin: '0 auto',
       padding: '0 1rem',
-      ...forBreakpoints(BREAKPOINTS, (breakpoint, value) => ({
+      ...forBreakpoints(BREAKPOINTS, value => ({
         width: 'calc(' + (value !== '0' ? value + ' - 1rem' : '100%') + ' - 2rem)'
       }))
     }

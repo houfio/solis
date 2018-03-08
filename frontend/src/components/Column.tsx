@@ -17,7 +17,7 @@ export const Column = ({ children, breakpoints, styles = [], tag: Tag = 'div' }:
   const styleSheet = StyleSheet.create({
     column: {
       flex: '0 0 100%',
-      ...forBreakpoints(breakpoints, ((breakpoint, value) => {
+      ...forBreakpoints(breakpoints, value => {
         if (isNumber(value)) {
           return {
             flexBasis: value && `${100 / 12 * value}%`,
@@ -28,7 +28,7 @@ export const Column = ({ children, breakpoints, styles = [], tag: Tag = 'div' }:
           flexBasis: value.size && `${100 / 12 * value.size}%`,
           marginLeft: value.offset && `${100 / 12 * value.offset}%`
         };
-      }))
+      })
     }
   });
 
