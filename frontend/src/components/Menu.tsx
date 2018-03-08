@@ -9,7 +9,7 @@ import { MenuItem } from '../api/Menu';
 import { Page } from '../api/Page';
 import { withProps } from '../utils/withProps';
 import { State } from '../types';
-import { findByKey } from '../utils/findByKey';
+import { findByValue } from '../utils/findByValue';
 import { Row } from './Row';
 
 type Props = {
@@ -56,7 +56,7 @@ export const Menu = connect(class extends Component<typeof props> {
           >
             <Heading text={row.name} breakpoints={{ [PHONE]: 'thin' }}/>
             {row.items.map(item => {
-              const page = findByKey(item, 'id', pages);
+              const page = findByValue(item, 'id', pages);
 
               if (!page) {
                 return false;

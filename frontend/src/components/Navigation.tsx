@@ -10,7 +10,7 @@ import { Page } from '../api/Page';
 import { Menu } from './Menu';
 import { forBreakpoint } from '../utils/forBreakpoint';
 import { TABLET_LANDSCAPE } from '../constants';
-import { findByKey } from '../utils/findByKey';
+import { findByValue } from '../utils/findByValue';
 
 type LocalState = {
   openMenu?: number,
@@ -106,7 +106,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       }
     });
 
-    const homePage = findByKey('home', 'type', pages);
+    const homePage = findByValue('home', 'type', pages);
 
     if (!homePage) {
       return false;

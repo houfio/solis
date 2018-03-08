@@ -3,8 +3,9 @@ import { Component } from 'react';
 import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { content } from '../modules/content';
+import { findByValue } from '../utils/findByValue';
 import { findByKey } from '../utils/findByKey';
-import { findRenderer } from '../utils/findRenderer';
+import { BLOCK_RENDERERS } from '../constants';
 
 type Props = {
   pageId: number
@@ -47,7 +48,7 @@ export const ContentPage = connect(class extends Component<typeof props> {
       return false;
     }
 
-    const page = findByKey(pageId, 'id', pages);
+    const page = findByValue(pageId, 'id', pages);
 
     if (!page) {
       return false;
@@ -60,7 +61,7 @@ export const ContentPage = connect(class extends Component<typeof props> {
     }
 
     return pageBlocks.map((block, index) => {
-      const renderer = findRenderer(block);
+      const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
       if (!renderer) {
         return false;
