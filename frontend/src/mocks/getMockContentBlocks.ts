@@ -47,28 +47,28 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
     page_id: 1,
     type: 'column',
     data: {
-      size: 3,
-      breakpoint: 'md'
+      size: 4,
+      breakpoint: 'TABLET_LANDSCAPE'
     },
     children: [
       {
         id: 6,
         type: 'text',
         data: {
-          text: 'Hello'
+          text: 'Hello world!'
         },
         children: [],
-        parent_data: 4,
+        parent_data: 0,
         visible: true
       },
       {
-        id: 7,
+        id: 10,
         type: 'text',
         data: {
-          text: 'World'
+          text: 'wew'
         },
         children: [],
-        parent_data: 4,
+        parent_data: 1,
         visible: true
       },
       {
@@ -80,7 +80,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
           target: 3
         },
         children: [],
-        parent_data: 4,
+        parent_data: 3,
         visible: true
       }
     ],

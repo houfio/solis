@@ -1,6 +1,7 @@
 import { Identifiable } from './Identifiable';
 import { Hidable } from './Hidable';
 import { ButtonTypes } from '../types';
+import { BREAKPOINTS } from '../constants';
 
 export type ContentBlockTypes = {
   text: {
@@ -11,7 +12,10 @@ export type ContentBlockTypes = {
     type: ButtonTypes,
     target: number
   },
-  column: {}
+  column: {
+    size: number,
+    breakpoint: keyof typeof BREAKPOINTS;
+  }
 }
 
 export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable & Hidable & {
