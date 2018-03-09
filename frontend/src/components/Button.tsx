@@ -31,7 +31,7 @@ export const Button = ({ text, type = 'primary', onClick }: Props) => {
       display: 'inline-block',
       padding: '.75rem',
       color: 'white',
-      cursor: 'default',
+      cursor: 'pointer',
       borderRadius: '.25rem',
       transition: 'background-color .2s ease',
       ...buttonStyles[type]

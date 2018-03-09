@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component } from 'react';
+import { Component, CSSProperties } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
 import { PHONE, TABLET_LANDSCAPE } from '../constants';
@@ -11,10 +11,12 @@ import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
 import { Row } from './Row';
+import { handle } from '../utils/handle';
 
 type Props = {
-  menu: MenuItem,
-  onClick: (page: Page) => void
+  menuItem: MenuItem,
+  onClick: (page: Page) => void,
+  styles?: CSSProperties[]
 }
 
 const mapStateToProps = (state: State) => ({
@@ -25,7 +27,7 @@ const { props, connect } = withProps<Props>()(mapStateToProps);
 
 export const Menu = connect(class extends Component<typeof props> {
   public render() {
-    const { menu, onClick } = this.props;
+    const { menuItem, onClick, styles } = this.props;
     const { pages } = this.props;
 
     if (!pages) {
@@ -39,23 +41,23 @@ export const Menu = connect(class extends Component<typeof props> {
         flexDirection: 'column'
       },
       link: {
+        cursor: 'pointer',
         ':hover': {
-          cursor: 'pointer',
           opacity: '.5'
         }
       }
     });
 
     return (
-      <Row>
-        {menu.rows.map((row, index) => (
+      <Row styles={styles}>
+        {menuItem.columns.map((column, index) => (
           <Column
             key={index}
             breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
             styles={[styleSheet.category]}
           >
-            <Heading text={row.name} breakpoints={{ [PHONE]: 'thin' }}/>
-            {row.items.map(item => {
+            <Heading text={column.name} breakpoints={{ [PHONE]: 'thin' }}/>
+            {column.items.map(item => {
               const page = findByValue(item, 'id', pages);
 
               if (!page) {
@@ -66,7 +68,7 @@ export const Menu = connect(class extends Component<typeof props> {
                 <a
                   key={item}
                   className={css(styleSheet.link)}
-                  onClick={() => onClick(page)}
+                  onClick={handle(onClick, page)}
                 >
                   {page.name}
                 </a>

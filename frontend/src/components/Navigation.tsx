@@ -11,10 +11,10 @@ import { Menu } from './Menu';
 import { forBreakpoint } from '../utils/forBreakpoint';
 import { TABLET_LANDSCAPE } from '../constants';
 import { findByValue } from '../utils/findByValue';
+import { handle } from '../utils/handle';
 
 type LocalState = {
-  openMenu?: number,
-  hovering: boolean
+  openMenu?: number
 }
 
 const mapStateToProps = (state: State) => ({
@@ -30,33 +30,37 @@ const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
 export const Navigation = connect(class extends Component<typeof props, LocalState> {
   public state = {
-    openMenu: undefined,
-    hovering: false
+    openMenu: undefined
   };
+
+  private menuNodes: { [key: number]: HTMLElement | undefined } = {};
 
   public render() {
     const { pages, menus } = this.props;
-    const { openMenu, hovering } = this.state;
+    const { openMenu } = this.state;
 
     if (!pages || !menus) {
       return false;
     }
 
-    const indexedPages: { [id: number]: Page } = pages.reduce(
-      (previous, current) => ({
-        ...previous,
-        [current.id]: current
-      }),
-      {}
-    );
+    const primaryMenu = findByValue('primary', 'name', menus);
+    const homePage = findByValue('home', 'type', pages);
+
+    if (!primaryMenu || !homePage) {
+      return false;
+    }
+
+    const openNode = openMenu !== undefined ? this.menuNodes[openMenu] : undefined;
 
     const styleSheet = StyleSheet.create({
       navigation: {
         position: 'fixed',
         width: '100%',
-        color: 'white',
-        backgroundColor: '#1976D2',
-        top: '0'
+        top: '0',
+        color: 'white'
+      },
+      bar: {
+        backgroundColor: '#1976D2'
       },
       container: {
         display: 'flex'
@@ -66,8 +70,9 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         alignItems: 'center',
         padding: '0 1rem',
         marginLeft: '-1rem',
+        cursor: 'pointer',
+        transition: 'opacity .2s ease',
         ':hover': {
-          cursor: 'pointer',
           opacity: '.5'
         }
       },
@@ -91,9 +96,12 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         flex: '1'
       },
       item: {
+        display: 'inline-block',
         padding: '2rem 1rem',
+        cursor: 'pointer',
+        lineHeight: 1,
+        transition: 'opacity .2s ease',
         ':hover': {
-          cursor: 'pointer',
           opacity: '.5'
         },
         ':last-child': {
@@ -101,50 +109,86 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         }
       },
       menu: {
+        visibility: 'hidden',
         position: 'absolute',
         width: '100%',
-        padding: '1rem 0 0 0',
-        backgroundColor: '#1976D2'
+        opacity: 0,
+        left: 0,
+        top: '5rem',
+        zIndex: 1,
+        transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
+      },
+      menuOpen: {
+        visibility: 'shown',
+        opacity: 1,
+        transitionDelay: '0s'
+      },
+      menuLeft: {
+        transform: 'translateX(10rem)'
+      },
+      menuRight: {
+        transform: 'translateX(-10rem)'
+      },
+      backDrop: {
+        position: 'absolute',
+        width: '100%',
+        height: '1px',
+        transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})`,
+        backgroundColor: '#1976D2',
+        transformOrigin: '50% 0 0',
+        transition: 'transform .2s ease'
       }
     });
 
-    const homePage = findByValue('home', 'type', pages);
-
-    if (!homePage) {
-      return false;
-    }
+    const setState = this.setState.bind(this);
 
     return (
       <nav className={css(styleSheet.navigation)}>
-        <Container styles={[styleSheet.container]}>
-          <div className={css(styleSheet.brand)} onClick={() => this.navigateTo(homePage)}>
-            <div className={css(styleSheet.logo)}/>
-            <span className={css(styleSheet.text)}>Jong Nederland</span>
-          </div>
-          <div className={css(styleSheet.push)}/>
-          {menus.header.map((menu, index) => (
-            <span
-              key={index}
-              className={css(styleSheet.item)}
-              onClick={() => this.navigateTo(indexedPages[menu.page_id])}
-              onMouseEnter={() => this.setState({ openMenu: index, hovering: true })}
-              onMouseLeave={() => this.setState({ hovering: false })}
-            >
-              {indexedPages[menu.page_id].name}
-            </span>
-          ))}
-        </Container>
-        {hovering && (
-          <div
-            className={css(styleSheet.menu)}
-            onMouseEnter={() => this.setState({ hovering: true })}
-            onMouseLeave={() => this.setState({ hovering: false })}
-          >
-            <Container>
-              <Menu menu={menus.header[openMenu!]} onClick={this.navigateTo}/>
-            </Container>
-          </div>
-        )}
+        <div className={css(styleSheet.bar)}>
+          <Container styles={[styleSheet.container]}>
+            <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
+              <div className={css(styleSheet.logo)}/>
+              <span className={css(styleSheet.text)}>Jong Nederland</span>
+            </div>
+            <div className={css(styleSheet.push)}/>
+            {primaryMenu.items.map((item, index) => {
+              const page = findByValue(item.page_id, 'id', pages);
+
+              if (!page) {
+                return false;
+              }
+
+              return (
+                <div
+                  key={index}
+                  onMouseEnter={handle(setState, { openMenu: index })}
+                  onMouseLeave={handle(setState, { openMenu: undefined })}
+                >
+                  <span
+                    className={css(styleSheet.item)}
+                    onClick={handle(this.navigateTo, page)}
+                  >
+                    {page.name}
+                  </span>
+                  <div
+                    ref={node => this.menuNodes[index] = node || undefined}
+                    className={css(
+                      styleSheet.menu,
+                      openMenu === index && styleSheet.menuOpen,
+                      Number(openMenu) > index && styleSheet.menuRight,
+                      Number(openMenu) < index && styleSheet.menuLeft
+                    )}
+                  >
+                    <Container>
+                      <Menu menuItem={item} onClick={this.navigateTo}/>
+                    </Container>
+                  </div>
+                </div>
+              );
+            })}
+          </Container>
+        </div>
+        <div className={css(styleSheet.backDrop)}/>
       </nav>
     );
   }
@@ -155,8 +199,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
     push(page.path);
 
     this.setState({
-      openMenu: undefined,
-      hovering: false
+      openMenu: undefined
     });
   };
 });

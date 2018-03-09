@@ -5,7 +5,7 @@ import { Action } from 'redux';
 
 import { Page } from './api/Page';
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
-import { Menus } from './api/Menu';
+import { Menu } from './api/Menu';
 
 export type State = {
   router: RouterState,
@@ -18,7 +18,7 @@ export type State = {
     contentBlocks: {
       [id: number]: ContentBlock[]
     },
-    menus?: Menus
+    menus?: Menu[]
   },
   http: {
     queue: {

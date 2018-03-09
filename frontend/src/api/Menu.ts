@@ -1,12 +1,14 @@
-export type MenuType = 'header';
+import { Identifiable } from './Identifiable';
+import { Hidable } from './Hidable';
 
-export type Menus = {
-  [T in MenuType]: MenuItem[]
+export type Menu = Identifiable & {
+  name: string,
+  items: MenuItem[]
 }
 
-export type MenuItem = {
+export type MenuItem = Identifiable & Hidable & {
   page_id: number,
-  rows: {
+  columns: {
     name: string,
     items: number[]
   }[]

@@ -24,7 +24,7 @@
     "normalize.css": "^8.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-markdown": "^3.2.2",
+    "react-markdown": "^3.3.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-redux": "^5.0.0-alpha.9",
@@ -33,16 +33,16 @@
   },
   "devDependencies": {
     "@types/aphrodite": "^0.5.7",
-    "@types/jest": "^22.1.4",
+    "@types/jest": "^22.2.0",
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
     "@types/react-router": "^4.0.22",
     "@types/react-router-redux": "^5.0.12",
-    "@types/redux-form": "^7.2.0",
+    "@types/redux-form": "^7.2.2",
     "@types/redux-logger": "^3.0.5",
     "react-scripts-ts": "^2.13.0",
     "redux-logger": "^3.0.6",
-    "typescript": "^2.8.0-dev.20180302"
+    "typescript": "^2.8.0-dev.20180308"
   }
 }
