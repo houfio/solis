@@ -34,6 +34,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
   };
 
   private menuNodes: { [key: number]: HTMLElement | undefined } = {};
+  private timeoutId = 0;
 
   public render() {
     const { pages, menus } = this.props;
@@ -140,8 +141,6 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       }
     });
 
-    const setState = this.setState.bind(this);
-
     return (
       <nav className={css(styleSheet.navigation)}>
         <div className={css(styleSheet.bar)}>
@@ -161,8 +160,8 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
               return (
                 <div
                   key={index}
-                  onMouseEnter={handle(setState, { openMenu: index })}
-                  onMouseLeave={handle(setState, { openMenu: undefined })}
+                  onMouseEnter={handle(this.setOpenMenu, index)}
+                  onMouseLeave={handle(this.setOpenMenu, undefined)}
                 >
                   <span
                     className={css(styleSheet.item)}
@@ -201,5 +200,20 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
     this.setState({
       openMenu: undefined
     });
+  };
+
+  private setOpenMenu = (openMenu?: number) => {
+    clearTimeout(this.timeoutId as any);
+
+    if (openMenu !== undefined) {
+      this.setState({ openMenu });
+
+      return;
+    }
+
+    this.timeoutId = setTimeout(
+      () => this.setState({ openMenu }),
+      250
+    ) as any;
   };
 });
