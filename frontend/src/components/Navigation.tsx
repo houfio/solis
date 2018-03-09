@@ -116,6 +116,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         opacity: 0,
         left: 0,
         top: '5rem',
+        paddingTop: '.5rem',
         zIndex: 1,
         transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
       },
