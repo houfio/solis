@@ -8,11 +8,11 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
     items: [
       {
         id: 0,
-        page_id: 2,
+        target: 2,
         columns: [
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -20,20 +20,20 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
           },
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -41,13 +41,13 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
@@ -57,18 +57,18 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
       },
       {
         id: 1,
-        page_id: 3,
+        target: 3,
         columns: [
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
           },
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -76,7 +76,7 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           }
@@ -85,11 +85,11 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
       },
       {
         id: 2,
-        page_id: 4,
+        target: 4,
         columns: [
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -97,20 +97,20 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
           },
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -118,20 +118,20 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
           },
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -139,20 +139,20 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]
           },
           {
             name: 'Account',
-            items: [
+            targets: [
               1,
               2,
               3
@@ -160,13 +160,13 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
           },
           {
             name: 'hoi',
-            items: [
+            targets: [
               1
             ]
           },
           {
             name: 'test',
-            items: [
+            targets: [
               3,
               4
             ]

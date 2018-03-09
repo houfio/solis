@@ -6,7 +6,7 @@ export const getMockPages = () => createMockResponse<Page[]>([
     id: 1,
     name: 'Home',
     path: '/',
-    guards: {},
+    guards: [],
     type: 'home',
     visible: true
   },
@@ -14,34 +14,43 @@ export const getMockPages = () => createMockResponse<Page[]>([
     id: 2,
     name: 'Login',
     path: '/login',
-    guards: {
-      no_auth: 1
-    },
+    guards: [
+      {
+        type: 'no_auth',
+        target: 1
+      }
+    ],
     visible: true
   },
   {
     id: 3,
     name: 'Register',
     path: '/register',
-    guards: {
-      no_auth: 1
-    },
+    guards: [
+      {
+        type: 'no_auth',
+        target: 1
+      }
+    ],
     visible: true
   },
   {
     id: 4,
     name: 'Profile',
     path: '/profile',
-    guards: {
-      auth: 2
-    },
+    guards: [
+      {
+        type: 'auth',
+        target: 2
+      }
+    ],
     visible: true
   },
   {
     id: 5,
     name: 'Empty',
     path: '/test',
-    guards: {},
+    guards: [],
     visible: true
   }
 ]);

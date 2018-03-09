@@ -152,7 +152,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
             </div>
             <div className={css(styleSheet.push)}/>
             {primaryMenu.items.map((item, index) => {
-              const page = findByValue(item.page_id, 'id', pages);
+              const page = findByValue(item.target, 'id', pages);
 
               if (!page) {
                 return false;

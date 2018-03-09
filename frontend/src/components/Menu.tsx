@@ -57,8 +57,8 @@ export const Menu = connect(class extends Component<typeof props> {
             styles={[styleSheet.category]}
           >
             <Heading text={column.name} breakpoints={{ [PHONE]: 'thin' }}/>
-            {column.items.map(item => {
-              const page = findByValue(item, 'id', pages);
+            {column.targets.map(target => {
+              const page = findByValue(target, 'id', pages);
 
               if (!page) {
                 return false;
@@ -66,7 +66,7 @@ export const Menu = connect(class extends Component<typeof props> {
 
               return (
                 <a
-                  key={item}
+                  key={target}
                   className={css(styleSheet.link)}
                   onClick={handle(onClick, page)}
                 >

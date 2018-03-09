@@ -7,7 +7,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { content } from '../modules/content';
-import { RouteGuard, RouteGuards } from '../api/RouteGuard';
+import { RouteGuard } from '../api/RouteGuard';
 import { findByValue } from '../utils/findByValue';
 import { ContentPage } from './ContentPage';
 import { GUARDS } from '../constants';
@@ -82,26 +82,21 @@ export const Root = connect(class extends Component<typeof props> {
     );
   }
 
-  private getRedirect = (routeGuards: RouteGuards): ReactNode | undefined => {
+  private getRedirect = (routeGuards: RouteGuard[]): ReactNode | undefined => {
     const { pages, state } = this.props;
 
     if (!pages) {
       return;
     }
 
-    for (let routeGuard in routeGuards) {
-      if (routeGuards.hasOwnProperty(routeGuard)) {
-        const guardName = routeGuard as RouteGuard;
-        const guardTarget = routeGuards[guardName];
-        const guard = GUARDS[guardName];
+    for (let routeGuard of routeGuards) {
+      const target = findByValue(routeGuard.target, 'id', pages);
+      const guard = GUARDS[routeGuard.type];
 
-        if (!guard(state) && guardTarget) {
-          const page = findByValue(guardTarget, 'id', pages);
-
-          return (
-            <Redirect to={page ? page.path : '/'}/>
-          );
-        }
+      if (!guard(state) && target) {
+        return (
+          <Redirect to={target.path}/>
+        );
       }
     }
 

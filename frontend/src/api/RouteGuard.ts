@@ -1,5 +1,6 @@
-export type RouteGuard = 'auth' | 'no_auth';
+export type RouteGuardTypes = 'auth' | 'no_auth';
 
-export type RouteGuards = {
-  [G in RouteGuard]?: number
+export type RouteGuard = {
+  type: RouteGuardTypes,
+  target: number
 };
