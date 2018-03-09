@@ -64,6 +64,8 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
       brand: {
         display: 'flex',
         alignItems: 'center',
+        padding: '0 1rem',
+        marginLeft: '-1rem',
         ':hover': {
           cursor: 'pointer',
           opacity: '.5'
@@ -95,7 +97,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
           opacity: '.5'
         },
         ':last-child': {
-          paddingRight: '0'
+          marginRight: '-1rem'
         }
       },
       menu: {
