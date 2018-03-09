@@ -14,6 +14,7 @@ import { GUARDS } from '../constants';
 import { Navigation } from './Navigation';
 import { Footer } from './Footer';
 import { Container } from './Container';
+import { Loading } from './Loading';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -40,13 +41,9 @@ export const Root = connect(class extends Component<typeof props> {
   public render() {
     const { location, pages, queue } = this.props;
 
-    if (queue.all) {
+    if (queue.all || !pages) {
       return (
-        'loading all'
-      );
-    } else if (!pages) {
-      return (
-        'no pages'
+        <Loading/>
       );
     }
 

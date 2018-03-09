@@ -38,26 +38,17 @@ export const ContentPage = connect(class extends Component<typeof props> {
 
   public render() {
     const { pageId } = this.props;
-    const { pages, contentBlocks, queue } = this.props;
-
-    if (queue.page) {
-      return 'loading page';
-    }
+    const { pages, contentBlocks } = this.props;
 
     if (!pages) {
       return false;
     }
 
     const page = findByValue(pageId, 'id', pages);
-
-    if (!page) {
-      return false;
-    }
-
     const pageBlocks = contentBlocks[pageId];
 
-    if (!pageBlocks) {
-      return '?';
+    if (!page || !pageBlocks) {
+      return false;
     }
 
     return pageBlocks.map((block, index) => {
