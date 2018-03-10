@@ -9,7 +9,7 @@ import { isNumber } from 'util';
 type Props = {
   children: ReactNode,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: { size?: number, offset?: number } | number },
-  styles?: CSSProperties[],
+  styles?: (CSSProperties | false)[],
   tag?: string
 }
 

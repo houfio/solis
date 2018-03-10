@@ -8,7 +8,7 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
     items: [
       {
         id: 0,
-        target: 2,
+        name: 'Menu item!',
         columns: [
           {
             name: 'Account',
@@ -57,7 +57,7 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
       },
       {
         id: 1,
-        target: 3,
+        name: 'Short',
         columns: [
           {
             name: 'test',
@@ -85,7 +85,7 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
       },
       {
         id: 2,
-        target: 4,
+        name: 'Long',
         columns: [
           {
             name: 'Account',

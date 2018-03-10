@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import { push } from 'react-router-redux';
 
@@ -34,7 +34,6 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
   };
 
   private menuNodes: { [key: number]: HTMLElement | undefined } = {};
-  private timeoutId = 0;
 
   public render() {
     const { pages, menus } = this.props;
@@ -58,7 +57,8 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         position: 'fixed',
         width: '100%',
         top: '0',
-        color: 'white'
+        color: 'white',
+        zIndex: 2
       },
       bar: {
         backgroundColor: '#1976D2'
@@ -105,9 +105,12 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         ':hover': {
           opacity: '.5'
         },
-        ':last-child': {
+        ':last-of-type': {
           marginRight: '-1rem'
         }
+      },
+      active: {
+        opacity: .5
       },
       menu: {
         visibility: 'hidden',
@@ -117,10 +120,10 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         left: 0,
         top: '5rem',
         paddingTop: '.5rem',
-        zIndex: 1,
+        zIndex: 3,
         transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
       },
-      menuOpen: {
+      open: {
         visibility: 'shown',
         opacity: 1,
         transitionDelay: '0s'
@@ -135,46 +138,50 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         position: 'absolute',
         width: '100%',
         height: '1px',
-        transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})`,
         backgroundColor: '#1976D2',
         transformOrigin: '50% 0 0',
         transition: 'transform .2s ease'
+      },
+      shadow: {
+        visibility: 'hidden',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        zIndex: 1,
+        transition: 'opacity .2s ease, visibility 0s linear .2s',
+        backgroundColor: 'rgba(255, 255, 255, .5)',
+        opacity: 0
       }
     });
 
     return (
-      <nav className={css(styleSheet.navigation)}>
-        <div className={css(styleSheet.bar)}>
-          <Container styles={[styleSheet.container]}>
-            <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
-              <div className={css(styleSheet.logo)}/>
-              <span className={css(styleSheet.text)}>Jong Nederland</span>
-            </div>
-            <div className={css(styleSheet.push)}/>
-            {primaryMenu.items.map((item, index) => {
-              const page = findByValue(item.target, 'id', pages);
-
-              if (!page) {
-                return false;
-              }
-
-              return (
-                <div
-                  key={item.id}
-                  onMouseEnter={handle(this.setOpenMenu, index)}
-                  onMouseLeave={handle(this.setOpenMenu, undefined)}
-                >
+      <>
+        <nav className={css(styleSheet.navigation)}>
+          <div className={css(styleSheet.bar)}>
+            <Container styles={[styleSheet.container]}>
+              <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
+                <div className={css(styleSheet.logo)}/>
+                <span className={css(styleSheet.text)}>Jong Nederland</span>
+              </div>
+              <div className={css(styleSheet.push)}/>
+              {primaryMenu.items.map((item, index) => (
+                <Fragment key={item.id}>
                   <span
-                    className={css(styleSheet.item)}
-                    onClick={handle(this.navigateTo, page)}
+                    className={css(
+                      styleSheet.item,
+                      openMenu === index && styleSheet.active
+                    )}
+                    onClick={handle(this.toggleMenu, index)}
                   >
-                    {page.name}
+                    {item.name}
                   </span>
                   <div
                     ref={node => this.menuNodes[index] = node || undefined}
                     className={css(
                       styleSheet.menu,
-                      openMenu === index && styleSheet.menuOpen,
+                      openMenu === index && styleSheet.open,
                       Number(openMenu) > index && styleSheet.menuRight,
                       Number(openMenu) < index && styleSheet.menuLeft
                     )}
@@ -183,13 +190,20 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
                       <Menu menuItem={item} onClick={this.navigateTo}/>
                     </Container>
                   </div>
-                </div>
-              );
-            })}
-          </Container>
-        </div>
-        <div className={css(styleSheet.backDrop)}/>
-      </nav>
+                </Fragment>
+              ))}
+            </Container>
+          </div>
+          <div
+            className={css(styleSheet.backDrop)}
+            style={{ transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})` }}
+          />
+        </nav>
+        <div
+          className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
+          onClick={handle(this.toggleMenu, undefined)}
+        />
+      </>
     );
   }
 
@@ -198,23 +212,22 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
 
     push(page.path);
 
-    this.setState({
-      openMenu: undefined
-    });
+    this.toggleMenu();
   };
 
-  private setOpenMenu = (openMenu?: number) => {
-    clearTimeout(this.timeoutId as any);
+  private toggleMenu = (index?: number) => {
+    const { openMenu } = this.state;
 
-    if (openMenu !== undefined) {
-      this.setState({ openMenu });
+    if (index === openMenu) {
+      this.setState({
+        openMenu: undefined
+      });
 
       return;
     }
 
-    this.timeoutId = setTimeout(
-      () => this.setState({ openMenu }),
-      250
-    ) as any;
+    this.setState({
+      openMenu: index
+    });
   };
 });

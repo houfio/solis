@@ -9,7 +9,7 @@ import { HeadingTypes } from '../types';
 type Props = {
   text: string,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
-  styles?: CSSProperties[]
+  styles?: (CSSProperties | false)[]
 }
 
 const headingSizes: { [T in HeadingTypes]: CSSProperties } = {
@@ -40,8 +40,6 @@ export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
   });
 
   return (
-    <span className={css(styleSheet.heading, styles)}>
-      {text}
-    </span>
+    <span className={css(styleSheet.heading, styles)}>{text}</span>
   );
 };

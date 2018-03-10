@@ -7,9 +7,11 @@ export type Menu = Identifiable & {
 }
 
 export type MenuItem = Identifiable & Hidable & {
-  target: number,
-  columns: {
-    name: string,
-    targets: number[]
-  }[]
+  name: string,
+  columns: MenuColumn[]
+}
+
+export type MenuColumn = {
+  name: string,
+  targets: number[]
 }

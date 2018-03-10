@@ -7,7 +7,7 @@ import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   children: ReactNode,
-  styles?: CSSProperties[],
+  styles?: (CSSProperties | false)[],
   tag?: string
 };
 

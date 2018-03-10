@@ -16,7 +16,7 @@ import { handle } from '../utils/handle';
 type Props = {
   menuItem: MenuItem,
   onClick: (page: Page) => void,
-  styles?: CSSProperties[]
+  styles?: (CSSProperties | false)[]
 }
 
 const mapStateToProps = (state: State) => ({
@@ -27,7 +27,7 @@ const { props, connect } = withProps<Props>()(mapStateToProps);
 
 export const Menu = connect(class extends Component<typeof props> {
   public render() {
-    const { menuItem, onClick, styles } = this.props;
+    const { menuItem, onClick, styles = [] } = this.props;
     const { pages } = this.props;
 
     if (!pages) {
@@ -42,6 +42,7 @@ export const Menu = connect(class extends Component<typeof props> {
       },
       link: {
         cursor: 'pointer',
+        transition: 'opacity .2s ease',
         ':hover': {
           opacity: '.5'
         }

@@ -4,7 +4,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 
 type Props = {
   children: ReactNode,
-  styles?: CSSProperties[],
+  styles?: (CSSProperties | false)[],
   tag?: string
 }
 

@@ -7,7 +7,8 @@ import { ButtonTypes } from '../types';
 type Props = {
   text: string,
   type?: ButtonTypes,
-  onClick?: () => void
+  onClick?: () => void,
+  styles?: (CSSProperties | false)[]
 }
 
 const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
@@ -25,7 +26,7 @@ const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
   }
 };
 
-export const Button = ({ text, type = 'primary', onClick }: Props) => {
+export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) => {
   const styleSheet = StyleSheet.create({
     button: {
       display: 'inline-block',
@@ -39,6 +40,6 @@ export const Button = ({ text, type = 'primary', onClick }: Props) => {
   });
 
   return (
-    <span className={css(styleSheet.button)} onClick={onClick}>{text}</span>
+    <span className={css(styleSheet.button, styles)} onClick={onClick}>{text}</span>
   );
 };
