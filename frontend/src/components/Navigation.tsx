@@ -160,7 +160,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
 
               return (
                 <div
-                  key={index}
+                  key={item.id}
                   onMouseEnter={handle(this.setOpenMenu, index)}
                   onMouseLeave={handle(this.setOpenMenu, undefined)}
                 >

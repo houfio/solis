@@ -65,11 +65,11 @@ export const Root = connect(class extends Component<typeof props> {
         <main className={css(styleSheet.main)}>
           <Container>
             <Switch location={location || createLocation(window.location.href)}>
-              {pages.map((page, index) => {
+              {pages.map(page => {
                 const redirect = this.getRedirect(page.guards);
 
                 return (
-                  <Route key={index} path={page.path} exact={true}>
+                  <Route key={page.id} path={page.path} exact={true}>
                     {redirect || <ContentPage pageId={page.id}/>}
                   </Route>
                 );

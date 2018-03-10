@@ -51,14 +51,14 @@ export const ContentPage = connect(class extends Component<typeof props> {
       return false;
     }
 
-    return pageBlocks.map((block, index) => {
+    return pageBlocks.map(block => {
       const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
       if (!renderer) {
         return false;
       }
 
-      return renderer(block, index);
+      return renderer(block, block.id);
     });
   }
 });
