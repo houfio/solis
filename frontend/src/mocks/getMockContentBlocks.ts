@@ -10,7 +10,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
       text: '# Home\n## Home\n### Home'
     },
     children: [],
-    visible: true
+    hidden: false
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
       text: 'Login'
     },
     children: [],
-    visible: true
+    hidden: false
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
       text: 'Register'
     },
     children: [],
-    visible: true
+    hidden: false
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
       text: 'Profile'
     },
     children: [],
-    visible: true
+    hidden: false
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
         },
         children: [],
         parent_data: 0,
-        visible: true
+        hidden: false
       },
       {
         id: 10,
@@ -69,7 +69,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
         },
         children: [],
         parent_data: 1,
-        visible: true
+        hidden: false
       },
       {
         id: 8,
@@ -81,10 +81,10 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
         },
         children: [],
         parent_data: 3,
-        visible: true
+        hidden: false
       }
     ],
-    visible: true
+    hidden: false
   },
   {
     id: 9,
@@ -96,6 +96,7 @@ export const getMockContentBlocks = (pageId: number) => createMockResponse<Conte
       target: 2
     },
     children: [],
-    visible: true
+    hidden: false,
+    draft: false
   }
 ].filter(item => item.page_id === pageId));

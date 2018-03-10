@@ -53,7 +53,8 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
             ]
           }
         ],
-        visible: true
+        hidden: false,
+        draft: false
       },
       {
         id: 1,
@@ -81,7 +82,8 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
             ]
           }
         ],
-        visible: true
+        hidden: false,
+        draft: false
       },
       {
         id: 2,
@@ -172,7 +174,8 @@ export const getMockMenus = () => createMockResponse<Menu[]>([
             ]
           }
         ],
-        visible: true
+        hidden: false,
+        draft: false
       }
     ]
   }

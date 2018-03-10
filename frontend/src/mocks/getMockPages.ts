@@ -8,7 +8,8 @@ export const getMockPages = () => createMockResponse<Page[]>([
     path: '/',
     guards: [],
     type: 'home',
-    visible: true
+    hidden: false,
+    draft: false
   },
   {
     id: 2,
@@ -20,7 +21,8 @@ export const getMockPages = () => createMockResponse<Page[]>([
         target: 1
       }
     ],
-    visible: true
+    hidden: false,
+    draft: false
   },
   {
     id: 3,
@@ -32,7 +34,8 @@ export const getMockPages = () => createMockResponse<Page[]>([
         target: 1
       }
     ],
-    visible: true
+    hidden: false,
+    draft: false
   },
   {
     id: 4,
@@ -44,13 +47,15 @@ export const getMockPages = () => createMockResponse<Page[]>([
         target: 2
       }
     ],
-    visible: true
+    hidden: false,
+    draft: false
   },
   {
     id: 5,
     name: 'Empty',
     path: '/test',
     guards: [],
-    visible: true
+    hidden: false,
+    draft: false
   }
 ]);

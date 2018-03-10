@@ -124,7 +124,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
       },
       open: {
-        visibility: 'shown',
+        visibility: 'visible',
         opacity: 1,
         transitionDelay: '0s'
       },
@@ -218,16 +218,8 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
   private toggleMenu = (index?: number) => {
     const { openMenu } = this.state;
 
-    if (index === openMenu) {
-      this.setState({
-        openMenu: undefined
-      });
-
-      return;
-    }
-
     this.setState({
-      openMenu: index
+      openMenu: openMenu === index ? undefined : index
     });
   };
 });

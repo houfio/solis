@@ -35,7 +35,12 @@ class Page implements JsonSerializable
     /**
      * @ORM\Column(type="boolean")
      */
-    public $visible = true;
+    public $hidden = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $draft = true;
 
     /**
      * @ORM\OneToMany(targetEntity="RouteGuard", mappedBy="page")
@@ -54,7 +59,8 @@ class Page implements JsonSerializable
             'name' => $this->name,
             'path' => $this->path,
             'type' => $this->type,
-            'visible' => $this->visible,
+            'hidden' => $this->hidden,
+            'draft' => $this->draft,
             'guards' => $this->guards
         ];
     }

@@ -47,7 +47,7 @@ class ContentBlock implements JsonSerializable
     /**
      * @ORM\Column(type="boolean")
      */
-    public $visible = true;
+    public $hidden = false;
 
     /**
      * @ORM\OneToMany(targetEntity="ContentBlock", mappedBy="parent")
@@ -62,7 +62,7 @@ class ContentBlock implements JsonSerializable
             'type' => $this->type,
             'data' => $this->data,
             'parent_data' => $this->parent_data,
-            'visible' => $this->visible,
+            'hidden' => $this->hidden,
             'children' => $this->children
         ];
     }

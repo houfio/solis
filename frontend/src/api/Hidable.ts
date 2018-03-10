@@ -1,3 +1,3 @@
 export type Hidable = {
-  visible: boolean
+  hidden: boolean
 };
