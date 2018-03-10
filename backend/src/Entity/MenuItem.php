@@ -27,6 +27,11 @@ class MenuItem implements JsonSerializable
      */
     public $target;
 
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  public $visible = true;
+
     /**
      * @ORM\OneToMany(targetEntity="MenuColumn", mappedBy="item")
      */
@@ -35,7 +40,9 @@ class MenuItem implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
+            'id' => $this->id,
             'target' => $this->target,
+            'visible' => $this->visible,
             'columns' => $this->columns
         ];
     }
