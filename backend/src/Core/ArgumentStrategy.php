@@ -3,7 +3,8 @@ namespace JNL\Core;
 
 use Exception;
 use JNL\Exception\HttpArrayException;
-use JNL\Core\RouteSet;
+use League\Fractal\Manager;
+use League\Fractal\Resource\ResourceInterface;
 use League\Route\Http\Exception\MethodNotAllowedException;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\Exception as HttpException;
@@ -61,6 +62,12 @@ class ArgumentStrategy implements StrategyInterface
 
             if (is_bool($response)) {
                 $response = new JsonResponse(['success' => $response]);
+            } else if ($response instanceof ResourceInterface) {
+                $transformer = new Manager();
+                $transformer->setSerializer(new Serializer());
+                $data = $transformer->createData($response)->toArray();
+
+                $response = new JsonResponse(['success' => true, 'data' => $data]);
             } else if (!$response instanceof ResponseInterface) {
                 $response = new JsonResponse(['success' => true, 'data' => $response]);
             }

@@ -51,15 +51,15 @@ export const Menu = connect(class extends Component<typeof props> {
 
     return (
       <Row styles={styles}>
-        {menuItem.columns.map((column, index) => (
+        {menuItem.columns.map(column => (
           <Column
-            key={index}
+            key={column.id}
             breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
             styles={[styleSheet.category]}
           >
             <Heading text={column.name} breakpoints={{ [PHONE]: 'thin' }}/>
             {column.targets.map(target => {
-              const page = findByValue(target, 'id', pages);
+              const page = findByValue(target.target, 'id', pages);
 
               if (!page) {
                 return false;
@@ -67,7 +67,7 @@ export const Menu = connect(class extends Component<typeof props> {
 
               return (
                 <a
-                  key={target}
+                  key={target.id}
                   className={css(styleSheet.link)}
                   onClick={handle(onClick, page)}
                 >

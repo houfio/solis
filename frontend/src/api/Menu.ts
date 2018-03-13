@@ -12,7 +12,11 @@ export type MenuItem = Identifiable & Hidable & Draftable & {
   columns: MenuColumn[]
 }
 
-export type MenuColumn = {
+export type MenuColumn = Identifiable & {
   name: string,
-  targets: number[]
+  targets: MenuTarget[]
+}
+
+export type MenuTarget = Identifiable & {
+  target: number
 }

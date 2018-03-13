@@ -19,9 +19,10 @@
   "require": {
     "doctrine/orm": "^2.5",
     "league/container": "^2.4",
+    "league/fractal": "^0.17.0",
     "league/route": "^3.0",
-    "zendframework/zend-diactoros": "^1.7",
-    "vlucas/valitron": "^1.4"
+    "vlucas/valitron": "^1.4",
+    "zendframework/zend-diactoros": "^1.7"
   },
   "autoload": {
     "psr-4": {

@@ -2,13 +2,12 @@
 namespace JNL\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 
 /**
  * @ORM\Table(name="menus")
  * @ORM\Entity
  */
-class Menu implements JsonSerializable
+class Menu
 {
     /**
      * @ORM\Column(type="integer")
@@ -26,13 +25,4 @@ class Menu implements JsonSerializable
      * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="menu")
      */
     public $items;
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'items' => $this->items
-        ];
-    }
 }
