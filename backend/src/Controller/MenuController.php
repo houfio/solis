@@ -19,7 +19,7 @@ class MenuController extends Controller
         $menuRepo = $this->getEntityManager()->getRepository('JNL\Entity\Menu');
         $menus = $menuRepo->findAll();
 
-        $resource = $this->collection($menus, MenuTransformer::class);
+        $resource = $this->createCollection($menus, MenuTransformer::class);
 
         return $resource;
     }

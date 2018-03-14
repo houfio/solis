@@ -27,9 +27,9 @@ abstract class Controller implements ContainerAwareInterface, RequestAwareInterf
 
         $login_repo = $this->getEntityManager()->getRepository('JNL\Entity\Login');
         /** @var Login $login */
-        $login = $login_repo->findOneBy(['token' => $this->getRequest()->getHeader('Authorization')]);
+        $login = $login_repo->findOneBy(['token' => $this->getRequest()->getHeader('Authorization'), 'active' => true]);
 
-        if (!$login || !$login->active || !$login->user->approved) {
+        if (!$login || !$login->user->approved) {
             throw new UnauthorizedException();
         }
 

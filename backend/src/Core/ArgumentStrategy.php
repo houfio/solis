@@ -33,6 +33,7 @@ class ArgumentStrategy implements StrategyInterface
             /** @var RouteSet $routeSet */
             $routeSet = $this->container->get(get_class($callable[0]) . '\routeSet');
             $path = substr($request->getUri()->getPath(), strlen($config['prefix']));
+            $query = $request->getQueryParams();
 
             if (empty($path)) {
                 $path = '/';
@@ -65,6 +66,11 @@ class ArgumentStrategy implements StrategyInterface
             } else if ($response instanceof ResourceInterface) {
                 $transformer = new Manager();
                 $transformer->setSerializer(new Serializer());
+
+                if ($query['include']) {
+                    $transformer->parseIncludes($query['include']);
+                }
+
                 $data = $transformer->createData($response)->toArray();
 
                 $response = new JsonResponse(['success' => true, 'data' => $data]);

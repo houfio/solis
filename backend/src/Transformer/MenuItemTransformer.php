@@ -23,6 +23,6 @@ class MenuItemTransformer extends Transformer
 
     public function includeColumns(MenuItem $item): ResourceInterface
     {
-        return $this->collection($item->columns, MenuColumnTransformer::class);
+        return $this->createCollection($item->columns, MenuColumnTransformer::class);
     }
 }

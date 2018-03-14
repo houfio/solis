@@ -2,9 +2,9 @@
 namespace JNL\Core;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityRepository;
 use JNL\Core\Traits\ResourceCreationTrait;
 use JNL\Entity\Login;
-use JNL\Entity\User;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerInterface;
 use League\Fractal\TransformerAbstract;
@@ -18,36 +18,35 @@ abstract class Transformer extends TransformerAbstract implements ContainerAware
         $this->setContainer($container);
     }
 
-    protected function getAuthenticatedUser(): ?User
+    protected function isAuthenticated(): bool
     {
         $request = $this->getContainer()->get('request');
         $entityManager = $this->getContainer()->get('entityManager');
 
         if (!$request->hasHeader('Authorization')) {
-            return null;
+            return false;
         }
 
+        /** @var EntityRepository $login_repo */
         $login_repo = $entityManager->getRepository('JNL\Entity\Login');
         /** @var Login $login */
-        $login = $login_repo->findOneBy(['token' => $request->getHeader('Authorization')]);
+        $login = $login_repo->findOneBy(['token' => $request->getHeader('Authorization'), 'active' => true]);
 
-        if (!$login || !$login->active || !$login->user->approved) {
-            return null;
+        if (!$login || !$login->user->approved) {
+            return false;
         }
 
-        return $login->user;
+        return true;
     }
 
-    public function authFilter(Collection $array, ...$filters): array
+    public function filter(Collection $array, array $filters): array
     {
-        $user = $this->getAuthenticatedUser();
+        $authenticated = $this->isAuthenticated();
 
-        return array_filter($array->toArray(), function ($item) use ($user, $filters) {
-            if (!$user) {
-                foreach ($filters as $filter) {
-                    if ($item->$filter) {
-                        return false;
-                    }
+        return array_filter($array->toArray(), function ($item) use ($filters, $authenticated) {
+            foreach ($filters as $filter => $value) {
+                if (!$value($item->$filter, $authenticated)) {
+                    return false;
                 }
             }
 

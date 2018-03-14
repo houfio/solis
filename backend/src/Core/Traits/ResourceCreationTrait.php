@@ -9,12 +9,12 @@ trait ResourceCreationTrait
 {
     use ContainerAwareTrait;
 
-    protected function item($data, $transformer)
+    protected function createItem($data, $transformer)
     {
         return new Item($data, new $transformer($this->getContainer()));
     }
 
-    protected function collection($data, $transformer)
+    protected function createCollection($data, $transformer)
     {
         return new Collection($data, new $transformer($this->getContainer()));
     }

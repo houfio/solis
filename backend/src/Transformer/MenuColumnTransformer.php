@@ -21,6 +21,6 @@ class MenuColumnTransformer extends Transformer
 
     public function includeTargets(MenuColumn $column): ResourceInterface
     {
-        return $this->collection($column->targets, MenuTargetTransformer::class);
+        return $this->createCollection($column->targets, MenuTargetTransformer::class);
     }
 }
