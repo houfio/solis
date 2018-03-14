@@ -3,9 +3,6 @@ import { ContentBlockRenderer, State } from './types';
 import { button } from './renderers/button';
 import { text } from './renderers/text';
 import { ContentBlockTypes } from './api/ContentBlock';
-import { auth } from './modules/auth';
-import { content } from './modules/content';
-import { http } from './modules/http';
 import { RouteGuardTypes } from './api/RouteGuard';
 
 export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRenderer<T> } = {
@@ -14,16 +11,12 @@ export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRend
   column
 };
 
-export const MODULES = [
-  auth,
-  content,
-  http
-];
-
 export const GUARDS: { [T in RouteGuardTypes]: (state: State) => boolean } = {
   auth: state => Boolean(state.auth.token),
   no_auth: state => !Boolean(state.auth.token)
 };
+
+export const API_URL = '/api';
 
 export const PHONE = 'PHONE';
 export const TABLET_PORTRAIT = 'TABLET_PORTRAIT';

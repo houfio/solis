@@ -6,10 +6,11 @@ import { createBrowserHistory } from 'history';
 
 import { ActionReducer, PartialReducers } from '../types';
 import { promise } from '../middleware/promise';
-import { MODULES } from '../constants';
+import { getModules } from './getModules';
 
 export const getStore = () => {
   const history = createBrowserHistory();
+  const modules = getModules();
 
   let devMiddleware: Middleware[] = [];
   let reducers: PartialReducers = {};
@@ -26,7 +27,7 @@ export const getStore = () => {
     combineReducers({
       router: routerReducer,
       form: formReducer,
-      ...MODULES.reduce(
+      ...modules.reduce(
         (previous, current) => {
           const keys = Object.keys(current).filter(key => key !== 'name' && key !== 'initialState');
 

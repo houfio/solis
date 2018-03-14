@@ -1,7 +1,8 @@
 import { createModule } from '../utils/createModule';
 import { getMockPages } from '../mocks/getMockPages';
 import { getMockContentBlocks } from '../mocks/getMockContentBlocks';
-import { getMockMenus } from '../mocks/getMockMenus';
+import { createApiRequest } from '../utils/createApiRequest';
+import { Menu } from '../api/Menu';
 
 export const content = createModule(
   'content',
@@ -35,7 +36,7 @@ export const content = createModule(
     ),
     getMenus: createAction('GET_MENUS')(
       () => ({
-        promise: getMockMenus(),
+        promise: createApiRequest<Menu[]>('get', 'menus'),
         queue: 'all'
       }),
       action => ({
