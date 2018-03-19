@@ -3,8 +3,8 @@ namespace JNL\Controller;
 
 use JNL\Core\Controller;
 use JNL\Core\RouteSet;
-use JNL\Transformer\MenuTransformer;
-use League\Fractal\Resource\Collection;
+use JNL\Entity\Menu;
+use JNL\Transformer\Menu\MenuTransformer;
 
 class MenuController extends Controller
 {
@@ -16,7 +16,7 @@ class MenuController extends Controller
 
     public function getMenus()
     {
-        $menuRepo = $this->getEntityManager()->getRepository('JNL\Entity\Menu');
+        $menuRepo = $this->getEntityManager()->getRepository(Menu::class);
         $menus = $menuRepo->findAll();
 
         $resource = $this->createCollection($menus, MenuTransformer::class);

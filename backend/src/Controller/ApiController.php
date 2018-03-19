@@ -2,8 +2,8 @@
 namespace JNL\Controller;
 
 use JNL\Core\Controller;
-use JNL\Core\Route;
 use JNL\Core\RouteSet;
+use JNL\Transformer\Route\RouteTransformer;
 use Zend\Diactoros\Response\EmptyResponse;
 
 class ApiController extends Controller
@@ -16,7 +16,11 @@ class ApiController extends Controller
 
     public function getApi()
     {
-        return $this->getContainer()->get('pages');
+        /** @var RouteSet $pageSet */
+        $pages = $this->getContainer()->get('pages');
+        $resource = $this->createCollection($pages->getRoutes(), RouteTransformer::class);
+
+        return $resource;
     }
 
     public function optionsApi()

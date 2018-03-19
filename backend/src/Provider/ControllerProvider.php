@@ -8,7 +8,8 @@ class ControllerProvider extends AbstractServiceProvider
     const CONTROLLERS = [
         'JNL\Controller\ApiController',
         'JNL\Controller\UserController',
-        'JNL\Controller\MenuController'
+        'JNL\Controller\MenuController',
+        'JNL\Controller\PageController'
     ];
 
     public function provides($alias = null)

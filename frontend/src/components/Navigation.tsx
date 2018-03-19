@@ -12,32 +12,27 @@ import { forBreakpoint } from '../utils/forBreakpoint';
 import { TABLET_LANDSCAPE } from '../constants';
 import { findByValue } from '../utils/findByValue';
 import { handle } from '../utils/handle';
-
-type LocalState = {
-  openMenu?: number
-}
+import { content } from '../modules/content';
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages,
-  menus: state.content.menus
+  menus: state.content.menus,
+  openMenu: state.content.openMenu
 });
 
 const getActionCreators = () => ({
+  setOpenMenu: content.setOpenMenu,
   push
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
-export const Navigation = connect(class extends Component<typeof props, LocalState> {
-  public state = {
-    openMenu: undefined
-  };
-
+export const Navigation = connect(class extends Component<typeof props> {
   private menuNodes: { [key: number]: HTMLElement | undefined } = {};
 
   public render() {
-    const { pages, menus } = this.props;
-    const { openMenu } = this.state;
+    const { pages, menus, openMenu } = this.props;
+    const { setOpenMenu } = this.props;
 
     if (!pages || !menus) {
       return false;
@@ -173,7 +168,7 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
                       styleSheet.item,
                       openMenu === index && styleSheet.active
                     )}
-                    onClick={handle(this.toggleMenu, index)}
+                    onClick={handle(setOpenMenu, { menuIndex: index })}
                   >
                     {item.name}
                   </span>
@@ -201,25 +196,16 @@ export const Navigation = connect(class extends Component<typeof props, LocalSta
         </nav>
         <div
           className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
-          onClick={handle(this.toggleMenu, undefined)}
+          onClick={handle(setOpenMenu, {})}
         />
       </>
     );
   }
 
   private navigateTo = (page: Page) => {
-    const { push } = this.props;
+    const { setOpenMenu, push } = this.props;
 
+    setOpenMenu({});
     push(page.path);
-
-    this.toggleMenu();
-  };
-
-  private toggleMenu = (index?: number) => {
-    const { openMenu } = this.state;
-
-    this.setState({
-      openMenu: openMenu === index ? undefined : index
-    });
   };
 });

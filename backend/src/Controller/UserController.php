@@ -56,9 +56,9 @@ class UserController extends Controller
 
     public function postRegister(array $args)
     {
-        $contactDataRepo = $this->getEntityManager()->getRepository('JNL\Entity\ContactData');
+        $contactDataRepo = $this->getEntityManager()->getRepository(ContactData::class);
         $contactData = $contactDataRepo->findOneBy(['email' => $args['email']]);
-        $userRepo = $this->getEntityManager()->getRepository('JNL\Entity\User');
+        $userRepo = $this->getEntityManager()->getRepository(User::class);
 
         if (($contactData && $userRepo->findOneBy(['contact_data' => $contactData]))
             || $userRepo->findOneBy(['membership_id' => $args['membership_id']])) {
@@ -95,14 +95,14 @@ class UserController extends Controller
             return false;
         }
 
-        $contactDataRepo = $this->getEntityManager()->getRepository('JNL\Entity\ContactData');
+        $contactDataRepo = $this->getEntityManager()->getRepository(ContactData::class);
         $contactData = $contactDataRepo->findOneBy(['email' => $args['email']]);
 
         if (!$contactData) {
             return false;
         }
 
-        $userRepo = $this->getEntityManager()->getRepository('JNL\Entity\User');
+        $userRepo = $this->getEntityManager()->getRepository(User::class);
         /** @var User $user */
         $user = $userRepo->findOneBy(['contact_data' => $contactData]);
 
@@ -132,7 +132,7 @@ class UserController extends Controller
 
         $token = $token[0];
 
-        $login_repo = $this->getEntityManager()->getRepository('JNL\Entity\Login');
+        $login_repo = $this->getEntityManager()->getRepository(Login::class);
         /** @var Login $login */
         $login = $login_repo->findOneBy(['token' => $token]);
         $login->active = false;

@@ -18,7 +18,8 @@ export type State = {
     contentBlocks: {
       [id: number]: ContentBlock[]
     },
-    menus?: Menu[]
+    menus?: Menu[],
+    openMenu?: number
   },
   http: {
     queue: {

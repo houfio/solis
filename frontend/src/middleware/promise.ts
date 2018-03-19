@@ -12,7 +12,7 @@ export const promise = (): Middleware => api => next => action => {
       api.dispatch(http.increaseQueue({ queue }))
     }
 
-    return (promise as Promise<object>).then(value => {
+    return (promise as Promise<any>).then(value => {
       next({ ...value, ...rest });
 
       if (queue) {
@@ -21,9 +21,9 @@ export const promise = (): Middleware => api => next => action => {
 
       return value;
     }).catch(value => {
-      if (queue) {
-        api.dispatch(http.decreaseQueue({ queue }))
-      }
+      const { type } = rest;
+
+      next({ type, ...value });
 
       return value;
     }) as any;

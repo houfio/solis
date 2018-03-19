@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Transformer;
+namespace JNL\Transformer\Menu;
 
 use JNL\Core\Transformer;
 use JNL\Entity\MenuItem;

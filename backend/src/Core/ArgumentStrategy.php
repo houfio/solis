@@ -33,7 +33,8 @@ class ArgumentStrategy implements StrategyInterface
             /** @var RouteSet $routeSet */
             $routeSet = $this->container->get(get_class($callable[0]) . '\routeSet');
             $path = substr($request->getUri()->getPath(), strlen($config['prefix']));
-            $query = $request->getQueryParams();
+            /** @var Manager $transformer */
+            $transformer = $this->container->get('transformer');
 
             if (empty($path)) {
                 $path = '/';
@@ -59,18 +60,11 @@ class ArgumentStrategy implements StrategyInterface
                 throw new HttpArrayException($validator->errors(), 422);
             }
 
-            $response = call_user_func_array($callable, [$args, $vars]);
+            $response = call_user_func_array($callable, [$args, $vars, $request->getQueryParams()]);
 
             if (is_bool($response)) {
                 $response = new JsonResponse(['success' => $response]);
             } else if ($response instanceof ResourceInterface) {
-                $transformer = new Manager();
-                $transformer->setSerializer(new Serializer());
-
-                if ($query['include']) {
-                    $transformer->parseIncludes($query['include']);
-                }
-
                 $data = $transformer->createData($response)->toArray();
 
                 $response = new JsonResponse(['success' => true, 'data' => $data]);

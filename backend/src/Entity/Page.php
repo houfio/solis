@@ -2,13 +2,12 @@
 namespace JNL\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
 
 /**
  * @ORM\Table(name="pages")
  * @ORM\Entity
  */
-class Page implements JsonSerializable
+class Page
 {
     /**
      * @ORM\Column(type="integer")
@@ -51,17 +50,4 @@ class Page implements JsonSerializable
      * @ORM\OneToMany(targetEntity="ContentBlock", mappedBy="page")
      */
     public $blocks;
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'path' => $this->path,
-            'type' => $this->type,
-            'hidden' => $this->hidden,
-            'draft' => $this->draft,
-            'guards' => $this->guards
-        ];
-    }
 }

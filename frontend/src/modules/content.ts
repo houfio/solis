@@ -9,7 +9,8 @@ export const content = createModule(
   {
     pages: undefined,
     contentBlocks: {},
-    menus: undefined
+    menus: undefined,
+    openMenu: undefined
   },
   createAction => ({
     getPages: createAction('GET_PAGES')(
@@ -41,6 +42,12 @@ export const content = createModule(
       }),
       action => ({
         menus: action.data
+      })
+    ),
+    setOpenMenu: createAction<{ menuIndex?: number }>('SET_OPEN_MENU')(
+      payload => payload,
+      (action, state) => ({
+        openMenu: state.openMenu === action.menuIndex ? undefined : action.menuIndex
       })
     )
   })

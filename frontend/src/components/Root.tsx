@@ -43,7 +43,7 @@ export const Root = connect(class extends Component<typeof props> {
 
     if (queue.all || !pages) {
       return (
-        <Loading/>
+        <Loading message="Dit duurt langer dan normaal..."/>
       );
     }
 

@@ -1,21 +1,21 @@
 <?php
 namespace JNL\Core\Traits;
 
-use League\Container\ContainerAwareTrait;
+use League\Container\ContainerInterface;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 
 trait ResourceCreationTrait
 {
-    use ContainerAwareTrait;
+    public abstract function getContainer(): ContainerInterface;
 
-    protected function createItem($data, $transformer)
+    protected function createItem($data, string $transformer)
     {
-        return new Item($data, new $transformer($this->getContainer()));
+        return new Item($data, $this->getContainer()->get($transformer));
     }
 
-    protected function createCollection($data, $transformer)
+    protected function createCollection($data, string $transformer)
     {
-        return new Collection($data, new $transformer($this->getContainer()));
+        return new Collection($data, $this->getContainer()->get($transformer));
     }
 }
