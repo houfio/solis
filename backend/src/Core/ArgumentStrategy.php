@@ -32,9 +32,9 @@ class ArgumentStrategy implements StrategyInterface
             $config = $this->container->get('config');
             /** @var RouteSet $routeSet */
             $routeSet = $this->container->get(get_class($callable[0]) . '\routeSet');
-            $path = substr($request->getUri()->getPath(), strlen($config['prefix']));
             /** @var Manager $transformer */
             $transformer = $this->container->get('transformer');
+            $path = substr($route->getPath(), strlen($config['prefix']));
 
             if (empty($path)) {
                 $path = '/';
