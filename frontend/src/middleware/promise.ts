@@ -20,12 +20,6 @@ export const promise = (): Middleware => api => next => action => {
       }
 
       return value;
-    }).catch(value => {
-      const { type } = rest;
-
-      next({ type, ...value });
-
-      return value;
     }) as any;
   }
 

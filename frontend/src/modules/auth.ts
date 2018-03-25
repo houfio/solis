@@ -1,5 +1,6 @@
 import { createModule } from '../utils/createModule';
-import { getMockToken } from '../mocks/getMockToken';
+import { createApiRequest } from '../utils/createApiRequest';
+import { Token } from '../types';
 
 export const auth = createModule(
   'auth',
@@ -12,7 +13,7 @@ export const auth = createModule(
       password: string
     }>('GET_TOKEN')(
       payload => ({
-        promise: getMockToken(),
+        promise: createApiRequest<Token>('post', 'user/login', payload),
         queue: 'page'
       }),
       action => {

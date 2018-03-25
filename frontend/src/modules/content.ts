@@ -1,8 +1,8 @@
 import { createModule } from '../utils/createModule';
-import { getMockPages } from '../mocks/getMockPages';
-import { getMockContentBlocks } from '../mocks/getMockContentBlocks';
 import { createApiRequest } from '../utils/createApiRequest';
 import { Menu } from '../api/Menu';
+import { Page } from '../api/Page';
+import { ContentBlock } from '../api/ContentBlock';
 
 export const content = createModule(
   'content',
@@ -15,7 +15,7 @@ export const content = createModule(
   createAction => ({
     getPages: createAction('GET_PAGES')(
       () => ({
-        promise: getMockPages(),
+        promise: createApiRequest<Page[]>('get', 'pages'),
         queue: 'all'
       }),
       action => ({
@@ -25,7 +25,7 @@ export const content = createModule(
     getContentBlocks: createAction<{ pageId: number }>('GET_CONTENT_BLOCKS')(
       payload => ({
         pageId: payload.pageId,
-        promise: getMockContentBlocks(payload.pageId),
+        promise: createApiRequest<ContentBlock[]>('get', `pages/${payload.pageId}`),
         queue: 'page'
       }),
       (action, state) => ({

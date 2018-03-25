@@ -2,7 +2,7 @@
 namespace JNL\Core;
 
 use Exception;
-use JNL\Exception\HttpArrayException;
+use JNL\Exceptions\HttpArrayException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\ResourceInterface;
 use League\Route\Http\Exception\MethodNotAllowedException;
@@ -120,6 +120,8 @@ class ArgumentStrategy implements StrategyInterface
         foreach ($exception->getHeaders() as $key => $value) {
             $response = $response->withAddedHeader($key, $value);
         }
+
+        error_log($exception->getMessage());
 
         return $response;
     }

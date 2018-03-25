@@ -1,10 +1,9 @@
 <?php
 namespace JNL\Core;
 
-use JsonSerializable;
 use League\Route\Http\Exception\NotFoundException;
 
-class RouteSet implements JsonSerializable
+class RouteSet
 {
     private $routes = [];
 
@@ -57,40 +56,5 @@ class RouteSet implements JsonSerializable
         }
 
         throw new NotFoundException();
-    }
-
-    public function jsonSerialize(): array
-    {
-        return array_reduce(
-            $this->getRoutes(),
-            function ($result, $route) {
-                $args = [];
-
-                foreach ($route['args'] as $name => $rules) {
-                    $rls = [];
-
-                    foreach ($rules as $rule => $params) {
-                        if (is_int($rule)) {
-                            $rule = $params;
-                            $params = [];
-                        }
-
-                        $rls[$rule] = $params;
-                    }
-
-                    $args[$name] = $rls;
-                }
-
-                $result[$route['name']] = [
-                    'path' => $route['path'],
-                    'method' => $route['method'],
-                    'auth' => $route['auth'],
-                    'args' => $args
-                ];
-
-                return $result;
-            },
-            []
-        );
     }
 }

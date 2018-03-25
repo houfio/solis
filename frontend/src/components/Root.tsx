@@ -7,7 +7,6 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { content } from '../modules/content';
-import { RouteGuard } from '../api/RouteGuard';
 import { findByValue } from '../utils/findByValue';
 import { ContentPage } from './ContentPage';
 import { GUARDS } from '../constants';
@@ -15,6 +14,7 @@ import { Navigation } from './Navigation';
 import { Footer } from './Footer';
 import { Container } from './Container';
 import { Loading } from './Loading';
+import { PageGuard } from '../api/Page';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -82,7 +82,7 @@ export const Root = connect(class extends Component<typeof props> {
     );
   }
 
-  private getRedirect = (routeGuards: RouteGuard[]): ReactNode | undefined => {
+  private getRedirect = (routeGuards: PageGuard[]): ReactNode | undefined => {
     const { pages, state } = this.props;
 
     if (!pages) {

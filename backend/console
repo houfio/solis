@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-use JNL\Provider\CommandProvider;
+use JNL\Providers\CommandProvider;
 use Symfony\Component\Console\Application;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 

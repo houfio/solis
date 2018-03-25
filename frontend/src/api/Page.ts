@@ -1,11 +1,16 @@
 import { Identifiable } from './Identifiable';
-import { RouteGuard } from './RouteGuard';
 import { Hidable } from './Hidable';
-import { Draftable } from './Draftable';
 
-export type Page = Identifiable & Hidable & Draftable & {
+export type Page = Identifiable & Hidable & {
   name: string,
   path: string,
-  guards: RouteGuard[],
-  type?: 'home'
+  type?: 'home',
+  guards: PageGuard[]
+};
+
+export type PageGuardTypes = 'auth' | 'no_auth';
+
+export type PageGuard = Identifiable & {
+  type: PageGuardTypes,
+  target: number
 };

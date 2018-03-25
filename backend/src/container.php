@@ -2,27 +2,27 @@
 use JNL\Core\Interfaces\ContainerAwareInterface;
 use JNL\Core\Interfaces\EntityManagerAwareInterface;
 use JNL\Core\Interfaces\RequestAwareInterface;
-use JNL\Provider\CommandProvider;
-use JNL\Provider\ConfigProvider;
-use JNL\Provider\ControllerProvider;
-use JNL\Provider\DispatcherProvider;
-use JNL\Provider\EntityManagerProvider;
-use JNL\Provider\RequestProvider;
-use JNL\Provider\ResponseProvider;
-use JNL\Provider\TransformerProvider;
+use JNL\Providers\CommandProvider;
+use JNL\Providers\ConfigProvider;
+use JNL\Providers\ControllerProvider;
+use JNL\Providers\DispatcherProvider;
+use JNL\Providers\EntityManagerProvider;
+use JNL\Providers\RequestProvider;
+use JNL\Providers\ResponseProvider;
+use JNL\Providers\TransformerProvider;
 use League\Container\Argument\RawArgument;
 use League\Container\Container;
 
 $container = new Container();
 
-$container->addServiceProvider(new ConfigProvider());
-$container->addServiceProvider(new EntityManagerProvider());
-$container->addServiceProvider(new CommandProvider());
-$container->addServiceProvider(new RequestProvider());
-$container->addServiceProvider(new ResponseProvider());
-$container->addServiceProvider(new DispatcherProvider());
-$container->addServiceProvider(new ControllerProvider());
-$container->addServiceProvider(new TransformerProvider());
+$container->addServiceProvider(ConfigProvider::class);
+$container->addServiceProvider(EntityManagerProvider::class);
+$container->addServiceProvider(CommandProvider::class);
+$container->addServiceProvider(RequestProvider::class);
+$container->addServiceProvider(ResponseProvider::class);
+$container->addServiceProvider(DispatcherProvider::class);
+$container->addServiceProvider(ControllerProvider::class);
+$container->addServiceProvider(TransformerProvider::class);
 
 $container->inflector(ContainerAwareInterface::class)
     ->invokeMethod('setContainer', [new RawArgument($container)]);

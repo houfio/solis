@@ -3,7 +3,7 @@ import { ContentBlockRenderer, State } from './types';
 import { button } from './renderers/button';
 import { text } from './renderers/text';
 import { ContentBlockTypes } from './api/ContentBlock';
-import { RouteGuardTypes } from './api/RouteGuard';
+import { PageGuardTypes } from './api/Page';
 
 export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRenderer<T> } = {
   text,
@@ -11,7 +11,7 @@ export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRend
   column
 };
 
-export const GUARDS: { [T in RouteGuardTypes]: (state: State) => boolean } = {
+export const GUARDS: { [T in PageGuardTypes]: (state: State) => boolean } = {
   auth: state => Boolean(state.auth.token),
   no_auth: state => !Boolean(state.auth.token)
 };
