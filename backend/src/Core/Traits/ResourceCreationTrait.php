@@ -24,8 +24,6 @@ trait ResourceCreationTrait
             $data = $data->toArray();
         }
 
-        error_log($this->getContainer()->get($transformer));
-
         return new Collection($this->collectionFilter($data), $this->getContainer()->get($transformer));
     }
 
