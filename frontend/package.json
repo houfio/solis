@@ -34,16 +34,16 @@
   },
   "devDependencies": {
     "@types/aphrodite": "^0.5.7",
-    "@types/jest": "^22.2.0",
-    "@types/react": "^16.0.40",
+    "@types/jest": "^22.2.2",
+    "@types/react": "^16.0.41",
     "@types/react-dom": "^16.0.4",
     "@types/react-redux": "^5.0.15",
-    "@types/react-router": "^4.0.22",
+    "@types/react-router": "^4.0.23",
     "@types/react-router-redux": "^5.0.12",
     "@types/redux-form": "^7.2.2",
     "@types/redux-logger": "^3.0.5",
-    "react-scripts-ts": "^2.13.0",
+    "react-scripts-ts": "^2.14.0",
     "redux-logger": "^3.0.6",
-    "typescript": "^2.8.0-dev.20180308"
+    "typescript": "^2.8.0-rc"
   }
 }
