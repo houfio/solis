@@ -8,14 +8,17 @@ export type Menu = Identifiable & {
 
 export type MenuItem = Identifiable & Hidable & {
   name: string,
+  order: number,
   columns: MenuColumn[]
 }
 
 export type MenuColumn = Identifiable & {
   name: string,
+  order: number,
   targets: MenuTarget[]
 }
 
 export type MenuTarget = Identifiable & {
-  target: number
+  target: number,
+  order: number
 }

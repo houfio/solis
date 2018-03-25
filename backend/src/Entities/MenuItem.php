@@ -28,6 +28,11 @@ class MenuItem
     public $name;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    public $order;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     public $hidden = false;

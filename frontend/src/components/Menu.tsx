@@ -51,14 +51,18 @@ export const Menu = connect(class extends Component<typeof props> {
 
     return (
       <Row styles={styles}>
-        {menuItem.columns.map(column => (
+        {menuItem.columns
+          .sort((a, b) => a.order - b.order)
+          .map(column => (
           <Column
             key={column.id}
             breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
             styles={[styleSheet.category]}
           >
             <Heading text={column.name} breakpoints={{ [PHONE]: 'thin' }}/>
-            {column.targets.map(target => {
+            {column.targets
+              .sort((a, b) => a.order - b.order)
+              .map(target => {
               const page = findByValue(target.target, 'id', pages);
 
               if (!page) {

@@ -10,7 +10,8 @@ class MenuTargetTransformer extends Transformer
     {
         return [
             'id' => $target->id,
-            'target' => $target->target
+            'target' => $target->target,
+            'order' => $target->order
         ];
     }
 }

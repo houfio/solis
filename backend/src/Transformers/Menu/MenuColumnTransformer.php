@@ -15,7 +15,8 @@ class MenuColumnTransformer extends Transformer
     {
         return [
             'id' => $column->id,
-            'name' => $column->name
+            'name' => $column->name,
+            'order' => $column->order
         ];
     }
 

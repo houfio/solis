@@ -161,7 +161,9 @@ export const Navigation = connect(class extends Component<typeof props> {
                 <span className={css(styleSheet.text)}>Jong Nederland</span>
               </div>
               <div className={css(styleSheet.push)}/>
-              {primaryMenu.items.map((item, index) => (
+              {primaryMenu.items
+                .sort((a, b) => a.order - b.order)
+                .map((item, index) => (
                 <Fragment key={item.id}>
                   <span
                     className={css(

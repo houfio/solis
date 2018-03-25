@@ -25,4 +25,9 @@ class MenuTarget
      * @ORM\Column(type="integer")
      */
     public $target;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public $order;
 }

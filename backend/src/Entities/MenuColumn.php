@@ -28,6 +28,11 @@ class MenuColumn
     public $name;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    public $order;
+
+    /**
      * @ORM\OneToMany(targetEntity="MenuTarget", mappedBy="column")
      */
     public $targets;

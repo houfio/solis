@@ -16,6 +16,7 @@ class MenuItemTransformer extends Transformer
         return [
             'id' => $item->id,
             'name' => $item->name,
+            'order' => $item->order,
             'hidden' => $item->hidden
         ];
     }
