@@ -21,10 +21,7 @@ class ContentBlockTransformer extends Transformer
         return [
             'id' => $block->id,
             'page_id' => $block->page->id,
-            'parent' => $block->parent ? [
-                'id' => $block->parent->id,
-                'data' => $block->parent_data
-            ] : null,
+            'parent_data' => $block->parent_data ? $block->parent_data : null,
             'type' => $this->getType($block),
             'hidden' => $block->hidden
         ];

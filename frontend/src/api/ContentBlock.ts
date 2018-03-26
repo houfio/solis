@@ -5,14 +5,10 @@ import { BREAKPOINTS } from '../constants';
 
 export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable & Hidable & {
   page_id?: number,
-  parent?: ContentBlockParent,
+  parent_data?: number,
   type: T,
   children: ContentBlock[],
   data: ContentBlockTypes[T]
-}
-
-export type ContentBlockParent = Identifiable & {
-  data: number
 }
 
 export type ContentBlockTypes = {

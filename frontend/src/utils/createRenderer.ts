@@ -11,7 +11,7 @@ export const createRenderer = <T extends keyof ContentBlockTypes>(component: Com
       const renderer = findByKey(child.type, BLOCK_RENDERERS);
 
       return {
-        data: child.parent!.data || 0,
+        data: child.parent_data || 0,
         render: () => renderer(child, child.id)
       };
     });

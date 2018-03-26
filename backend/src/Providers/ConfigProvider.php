@@ -15,7 +15,7 @@ class ConfigProvider extends AbstractServiceProvider
             $config = [
                 'debug' => false,
                 'database_host' => '127.0.0.1',
-                'database_name' => 'jnl',
+                'database_name' => 'solis',
                 'prefix' => '/api',
                 'timezone' => 'Europe/Amsterdam'
             ];
