@@ -7,21 +7,28 @@ export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable
   page_id?: number,
   parent_data?: number,
   type: T,
+  order: number,
   children: ContentBlock[],
   data: ContentBlockTypes[T]
 }
 
 export type ContentBlockTypes = {
-  text: Identifiable & {
+  text: {
     text: string
   },
-  button: Identifiable & {
+  button: {
     text: string,
     type: ButtonTypes,
     target: number
   },
-  column: Identifiable & {
+  column: {
     size: number,
     breakpoint: keyof typeof BREAKPOINTS;
+  },
+  hero: {
+    image: string,
+    alignment: number,
+    height: number,
+    dark: boolean
   }
 }

@@ -29,6 +29,11 @@ class ContentBlock
     public $data;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    public $order;
+
+    /**
      * @ORM\ManyToOne(targetEntity="ContentBlock", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
      */

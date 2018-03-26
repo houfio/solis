@@ -9,7 +9,6 @@ class TextBlockTransformer extends Transformer
     public function transform(Text $data): array
     {
         return [
-            'id' => $data->id,
             'text' => $data->text
         ];
     }

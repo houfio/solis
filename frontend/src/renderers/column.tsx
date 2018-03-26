@@ -15,7 +15,9 @@ export const column = createRenderer(class extends Component<RendererProps<'colu
 
     return (
       <Row>
-        {children.map(child => {
+        {children
+          .sort((a, b) => a.order - b.order)
+          .map(child => {
           const index = child.data;
           let offset = 0;
 

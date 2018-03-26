@@ -12,11 +12,11 @@ type Props = {
   styles?: (CSSProperties | false)[]
 }
 
-const headingSizes: { [T in HeadingTypes]: CSSProperties } = {
+const headingStyles: { [T in HeadingTypes]: CSSProperties } = {
   bold: {
     fontSize: '2rem',
     fontWeight: 'bold',
-    color: 'rgba(0, 0, 0, .85)',
+    opacity: .85,
     marginBottom: '.5rem'
   },
   thin: {
@@ -26,7 +26,7 @@ const headingSizes: { [T in HeadingTypes]: CSSProperties } = {
   subtle: {
     fontSize: '.75rem',
     textTransform: 'uppercase',
-    color: 'rgba(0, 0, 0, .60)',
+    opacity: .6,
     margin: '-.5rem 0 .5rem 0'
   }
 };
@@ -35,7 +35,7 @@ export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
   const styleSheet = StyleSheet.create({
     heading: {
       display: 'block',
-      ...forBreakpoints(breakpoints, value => headingSizes[value])
+      ...forBreakpoints(breakpoints, value => headingStyles[value])
     }
   });
 

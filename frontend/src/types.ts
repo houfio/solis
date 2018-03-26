@@ -48,11 +48,11 @@ export type RendererProps<T extends keyof ContentBlockTypes> = {
   children: ContentBlockChild[]
 }
 
-export type ContentBlockRenderer<T extends keyof ContentBlockTypes> =
-  (block: ContentBlock<T>, key: number) => ReactNode;
+export type ContentBlockRenderer<T extends keyof ContentBlockTypes> = (block: ContentBlock<T>) => ReactNode;
 
 export type ContentBlockChild = {
   data: number,
+  order: number,
   render: () => ReactNode
 };
 
