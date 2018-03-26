@@ -21,11 +21,6 @@ class Hero extends BlockData
     /**
      * @ORM\Column(type="integer")
      */
-    public $fill;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     public $height;
 
     /**

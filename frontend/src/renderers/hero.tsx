@@ -8,23 +8,35 @@ import { Container } from '../components/Container';
 
 export const hero = createRenderer(class extends Component<RendererProps<'hero'>> {
   public render() {
-    const { data: { image, height, dark } } = this.props;
+    const { data: { image, alignment, height, dark }, children } = this.props;
 
     const styleSheet = StyleSheet.create({
       hero: {
         position: 'absolute',
         left: 0,
         width: '100%',
-        height: `${height}px`,
         backgroundImage: `url("${image}")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         color: dark ? 'black' : 'white'
+      },
+      container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: alignment === 0 ? 'flex-start' : alignment === 1 ? 'center' : 'flex-end',
+        height: `${height}px`
       }
     });
 
     return (
       <div className={css(styleSheet.hero)}>
-        <Container>
-          hero
+        <Container styles={[styleSheet.container]}>
+          {children
+            .sort((a, b) => a.order - b.order)
+            .map(child => (
+            child.render()
+          ))}
         </Container>
       </div>
     );

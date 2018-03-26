@@ -12,7 +12,6 @@ class HeroBlockTransformer extends Transformer
             'id' => $data->id,
             'image' => $data->image,
             'alignment' => $data->alignment,
-            'fill' => $data->fill,
             'height' => $data->height,
             'dark' => $data->dark
         ];

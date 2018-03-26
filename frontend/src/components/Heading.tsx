@@ -8,11 +8,12 @@ import { HeadingTypes } from '../types';
 
 type Props = {
   text: string,
-  breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
+  dark?: boolean,
+  breakpoints: HeadingTypes | { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
   styles?: (CSSProperties | false)[]
 }
 
-const headingSizes: { [T in HeadingTypes]: CSSProperties } = {
+const headingStyles = (dark: boolean): { [T in HeadingTypes]: CSSProperties } => ({
   bold: {
     fontSize: '2rem',
     fontWeight: 'bold',
@@ -29,13 +30,15 @@ const headingSizes: { [T in HeadingTypes]: CSSProperties } = {
     color: 'rgba(0, 0, 0, .60)',
     margin: '-.5rem 0 .5rem 0'
   }
-};
+});
 
-export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
+export const Heading = ({ text, dark = true, breakpoints, styles = [] }: Props) => {
+  const headingStyles = headingStyles(dark);
+
   const styleSheet = StyleSheet.create({
     heading: {
       display: 'block',
-      ...forBreakpoints(breakpoints, value => headingSizes[value])
+      ...forBreakpoints(breakpoints, value => headingStyles[value])
     }
   });
 

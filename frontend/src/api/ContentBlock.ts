@@ -7,6 +7,7 @@ export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable
   page_id?: number,
   parent_data?: number,
   type: T,
+  order: number,
   children: ContentBlock[],
   data: ContentBlockTypes[T]
 }
@@ -27,7 +28,6 @@ export type ContentBlockTypes = {
   hero: Identifiable & {
     image: string,
     alignment: number,
-    fill: number,
     height: number,
     dark: boolean
   }
