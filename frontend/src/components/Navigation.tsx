@@ -74,7 +74,7 @@ export const Navigation = connect(class extends Component<typeof props> {
       },
       logo: {
         display: 'block',
-        background: 'url(static/logo.png)',
+        background: 'url(/static/logo.png)',
         backgroundSize: '100%',
         width: '3rem',
         height: '3rem',
