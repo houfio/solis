@@ -49,10 +49,8 @@ class BlogController extends Controller
         }
 
         $blogPost = new BlogPost();
-        $blogPost->user = $user;
         $blogPost->title = $args['title'];
         $blogPost->content = $args['content'];
-        $blogPost->category = $args['category'];
 
         $this->getEntityManager()->persist($blogPost);
         $this->getEntityManager()->flush();
