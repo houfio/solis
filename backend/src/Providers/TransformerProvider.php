@@ -5,6 +5,7 @@ use JNL\Core\Serializer;
 use JNL\Transformers\ContentBlock\ButtonBlockTransformer;
 use JNL\Transformers\ContentBlock\ColumnBlockTransformer;
 use JNL\Transformers\ContentBlock\ContentBlockTransformer;
+use JNL\Transformers\ContentBlock\HeroBlockTransformer;
 use JNL\Transformers\ContentBlock\TextBlockTransformer;
 use JNL\Transformers\Menu\MenuColumnTransformer;
 use JNL\Transformers\Menu\MenuItemTransformer;
@@ -37,7 +38,8 @@ class TransformerProvider extends AbstractServiceProvider
         ContentBlockTransformer::class,
         TextBlockTransformer::class,
         ButtonBlockTransformer::class,
-        ColumnBlockTransformer::class
+        ColumnBlockTransformer::class,
+        HeroBlockTransformer::class
     ];
 
     protected $provides = [

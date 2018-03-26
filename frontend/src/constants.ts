@@ -4,11 +4,13 @@ import { button } from './renderers/button';
 import { text } from './renderers/text';
 import { ContentBlockTypes } from './api/ContentBlock';
 import { PageGuardTypes } from './api/Page';
+import { hero } from './renderers/hero';
 
 export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRenderer<T> } = {
   text,
   button,
-  column
+  column,
+  hero
 };
 
 export const GUARDS: { [T in PageGuardTypes]: (state: State) => boolean } = {

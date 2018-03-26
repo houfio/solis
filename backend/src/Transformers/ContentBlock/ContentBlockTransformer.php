@@ -15,7 +15,8 @@ class ContentBlockTransformer extends Transformer
     private $dataTransformers = [
         'text' => TextBlockTransformer::class,
         'button' => ButtonBlockTransformer::class,
-        'column' => ColumnBlockTransformer::class
+        'column' => ColumnBlockTransformer::class,
+        'hero' => HeroBlockTransformer::class
     ];
 
     public function transform(ContentBlock $block): array

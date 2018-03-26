@@ -23,5 +23,12 @@ export type ContentBlockTypes = {
   column: Identifiable & {
     size: number,
     breakpoint: keyof typeof BREAKPOINTS;
+  },
+  hero: Identifiable & {
+    image: string,
+    alignment: number,
+    fill: number,
+    height: number,
+    dark: boolean
   }
 }
