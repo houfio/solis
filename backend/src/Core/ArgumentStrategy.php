@@ -2,8 +2,9 @@
 namespace JNL\Core;
 
 use Exception;
-use JNL\Exception\HttpArrayException;
-use JNL\Core\RouteSet;
+use JNL\Exceptions\HttpArrayException;
+use League\Fractal\Manager;
+use League\Fractal\Resource\ResourceInterface;
 use League\Route\Http\Exception\MethodNotAllowedException;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\Exception as HttpException;
@@ -31,7 +32,9 @@ class ArgumentStrategy implements StrategyInterface
             $config = $this->container->get('config');
             /** @var RouteSet $routeSet */
             $routeSet = $this->container->get(get_class($callable[0]) . '\routeSet');
-            $path = substr($request->getUri()->getPath(), strlen($config['prefix']));
+            /** @var Manager $transformer */
+            $transformer = $this->container->get('transformer');
+            $path = substr($route->getPath(), strlen($config['prefix']));
 
             if (empty($path)) {
                 $path = '/';
@@ -57,10 +60,14 @@ class ArgumentStrategy implements StrategyInterface
                 throw new HttpArrayException($validator->errors(), 422);
             }
 
-            $response = call_user_func_array($callable, [$args, $vars]);
+            $response = call_user_func_array($callable, [$args, $vars, $request->getQueryParams()]);
 
             if (is_bool($response)) {
                 $response = new JsonResponse(['success' => $response]);
+            } else if ($response instanceof ResourceInterface) {
+                $data = $transformer->createData($response)->toArray();
+
+                $response = new JsonResponse(['success' => true, 'data' => $data]);
             } else if (!$response instanceof ResponseInterface) {
                 $response = new JsonResponse(['success' => true, 'data' => $response]);
             }
@@ -113,6 +120,8 @@ class ArgumentStrategy implements StrategyInterface
         foreach ($exception->getHeaders() as $key => $value) {
             $response = $response->withAddedHeader($key, $value);
         }
+
+        error_log($exception->getMessage());
 
         return $response;
     }
