@@ -15,16 +15,12 @@ class BlogController extends Controller
             ->get('blog', '/blog/{id:number}', 'getBlog')
             ->post('blog_create', '/blog', 'postBlog', true, [
                 'title' => ['required'],
-                'content' => ['required'],
-                'category' => ['required']
+                'content' => ['required']
             ])
             ->post('blog_remove', '/blog/{id:number}/remove', 'postBlogRemove', true)
             ->post('blog_update', '/blog/{id:number}', 'postBlogUpdate', true, [
-                'id' => ['required', 'integer'],
                 'title' => [],
-                'content' => [],
-                'visible' => ['boolean'],
-                'category' => []
+                'content' => []
             ]);
     }
 
