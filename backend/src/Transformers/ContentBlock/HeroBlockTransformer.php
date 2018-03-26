@@ -9,7 +9,6 @@ class HeroBlockTransformer extends Transformer
     public function transform(Hero $data): array
     {
         return [
-            'id' => $data->id,
             'image' => $data->image,
             'alignment' => $data->alignment,
             'height' => $data->height,

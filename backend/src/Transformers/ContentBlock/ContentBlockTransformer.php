@@ -23,7 +23,7 @@ class ContentBlockTransformer extends Transformer
     {
         return [
             'id' => $block->id,
-            'page_id' => $block->page->id,
+            'page_id' => isset($block->page) ? $block->page->id : null,
             'order' => $block->order,
             'parent_data' => $block->parent_data ? $block->parent_data : null,
             'type' => $this->getType($block),

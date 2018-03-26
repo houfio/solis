@@ -10,7 +10,6 @@ class ColumnBlockTransformer extends Transformer
     public function transform(Column $data): array
     {
         return [
-            'id' => $data->id,
             'size' => $data->size,
             'breakpoint' => $data->breakpoint
         ];

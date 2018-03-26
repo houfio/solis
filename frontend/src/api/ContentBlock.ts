@@ -13,19 +13,19 @@ export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable
 }
 
 export type ContentBlockTypes = {
-  text: Identifiable & {
+  text: {
     text: string
   },
-  button: Identifiable & {
+  button: {
     text: string,
     type: ButtonTypes,
     target: number
   },
-  column: Identifiable & {
+  column: {
     size: number,
     breakpoint: keyof typeof BREAKPOINTS;
   },
-  hero: Identifiable & {
+  hero: {
     image: string,
     alignment: number,
     height: number,
