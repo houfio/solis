@@ -18,7 +18,7 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
         backgroundImage: `url("${image}")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        color: dark ? 'black' : 'white'
+        color: dark ? '#000000' : '#FFFFFF'
       },
       container: {
         display: 'flex',
