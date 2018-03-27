@@ -30,4 +30,9 @@ class BlogPost
      * @ORM\Column(type="datetime")
      */
     public $date;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $deleted = false;
 }

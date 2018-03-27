@@ -11,8 +11,8 @@ class BlogController extends Controller
     public function initialize(): RouteSet
     {
         return RouteSet::create()
-            ->get('blog', '/blog', 'getBlogDetails')
-            ->get('blog', '/blog/{id:number}', 'getBlog')
+            ->get('blog', '/blog', 'getBlog')
+            ->get('blog', '/blog/{id:number}', 'getBlogDetails')
             ->post('blog_create', '/blog', 'postBlog', true, [
                 'title' => ['required'],
                 'content' => ['required']
@@ -26,16 +26,16 @@ class BlogController extends Controller
 
     public function getBlog()
     {
-        $blogPostRepo = $this->getEntityManager()->getRepository('JNL\Entity\BlogPost');
-        $blogPosts = $blogPostRepo->findAll();
+        $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
+        $blogPosts = $blogPostRepo->findBy(['deleted' => false]);
 
         return $blogPosts;
     }
 
     public function getBlogDetails(array $args, array $vars)
     {
-        $blogPostDetailsRepo = $this->getEntityManager()->getRepository('JNL\Entity\BlogPost');
-        $blogPostDetails = $blogPostDetailsRepo->findOneBy(['id' => $vars['id']]);
+        $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
+        $blogPostDetails = $blogPostRepo->findOneBy(['id' => $vars['id']]);
 
         return $blogPostDetails;
     }
@@ -66,7 +66,7 @@ class BlogController extends Controller
             throw new UnauthorizedException();
         }
 
-        $blogPostRepo = $this->getEntityManager()->getRepository('JNL\Entity\BlogPost');
+        $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
         $blogPost = $blogPostRepo->findOneBy(['id' => $vars['id']]);
 
         if (!$blogPost) {
@@ -89,7 +89,7 @@ class BlogController extends Controller
             throw new UnauthorizedException();
         }
 
-        $blogPostRepo = $this->getEntityManager()->getRepository('JNL\Entity\BlogPost');
+        $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
         $blogPost = $blogPostRepo->findOneBy(['id' => $vars['id']]);
 
         if (!$blogPost) {
