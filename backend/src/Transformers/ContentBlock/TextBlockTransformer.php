@@ -9,7 +9,8 @@ class TextBlockTransformer extends Transformer
     public function transform(Text $data): array
     {
         return [
-            'text' => $data->text
+            'text' => $data->text,
+            'mode' => $data->mode
         ];
     }
 }

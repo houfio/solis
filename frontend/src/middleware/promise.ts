@@ -9,14 +9,14 @@ export const promise = (): Middleware => api => next => action => {
     const { promise, queue, ...rest } = anyAction;
 
     if (queue) {
-      api.dispatch(http.increaseQueue({ queue }))
+      api.dispatch(http.increaseQueue({ queue }));
     }
 
     return (promise as Promise<any>).then(value => {
       next({ ...value, ...rest });
 
       if (queue) {
-        api.dispatch(http.decreaseQueue({ queue }))
+        api.dispatch(http.decreaseQueue({ queue }));
       }
 
       return value;

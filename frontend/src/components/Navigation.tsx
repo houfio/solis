@@ -164,31 +164,31 @@ export const Navigation = connect(class extends Component<typeof props> {
               {primaryMenu.items
                 .sort((a, b) => a.order - b.order)
                 .map((item, index) => (
-                <Fragment key={item.id}>
-                  <span
-                    className={css(
-                      styleSheet.item,
-                      openMenu === index && styleSheet.active
-                    )}
-                    onClick={handle(setOpenMenu, { menuIndex: index })}
-                  >
-                    {item.name}
-                  </span>
-                  <div
-                    ref={node => this.menuNodes[index] = node || undefined}
-                    className={css(
-                      styleSheet.menu,
-                      openMenu === index && styleSheet.open,
-                      Number(openMenu) > index && styleSheet.menuRight,
-                      Number(openMenu) < index && styleSheet.menuLeft
-                    )}
-                  >
-                    <Container>
-                      <Menu menuItem={item} onClick={this.navigateTo}/>
-                    </Container>
-                  </div>
-                </Fragment>
-              ))}
+                  <Fragment key={item.id}>
+                    <span
+                      className={css(
+                        styleSheet.item,
+                        openMenu === index && styleSheet.active
+                      )}
+                      onClick={handle(setOpenMenu, { menuIndex: index })}
+                    >
+                      {item.name}
+                    </span>
+                    <div
+                      ref={node => this.menuNodes[index] = node || undefined}
+                      className={css(
+                        styleSheet.menu,
+                        openMenu === index && styleSheet.open,
+                        Number(openMenu) > index && styleSheet.menuRight,
+                        Number(openMenu) < index && styleSheet.menuLeft
+                      )}
+                    >
+                      <Container>
+                        <Menu menuItem={item} onClick={this.navigateTo}/>
+                      </Container>
+                    </div>
+                  </Fragment>
+                ))}
             </Container>
           </div>
           <div

@@ -12,4 +12,9 @@ class Text extends BlockData
      * @ORM\Column(type="text")
      */
     public $text;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public $mode;
 }

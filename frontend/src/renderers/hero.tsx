@@ -8,7 +8,7 @@ import { Container } from '../components/Container';
 
 export const hero = createRenderer(class extends Component<RendererProps<'hero'>> {
   public render() {
-    const { data: { image, alignment, height, dark }, children } = this.props;
+    const { data: { image, alignment, height }, children } = this.props;
 
     const styleSheet = StyleSheet.create({
       hero: {
@@ -17,8 +17,7 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
         width: '100%',
         backgroundImage: `url("${image}")`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        color: dark ? '#000000' : '#FFFFFF'
+        backgroundPosition: 'center'
       },
       container: {
         display: 'flex',
@@ -35,8 +34,8 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
           {children
             .sort((a, b) => a.order - b.order)
             .map(child => (
-            child.render()
-          ))}
+              child.render()
+            ))}
         </Container>
       </div>
     );

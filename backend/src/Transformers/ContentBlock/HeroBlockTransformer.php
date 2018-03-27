@@ -11,8 +11,7 @@ class HeroBlockTransformer extends Transformer
         return [
             'image' => $data->image,
             'alignment' => $data->alignment,
-            'height' => $data->height,
-            'dark' => $data->dark
+            'height' => $data->height
         ];
     }
 }

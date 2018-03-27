@@ -14,7 +14,7 @@ class Button extends BlockData
     public $text;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="integer")
      */
     public $type;
 
