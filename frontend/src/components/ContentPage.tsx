@@ -54,13 +54,13 @@ export const ContentPage = connect(class extends Component<typeof props> {
     return pageBlocks
       .sort((a, b) => a.order - b.order)
       .map(block => {
-      const renderer = findByKey(block.type, BLOCK_RENDERERS);
+        const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
-      if (!renderer) {
-        return false;
-      }
+        if (!renderer) {
+          return false;
+        }
 
-      return renderer(block);
-    });
+        return renderer(block);
+      });
   }
 });

@@ -23,7 +23,11 @@ export const button = createRenderer(connect(class extends Component<typeof prop
     const { data: { text, type } } = this.props;
 
     return (
-      <Button text={text} type={type} onClick={this.navigateToTarget}/>
+      <Button
+        text={text}
+        type={type === 0 ? 'primary' : 'secondary'}
+        onClick={this.navigateToTarget}
+      />
     );
   }
 
@@ -43,5 +47,5 @@ export const button = createRenderer(connect(class extends Component<typeof prop
     }
 
     push(page.path);
-  }
+  };
 }));

@@ -30,7 +30,7 @@ export const http = createModule(
             ...state.queue,
             [action.queue]: Math.max(0, current - 1)
           }
-        }
+        };
       }
     )
   })

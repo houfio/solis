@@ -8,34 +8,42 @@ import { HeadingTypes } from '../types';
 
 type Props = {
   text: string,
+  light?: boolean,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
   styles?: (CSSProperties | false)[]
 }
 
-const headingStyles: { [T in HeadingTypes]: CSSProperties } = {
-  bold: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    opacity: .85,
-    marginBottom: '.5rem'
-  },
-  thin: {
-    fontSize: '1.5rem',
-    marginBottom: '.5rem'
-  },
-  subtle: {
-    fontSize: '.75rem',
-    textTransform: 'uppercase',
-    opacity: .6,
-    margin: '-.5rem 0 .5rem 0'
-  }
+const headingStyles = (light: boolean): { [T in HeadingTypes]: CSSProperties } => {
+  const rgb = light ? '255, 255, 255' : '0, 0, 0';
+
+  return {
+    bold: {
+      fontSize: '2rem',
+      fontWeight: 'bold',
+      color: `rgba(${rgb}, ${light ? 1 : .85})`,
+      marginBottom: '.5rem'
+    },
+    thin: {
+      fontSize: '1.5rem',
+      marginBottom: '.5rem',
+      color: `rgba(${rgb}, ${light ? 1 : .75})`,
+    },
+    subtle: {
+      fontSize: '.75rem',
+      textTransform: 'uppercase',
+      color: `rgba(${rgb}, ${light ? 1 : .6})`,
+      margin: '-.5rem 0 .5rem 0'
+    }
+  };
 };
 
-export const Heading = ({ text, breakpoints, styles = [] }: Props) => {
+export const Heading = ({ text, light = false, breakpoints, styles = [] }: Props) => {
+  const style = headingStyles(light);
+
   const styleSheet = StyleSheet.create({
     heading: {
       display: 'block',
-      ...forBreakpoints(breakpoints, value => headingStyles[value])
+      ...forBreakpoints(breakpoints, value => style[value])
     }
   });
 

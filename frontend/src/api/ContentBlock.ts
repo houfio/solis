@@ -1,6 +1,5 @@
 import { Identifiable } from './Identifiable';
 import { Hidable } from './Hidable';
-import { ButtonTypes } from '../types';
 import { BREAKPOINTS } from '../constants';
 
 export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable & Hidable & {
@@ -14,11 +13,12 @@ export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable
 
 export type ContentBlockTypes = {
   text: {
-    text: string
+    text: string,
+    mode: number
   },
   button: {
     text: string,
-    type: ButtonTypes,
+    type: number,
     target: number
   },
   column: {
@@ -28,7 +28,6 @@ export type ContentBlockTypes = {
   hero: {
     image: string,
     alignment: number,
-    height: number,
-    dark: boolean
+    height: number
   }
 }

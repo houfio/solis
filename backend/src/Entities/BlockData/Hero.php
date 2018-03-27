@@ -22,9 +22,4 @@ class Hero extends BlockData
      * @ORM\Column(type="integer")
      */
     public $height;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    public $dark;
 }

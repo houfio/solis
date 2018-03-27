@@ -18,21 +18,21 @@ export const column = createRenderer(class extends Component<RendererProps<'colu
         {children
           .sort((a, b) => a.order - b.order)
           .map(child => {
-          const index = child.data;
-          let offset = 0;
+            const index = child.data;
+            let offset = 0;
 
-          if (index - 1 > lastColumn) {
-            offset = (index - lastColumn - 1) * childSize;
-          }
+            if (index - 1 > lastColumn) {
+              offset = (index - lastColumn - 1) * childSize;
+            }
 
-          lastColumn = index;
+            lastColumn = index;
 
-          return (
-            <Column key={index} breakpoints={{ [breakpoint]: { size: childSize, offset } }}>
-              {child.render()}
-            </Column>
-          );
-        })}
+            return (
+              <Column key={index} breakpoints={{ [breakpoint]: { size: childSize, offset } }}>
+                {child.render()}
+              </Column>
+            );
+          })}
       </Row>
     );
   }

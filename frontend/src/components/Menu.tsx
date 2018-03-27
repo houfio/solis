@@ -54,33 +54,33 @@ export const Menu = connect(class extends Component<typeof props> {
         {menuItem.columns
           .sort((a, b) => a.order - b.order)
           .map(column => (
-          <Column
-            key={column.id}
-            breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
-            styles={[styleSheet.category]}
-          >
-            <Heading text={column.name} breakpoints={{ [PHONE]: 'thin' }}/>
-            {column.targets
-              .sort((a, b) => a.order - b.order)
-              .map(target => {
-              const page = findByValue(target.target, 'id', pages);
+            <Column
+              key={column.id}
+              breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
+              styles={[styleSheet.category]}
+            >
+              <Heading text={column.name} light={true} breakpoints={{ [PHONE]: 'thin' }}/>
+              {column.targets
+                .sort((a, b) => a.order - b.order)
+                .map(target => {
+                  const page = findByValue(target.target, 'id', pages);
 
-              if (!page) {
-                return false;
-              }
+                  if (!page) {
+                    return false;
+                  }
 
-              return (
-                <a
-                  key={target.id}
-                  className={css(styleSheet.link)}
-                  onClick={handle(onClick, page)}
-                >
-                  {page.name}
-                </a>
-              );
-            })}
-          </Column>
-        ))}
+                  return (
+                    <a
+                      key={target.id}
+                      className={css(styleSheet.link)}
+                      onClick={handle(onClick, page)}
+                    >
+                      {page.name}
+                    </a>
+                  );
+                })}
+            </Column>
+          ))}
       </Row>
     );
   }
