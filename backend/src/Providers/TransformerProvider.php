@@ -15,7 +15,7 @@ use JNL\Transformers\Page\PageGuardTransformer;
 use JNL\Transformers\Page\PageTransformer;
 use JNL\Transformers\Route\RouteArgumentTransformer;
 use JNL\Transformers\Route\RouteTransformer;
-use JNL\Transformers\User\BlogTransformer;
+use JNL\Transformers\Blog\BlogPostTransformer;
 use JNL\Transformers\User\ContactDataTransformer;
 use JNL\Transformers\User\TokenTransformer;
 use JNL\Transformers\User\UserTransformer;
@@ -41,7 +41,7 @@ class TransformerProvider extends AbstractServiceProvider
         ButtonBlockTransformer::class,
         ColumnBlockTransformer::class,
         HeroBlockTransformer::class,
-        BlogTransformer::class
+        BlogPostTransformer::class
     ];
 
     protected $provides = [

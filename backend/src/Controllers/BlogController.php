@@ -4,6 +4,7 @@ namespace JNL\Controllers;
 use JNL\Core\Controller;
 use JNL\Core\RouteSet;
 use JNL\Entities\BlogPost;
+use JNL\Transformers\Blog\BlogPostTransformer;
 use League\Container\Exception\NotFoundException;
 use League\Route\Http\Exception\UnauthorizedException;
 
@@ -12,14 +13,14 @@ class BlogController extends Controller
     public function initialize(): RouteSet
     {
         return RouteSet::create()
-            ->get('blog', '/blog', 'getBlog')
-            ->get('blog', '/blog_details/{id:number}', 'getBlogDetails')
-            ->post('blog_create', '/blog', 'postBlog', true, [
+            ->get('blogs', '/blogs', 'getBlog')
+            ->get('blog', '/blogs/{id:number}', 'getBlogDetails')
+            ->post('blog_create', '/blogs', 'postBlog', true, [
                 'title' => ['required', 'lengthMax' => [128]],
                 'content' => ['required']
             ])
-            ->post('blog_remove', '/blog/{id:number}/remove', 'postBlogRemove', true)
-            ->post('blog_update', '/blog/{id:number}', 'postBlogUpdate', true, [
+            ->post('blog_remove', '/blogs/{id:number}/remove', 'postBlogRemove', true)
+            ->post('blog_update', '/blogs/{id:number}', 'postBlogUpdate', true, [
                 'title' => [],
                 'content' => []
             ]);
@@ -30,19 +31,24 @@ class BlogController extends Controller
         $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
         $blogPosts = $blogPostRepo->findBy(['deleted' => false]);
 
-        return $blogPosts;
+        $resource = $this->createCollection($blogPosts, BlogPostTransformer::class);
+
+        return $resource;
     }
 
     public function getBlogDetails(array $args, array $vars)
     {
         $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
-        $blogPostDetails = $blogPostRepo->findOneBy(['id' => $vars['id'], 'deleted' => false]);
+        $blogPost = $blogPostRepo->findOneBy(['id' => $vars['id'], 'deleted' => false]);
 
-        if($blogPostDetails == null) {
+        if (!$blogPost) {
             throw new NotFoundException();
         }
 
-        return $blogPostDetails;
+        $resource = $this->createItem($blogPost, BlogPostTransformer::class);
+        $this->includeTransformations(['content']);
+
+        return $resource;
     }
 
     public function postBlog(array $args)
