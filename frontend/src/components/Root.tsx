@@ -15,6 +15,7 @@ import { Footer } from './Footer';
 import { Container } from './Container';
 import { Loading } from './Loading';
 import { PageGuard } from '../api/Page';
+import { Breadcrumbs } from './Breadcrumbs';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -63,6 +64,7 @@ export const Root = connect(class extends Component<typeof props> {
       <div className={css(styleSheet.body)}>
         <Navigation/>
         <main className={css(styleSheet.main)}>
+          <Breadcrumbs/>
           <Container>
             <Switch location={location || createLocation(window.location.href)}>
               {pages.map(page => {
