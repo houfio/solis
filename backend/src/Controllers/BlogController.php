@@ -13,8 +13,8 @@ class BlogController extends Controller
     public function initialize(): RouteSet
     {
         return RouteSet::create()
-            ->get('blogs', '/blogs', 'getBlog')
-            ->get('blog', '/blogs/{id:number}', 'getBlogDetails')
+            ->get('blogs', '/blogs', 'getBlogs')
+            ->get('blog', '/blogs/{id:number}', 'getBlog')
             ->post('blog_create', '/blogs', 'postBlog', true, [
                 'title' => ['required', 'lengthMax' => [128]],
                 'content' => ['required']
@@ -26,7 +26,7 @@ class BlogController extends Controller
             ]);
     }
 
-    public function getBlog()
+    public function getBlogs()
     {
         $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
         $blogPosts = $blogPostRepo->findBy(['deleted' => false]);
@@ -36,7 +36,7 @@ class BlogController extends Controller
         return $resource;
     }
 
-    public function getBlogDetails(array $args, array $vars)
+    public function getBlog(array $args, array $vars)
     {
         $blogPostRepo = $this->getEntityManager()->getRepository(BlogPost::class);
         $blogPost = $blogPostRepo->findOneBy(['id' => $vars['id'], 'deleted' => false]);
