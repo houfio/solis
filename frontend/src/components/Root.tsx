@@ -64,8 +64,8 @@ export const Root = connect(class extends Component<typeof props> {
       <div className={css(styleSheet.body)}>
         <Navigation/>
         <main className={css(styleSheet.main)}>
+          <Breadcrumbs/>
           <Container>
-            <Breadcrumbs/>
             <Switch location={location || createLocation(window.location.href)}>
               {pages.map(page => {
                 const redirect = this.getRedirect(page.guards);
