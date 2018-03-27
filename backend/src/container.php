@@ -2,6 +2,7 @@
 use JNL\Core\Interfaces\ContainerAwareInterface;
 use JNL\Core\Interfaces\EntityManagerAwareInterface;
 use JNL\Core\Interfaces\RequestAwareInterface;
+use JNL\Core\Interfaces\TransformerAwareInterface;
 use JNL\Providers\CommandProvider;
 use JNL\Providers\ConfigProvider;
 use JNL\Providers\ControllerProvider;
@@ -32,5 +33,8 @@ $container->inflector(EntityManagerAwareInterface::class)
 
 $container->inflector(RequestAwareInterface::class)
     ->invokeMethod('setRequest', ['request']);
+
+$container->inflector(TransformerAwareInterface::class)
+    ->invokeMethod('setTransformer', ['transformer']);
 
 return $container;
