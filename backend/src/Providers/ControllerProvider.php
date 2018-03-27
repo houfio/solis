@@ -2,6 +2,7 @@
 namespace JNL\Providers;
 
 use JNL\Controllers\ApiController;
+use JNL\Controllers\BlogController;
 use JNL\Controllers\MenuController;
 use JNL\Controllers\PageController;
 use JNL\Controllers\UserController;
@@ -13,7 +14,8 @@ class ControllerProvider extends AbstractServiceProvider
         ApiController::class,
         UserController::class,
         MenuController::class,
-        PageController::class
+        PageController::class,
+        BlogController::class
     ];
 
     public function provides($alias = null)
