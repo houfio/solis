@@ -13,9 +13,10 @@ import { GUARDS } from '../constants';
 import { Navigation } from './Navigation';
 import { Footer } from './Footer';
 import { Container } from './Container';
-import { Loading } from './Loading';
+import { Spinner } from './Spinner';
 import { PageGuard } from '../api/Page';
 import { Breadcrumbs } from './Breadcrumbs';
+import { Progress } from './Progress';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -44,7 +45,7 @@ export const Root = connect(class extends Component<typeof props> {
 
     if (queue.all || !pages) {
       return (
-        <Loading message="Dit duurt langer dan normaal..."/>
+        <Spinner/>
       );
     }
 
@@ -62,6 +63,7 @@ export const Root = connect(class extends Component<typeof props> {
 
     return (
       <div className={css(styleSheet.body)}>
+        <Progress/>
         <Navigation/>
         <main className={css(styleSheet.main)}>
           <Breadcrumbs/>
