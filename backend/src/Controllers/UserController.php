@@ -1,13 +1,13 @@
 <?php
-namespace JNL\Controllers;
+namespace Solis\Controllers;
 
 use DateTime;
-use JNL\Core\Controller;
-use JNL\Entities\ContactData;
-use JNL\Entities\Token;
-use JNL\Entities\User;
-use JNL\Core\RouteSet;
-use JNL\Transformers\User\UserTransformer;
+use Solis\Core\Controller;
+use Solis\Entities\ContactData;
+use Solis\Entities\Token;
+use Solis\Entities\User;
+use Solis\Core\RouteSet;
+use Solis\Transformers\User\UserTransformer;
 use League\Route\Http\Exception\UnauthorizedException;
 
 class UserController extends Controller

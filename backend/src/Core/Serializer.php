@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Core;
+namespace Solis\Core;
 
 use League\Fractal\Serializer\ArraySerializer;
 

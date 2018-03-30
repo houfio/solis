@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\ContentBlock;
+namespace Solis\Transformers\ContentBlock;
 
-use JNL\Core\Transformer;
-use JNL\Entities\BlockData\Hero;
+use Solis\Core\Transformer;
+use Solis\Entities\BlockData\Hero;
 
 class HeroBlockTransformer extends Transformer
 {

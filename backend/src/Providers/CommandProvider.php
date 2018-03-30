@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Providers;
+namespace Solis\Providers;
 
 use Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand;
 use Doctrine\ORM\Tools\Console\Command\InfoCommand;
@@ -7,7 +7,7 @@ use Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand;
 use Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand;
-use JNL\Commands\RunServerCommand;
+use Solis\Commands\RunServerCommand;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class CommandProvider extends AbstractServiceProvider

@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\ContentBlock;
+namespace Solis\Transformers\ContentBlock;
 
-use JNL\Core\Transformer;
-use JNL\Entities\BlockData\Button;
+use Solis\Core\Transformer;
+use Solis\Entities\BlockData\Button;
 
 class ButtonBlockTransformer extends Transformer
 {

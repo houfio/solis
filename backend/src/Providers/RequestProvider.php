@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Providers;
+namespace Solis\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Zend\Diactoros\ServerRequestFactory;

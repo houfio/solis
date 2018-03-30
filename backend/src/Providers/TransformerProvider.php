@@ -1,24 +1,24 @@
 <?php
-namespace JNL\Providers;
+namespace Solis\Providers;
 
-use JNL\Core\Serializer;
-use JNL\Transformers\ContentBlock\ButtonBlockTransformer;
-use JNL\Transformers\ContentBlock\ColumnBlockTransformer;
-use JNL\Transformers\ContentBlock\ContentBlockTransformer;
-use JNL\Transformers\ContentBlock\HeroBlockTransformer;
-use JNL\Transformers\ContentBlock\TextBlockTransformer;
-use JNL\Transformers\Menu\MenuColumnTransformer;
-use JNL\Transformers\Menu\MenuItemTransformer;
-use JNL\Transformers\Menu\MenuTargetTransformer;
-use JNL\Transformers\Menu\MenuTransformer;
-use JNL\Transformers\Page\PageGuardTransformer;
-use JNL\Transformers\Page\PageTransformer;
-use JNL\Transformers\Route\RouteArgumentTransformer;
-use JNL\Transformers\Route\RouteTransformer;
-use JNL\Transformers\Blog\BlogPostTransformer;
-use JNL\Transformers\User\ContactDataTransformer;
-use JNL\Transformers\User\TokenTransformer;
-use JNL\Transformers\User\UserTransformer;
+use Solis\Core\Serializer;
+use Solis\Transformers\ContentBlock\ButtonBlockTransformer;
+use Solis\Transformers\ContentBlock\ColumnBlockTransformer;
+use Solis\Transformers\ContentBlock\ContentBlockTransformer;
+use Solis\Transformers\ContentBlock\HeroBlockTransformer;
+use Solis\Transformers\ContentBlock\TextBlockTransformer;
+use Solis\Transformers\Menu\MenuColumnTransformer;
+use Solis\Transformers\Menu\MenuItemTransformer;
+use Solis\Transformers\Menu\MenuTargetTransformer;
+use Solis\Transformers\Menu\MenuTransformer;
+use Solis\Transformers\Page\PageGuardTransformer;
+use Solis\Transformers\Page\PageTransformer;
+use Solis\Transformers\Route\RouteArgumentTransformer;
+use Solis\Transformers\Route\RouteTransformer;
+use Solis\Transformers\Blog\BlogPostTransformer;
+use Solis\Transformers\User\ContactDataTransformer;
+use Solis\Transformers\User\TokenTransformer;
+use Solis\Transformers\User\UserTransformer;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Fractal\Manager;
 

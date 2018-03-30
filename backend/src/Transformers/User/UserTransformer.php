@@ -1,9 +1,9 @@
 <?php
-namespace JNL\Transformers\User;
+namespace Solis\Transformers\User;
 
-use JNL\Core\Transformer;
-use JNL\Entities\Token;
-use JNL\Entities\User;
+use Solis\Core\Transformer;
+use Solis\Entities\Token;
+use Solis\Entities\User;
 use League\Fractal\Resource\ResourceInterface;
 
 class UserTransformer extends Transformer

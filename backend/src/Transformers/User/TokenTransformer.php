@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\User;
+namespace Solis\Transformers\User;
 
-use JNL\Core\Transformer;
-use JNL\Entities\Token;
+use Solis\Core\Transformer;
+use Solis\Entities\Token;
 
 class TokenTransformer extends Transformer
 {

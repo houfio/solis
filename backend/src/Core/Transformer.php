@@ -1,14 +1,14 @@
 <?php
-namespace JNL\Core;
+namespace Solis\Core;
 
-use JNL\Core\Interfaces\ContainerAwareInterface;
-use JNL\Core\Interfaces\EntityManagerAwareInterface;
-use JNL\Core\Interfaces\RequestAwareInterface;
-use JNL\Core\Traits\ContainerAwareTrait;
-use JNL\Core\Traits\EntityManagerAwareTrait;
-use JNL\Core\Traits\RequestAwareTrait;
-use JNL\Core\Traits\ResourceCreationTrait;
-use JNL\Core\Traits\UserAwareTrait;
+use Solis\Core\Interfaces\ContainerAwareInterface;
+use Solis\Core\Interfaces\EntityManagerAwareInterface;
+use Solis\Core\Interfaces\RequestAwareInterface;
+use Solis\Core\Traits\ContainerAwareTrait;
+use Solis\Core\Traits\EntityManagerAwareTrait;
+use Solis\Core\Traits\RequestAwareTrait;
+use Solis\Core\Traits\ResourceCreationTrait;
+use Solis\Core\Traits\UserAwareTrait;
 use League\Fractal\TransformerAbstract;
 
 abstract class Transformer extends TransformerAbstract implements ContainerAwareInterface, RequestAwareInterface, EntityManagerAwareInterface

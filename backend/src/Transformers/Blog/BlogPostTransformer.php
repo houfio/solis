@@ -1,10 +1,10 @@
 <?php
-namespace JNL\Transformers\Blog;
+namespace Solis\Transformers\Blog;
 
-use JNL\Core\Transformer;
-use JNL\Entities\BlogPost;
-use JNL\Entities\Token;
-use JNL\Entities\User;
+use Solis\Core\Transformer;
+use Solis\Entities\BlogPost;
+use Solis\Entities\Token;
+use Solis\Entities\User;
 use League\Fractal\Resource\ResourceInterface;
 
 class BlogPostTransformer extends Transformer

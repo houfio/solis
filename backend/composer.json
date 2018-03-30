@@ -1,5 +1,5 @@
 {
-  "name": "jnl/backend",
+  "name": "solis/backend",
   "description": "Jong Nederland backend",
   "license": "unlicensed",
   "authors": [
@@ -26,7 +26,7 @@
   },
   "autoload": {
     "psr-4": {
-      "JNL\\": "src/"
+      "Solis\\": "src/"
     }
   }
 }

@@ -1,11 +1,11 @@
 <?php
-namespace JNL\Providers;
+namespace Solis\Providers;
 
-use JNL\Controllers\ApiController;
-use JNL\Controllers\BlogController;
-use JNL\Controllers\MenuController;
-use JNL\Controllers\PageController;
-use JNL\Controllers\UserController;
+use Solis\Controllers\ApiController;
+use Solis\Controllers\BlogController;
+use Solis\Controllers\MenuController;
+use Solis\Controllers\PageController;
+use Solis\Controllers\UserController;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ControllerProvider extends AbstractServiceProvider

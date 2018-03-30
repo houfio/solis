@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\Page;
+namespace Solis\Transformers\Page;
 
-use JNL\Core\Transformer;
-use JNL\Entities\PageGuard;
+use Solis\Core\Transformer;
+use Solis\Entities\PageGuard;
 
 class PageGuardTransformer extends Transformer
 {

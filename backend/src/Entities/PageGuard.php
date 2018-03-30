@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Entities;
+namespace Solis\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 

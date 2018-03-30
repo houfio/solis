@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Core;
+namespace Solis\Core;
 
 use Exception;
-use JNL\Exceptions\HttpArrayException;
+use Solis\Exceptions\HttpArrayException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\ResourceInterface;
 use League\Route\Http\Exception\MethodNotAllowedException;

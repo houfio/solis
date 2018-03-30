@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Core\Traits;
+namespace Solis\Core\Traits;
 
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
-use JNL\Entities\User;
+use Solis\Entities\User;
 use League\Container\ContainerInterface;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;

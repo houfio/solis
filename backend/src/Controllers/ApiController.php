@@ -1,9 +1,9 @@
 <?php
-namespace JNL\Controllers;
+namespace Solis\Controllers;
 
-use JNL\Core\Controller;
-use JNL\Core\RouteSet;
-use JNL\Transformers\Route\RouteTransformer;
+use Solis\Core\Controller;
+use Solis\Core\RouteSet;
+use Solis\Transformers\Route\RouteTransformer;
 use Zend\Diactoros\Response\EmptyResponse;
 
 class ApiController extends Controller

@@ -1,12 +1,12 @@
 <?php
-namespace JNL\Controllers;
+namespace Solis\Controllers;
 
-use JNL\Core\Controller;
-use JNL\Core\RouteSet;
-use JNL\Entities\PostCategory;
-use JNL\Entities\BlogPost;
-use JNL\Entities\BlogCategory;
-use JNL\Transformers\Blog\BlogPostTransformer;
+use Solis\Core\Controller;
+use Solis\Core\RouteSet;
+use Solis\Entities\PostCategory;
+use Solis\Entities\BlogPost;
+use Solis\Entities\BlogCategory;
+use Solis\Transformers\Blog\BlogPostTransformer;
 use League\Container\Exception\NotFoundException;
 use League\Route\Http\Exception\UnauthorizedException;
 
