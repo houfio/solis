@@ -3,7 +3,9 @@ namespace JNL\Controllers;
 
 use JNL\Core\Controller;
 use JNL\Core\RouteSet;
+use JNL\Entities\PostCategory;
 use JNL\Entities\BlogPost;
+use JNL\Entities\BlogCategory;
 use JNL\Transformers\Blog\BlogPostTransformer;
 use League\Container\Exception\NotFoundException;
 use League\Route\Http\Exception\UnauthorizedException;
@@ -17,7 +19,11 @@ class BlogController extends Controller
             ->get('blog', '/blogs/{id:number}', 'getBlog')
             ->post('blog_create', '/blogs', 'postBlog', true, [
                 'title' => ['required', 'lengthMax' => [128]],
-                'content' => ['required']
+                'content' => ['required'],
+                'categories' => ['required', 'array']
+            ])
+            ->post('category_create', '/blogs/category', 'postCreateCategory', true, [
+                'name' => ['required', 'lengthMax' => [128]]
             ])
             ->post('blog_remove', '/blogs/{id:number}/remove', 'postBlogRemove', true)
             ->post('blog_update', '/blogs/{id:number}', 'postBlogUpdate', true, [
@@ -63,6 +69,14 @@ class BlogController extends Controller
         $blogPost->title = $args['title'];
         $blogPost->content = $args['content'];
 
+        foreach ($args['categories'] as $category) {
+            $blogCategory = new PostCategory();
+            $blogCategory->post = $blogPost;
+            $blogCategory->category = $category;
+
+            $this->getEntityManager()->persist($blogCategory);
+        }
+
         $this->getEntityManager()->persist($blogPost);
         $this->getEntityManager()->flush();
 
@@ -87,6 +101,23 @@ class BlogController extends Controller
         $blogPost->deleted = true;
 
         $this->getEntityManager()->merge($blogPost);
+        $this->getEntityManager()->flush();
+
+        return true;
+    }
+
+    public function postCreateCategory(array $args)
+    {
+        $user = $this->getAuthenticatedUser();
+
+        if(!$user->admin) {
+            throw new UnauthorizedException();
+        }
+
+        $category = new BlogCategory();
+        $category->name = $args['name'];
+
+        $this->getEntityManager()->persist($category);
         $this->getEntityManager()->flush();
 
         return true;

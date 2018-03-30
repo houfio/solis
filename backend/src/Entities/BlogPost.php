@@ -1,6 +1,7 @@
 <?php
 namespace JNL\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,4 +36,14 @@ class BlogPost
      * @ORM\Column(type="boolean")
      */
     public $deleted = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BlogCategory", mappedBy="post")
+     */
+    public $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 }
