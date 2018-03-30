@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Entities;
+namespace Solis\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +24,7 @@ class ContentBlock
     public $page;
 
     /**
-     * @ORM\OneToOne(targetEntity="JNL\Entities\BlockData\BlockData", mappedBy="block")
+     * @ORM\OneToOne(targetEntity="Solis\Entities\BlockData\BlockData", mappedBy="block")
      */
     public $data;
 

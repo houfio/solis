@@ -1,16 +1,16 @@
 <?php
-use JNL\Core\Interfaces\ContainerAwareInterface;
-use JNL\Core\Interfaces\EntityManagerAwareInterface;
-use JNL\Core\Interfaces\RequestAwareInterface;
-use JNL\Core\Interfaces\TransformerAwareInterface;
-use JNL\Providers\CommandProvider;
-use JNL\Providers\ConfigProvider;
-use JNL\Providers\ControllerProvider;
-use JNL\Providers\DispatcherProvider;
-use JNL\Providers\EntityManagerProvider;
-use JNL\Providers\RequestProvider;
-use JNL\Providers\ResponseProvider;
-use JNL\Providers\TransformerProvider;
+use Solis\Core\Interfaces\ContainerAwareInterface;
+use Solis\Core\Interfaces\EntityManagerAwareInterface;
+use Solis\Core\Interfaces\RequestAwareInterface;
+use Solis\Core\Interfaces\TransformerAwareInterface;
+use Solis\Providers\CommandProvider;
+use Solis\Providers\ConfigProvider;
+use Solis\Providers\ControllerProvider;
+use Solis\Providers\DispatcherProvider;
+use Solis\Providers\EntityManagerProvider;
+use Solis\Providers\RequestProvider;
+use Solis\Providers\ResponseProvider;
+use Solis\Providers\TransformerProvider;
 use League\Container\Argument\RawArgument;
 use League\Container\Container;
 

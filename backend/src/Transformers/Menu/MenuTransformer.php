@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\Menu;
+namespace Solis\Transformers\Menu;
 
-use JNL\Core\Transformer;
-use JNL\Entities\Menu;
+use Solis\Core\Transformer;
+use Solis\Entities\Menu;
 use League\Fractal\ParamBag;
 use League\Fractal\Resource\ResourceInterface;
 

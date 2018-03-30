@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Entities\BlockData;
+namespace Solis\Entities\BlockData;
 
 use Doctrine\ORM\Mapping as ORM;
 

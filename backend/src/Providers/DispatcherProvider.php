@@ -1,9 +1,10 @@
 <?php
-namespace JNL\Providers;
+namespace Solis\Providers;
 
-use JNL\Core\ArgumentStrategy;
-use JNL\Core\Controller;
-use JNL\Core\RouteSet;
+use Solis\Controllers\ApiController;
+use Solis\Core\ArgumentStrategy;
+use Solis\Core\Controller;
+use Solis\Core\RouteSet;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -63,7 +64,7 @@ class DispatcherProvider extends AbstractServiceProvider
                     $group->map($route['method'], $route['path'], [$controller, $route['handler']]);
 
                     if ($route['auth']) {
-                        $group->options($route['path'], ['JNL\Controller\ApiController', 'optionsApi']);
+                        $group->options($route['path'], [ApiController::class, 'optionsApi']);
                     }
                 }
             }

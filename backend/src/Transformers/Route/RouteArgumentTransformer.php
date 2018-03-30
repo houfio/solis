@@ -1,7 +1,7 @@
 <?php
-namespace JNL\Transformers\Route;
+namespace Solis\Transformers\Route;
 
-use JNL\Core\Transformer;
+use Solis\Core\Transformer;
 
 class RouteArgumentTransformer extends Transformer
 {

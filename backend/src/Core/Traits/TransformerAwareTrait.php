@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Core\Traits;
+namespace Solis\Core\Traits;
 
 use League\Fractal\Manager;
 

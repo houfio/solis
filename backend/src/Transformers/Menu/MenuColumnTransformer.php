@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\Menu;
+namespace Solis\Transformers\Menu;
 
-use JNL\Core\Transformer;
-use JNL\Entities\MenuColumn;
+use Solis\Core\Transformer;
+use Solis\Entities\MenuColumn;
 use League\Fractal\Resource\ResourceInterface;
 
 class MenuColumnTransformer extends Transformer

@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\User;
+namespace Solis\Transformers\User;
 
-use JNL\Core\Transformer;
-use JNL\Entities\ContactData;
+use Solis\Core\Transformer;
+use Solis\Entities\ContactData;
 
 class ContactDataTransformer extends Transformer
 {

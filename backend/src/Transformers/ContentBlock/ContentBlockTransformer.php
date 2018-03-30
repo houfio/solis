@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\ContentBlock;
+namespace Solis\Transformers\ContentBlock;
 
-use JNL\Core\Transformer;
-use JNL\Entities\ContentBlock;
+use Solis\Core\Transformer;
+use Solis\Entities\ContentBlock;
 use League\Fractal\Resource\ResourceInterface;
 
 class ContentBlockTransformer extends Transformer

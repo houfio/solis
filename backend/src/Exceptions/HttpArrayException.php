@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Exceptions;
+namespace Solis\Exceptions;
 
 use League\Route\Http\Exception as HttpException;
 

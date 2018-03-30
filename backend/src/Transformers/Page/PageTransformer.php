@@ -1,8 +1,8 @@
 <?php
-namespace JNL\Transformers\Page;
+namespace Solis\Transformers\Page;
 
-use JNL\Core\Transformer;
-use JNL\Entities\Page;
+use Solis\Core\Transformer;
+use Solis\Entities\Page;
 use League\Fractal\Resource\ResourceInterface;
 
 class PageTransformer extends Transformer

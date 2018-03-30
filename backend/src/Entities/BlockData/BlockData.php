@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Entities\BlockData;
+namespace Solis\Entities\BlockData;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,7 +19,7 @@ abstract class BlockData
     public $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="JNL\Entities\ContentBlock", inversedBy="data")
+     * @ORM\OneToOne(targetEntity="Solis\Entities\ContentBlock", inversedBy="data")
      */
     public $block;
 }

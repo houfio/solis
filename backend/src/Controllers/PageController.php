@@ -1,12 +1,12 @@
 <?php
-namespace JNL\Controllers;
+namespace Solis\Controllers;
 
-use JNL\Core\Controller;
-use JNL\Core\RouteSet;
-use JNL\Entities\ContentBlock;
-use JNL\Entities\Page;
-use JNL\Transformers\ContentBlock\ContentBlockTransformer;
-use JNL\Transformers\Page\PageTransformer;
+use Solis\Core\Controller;
+use Solis\Core\RouteSet;
+use Solis\Entities\ContentBlock;
+use Solis\Entities\Page;
+use Solis\Transformers\ContentBlock\ContentBlockTransformer;
+use Solis\Transformers\Page\PageTransformer;
 
 class PageController extends Controller
 {

@@ -1,10 +1,10 @@
 <?php
-namespace JNL\Controllers;
+namespace Solis\Controllers;
 
-use JNL\Core\Controller;
-use JNL\Core\RouteSet;
-use JNL\Entities\Menu;
-use JNL\Transformers\Menu\MenuTransformer;
+use Solis\Core\Controller;
+use Solis\Core\RouteSet;
+use Solis\Entities\Menu;
+use Solis\Transformers\Menu\MenuTransformer;
 
 class MenuController extends Controller
 {

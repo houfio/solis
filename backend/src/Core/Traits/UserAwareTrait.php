@@ -1,9 +1,9 @@
 <?php
-namespace JNL\Core\Traits;
+namespace Solis\Core\Traits;
 
 use Doctrine\ORM\EntityManager;
-use JNL\Entities\Token;
-use JNL\Entities\User;
+use Solis\Entities\Token;
+use Solis\Entities\User;
 use League\Route\Http\Exception\UnauthorizedException;
 use Zend\Diactoros\ServerRequest;
 

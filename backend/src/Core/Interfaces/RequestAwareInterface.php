@@ -1,5 +1,5 @@
 <?php
-namespace JNL\Core\Interfaces;
+namespace Solis\Core\Interfaces;
 
 use Zend\Diactoros\ServerRequest;
 

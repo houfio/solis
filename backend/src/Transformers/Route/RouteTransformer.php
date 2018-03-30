@@ -1,7 +1,7 @@
 <?php
-namespace JNL\Transformers\Route;
+namespace Solis\Transformers\Route;
 
-use JNL\Core\Transformer;
+use Solis\Core\Transformer;
 use League\Fractal\Resource\ResourceInterface;
 
 class RouteTransformer extends Transformer
