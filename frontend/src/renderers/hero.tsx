@@ -11,6 +11,9 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
     const { data: { image, alignment, height }, children } = this.props;
 
     const styleSheet = StyleSheet.create({
+      wrapper: {
+        height: `${height}px`
+      },
       hero: {
         position: 'absolute',
         left: 0,
@@ -29,14 +32,16 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
     });
 
     return (
-      <div className={css(styleSheet.hero)}>
-        <Container styles={[styleSheet.container]}>
-          {children
-            .sort((a, b) => a.order - b.order)
-            .map(child => (
-              child.render()
-            ))}
-        </Container>
+      <div className={css(styleSheet.wrapper)}>
+        <div className={css(styleSheet.hero)}>
+          <Container styles={[styleSheet.container]}>
+            {children
+              .sort((a, b) => a.order - b.order)
+              .map(child => (
+                child.render()
+              ))}
+          </Container>
+        </div>
       </div>
     );
   }
