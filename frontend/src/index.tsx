@@ -6,9 +6,9 @@ import 'whatwg-fetch';
 import 'normalize.css';
 
 import { Root } from './components/Root';
-import { getStore } from './utils/getStore';
+import { createStore } from './utils/createStore';
 
-const { store, history } = getStore();
+const { store, history } = createStore();
 
 render(
   <Provider store={store}>

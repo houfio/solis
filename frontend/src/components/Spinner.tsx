@@ -25,7 +25,7 @@ export const Spinner = () => {
       border: '.25rem solid #BDC1C6',
       borderLeft: '.25rem solid #1976D2',
       borderRadius: '50%',
-      animationName: rotate,
+      animationName: rotate as any,
       animationTimingFunction: 'linear',
       animationDuration: '.5s',
       animationIterationCount: 'infinite'

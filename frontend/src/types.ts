@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { RouterState } from 'react-router-redux';
 import { FormState } from 'redux-form';
-import { Action } from 'redux';
+import { Action as ReduxAction } from 'redux';
 
 import { Page } from './api/Page';
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
@@ -34,7 +34,11 @@ export type Token = {
 
 export type Queue = {
   queue: 'all' | 'page'
-}
+};
+
+export type ButtonTypes = 'primary' | 'secondary';
+
+export type HeadingTypes = 'bold' | 'thin' | 'subtle';
 
 export type ApiResponse<T> = {
   success: boolean,
@@ -46,7 +50,7 @@ export type ApiResponse<T> = {
 export type RendererProps<T extends keyof ContentBlockTypes> = {
   data: ContentBlockTypes[T],
   children: ContentBlockChild[]
-}
+};
 
 export type ContentBlockRenderer<T extends keyof ContentBlockTypes> = (block: ContentBlock<T>) => ReactNode;
 
@@ -56,36 +60,35 @@ export type ContentBlockChild = {
   render: () => ReactNode
 };
 
-export type Module<S, T extends ActionReducers> = {
-  name: string,
-  initialState: S
-} & T;
+export type Map<U, B> = (payload: U) => B;
 
-export type ActionReducers = {
-  [name: string]: ActionReducer
+export type Reduce<M, P> = (payload: M, state: P) => Partial<P>;
+
+export type Action<U, Y> = (payload?: U) => ReduxAction & Y;
+
+export type AsyncPayload<T> = {
+  promise: Promise<T>
 };
-
-export type ActionReducer<S = any, P = any, A = any> = {
-  (payload?: P): A & Action,
-  type: string,
-  reduce: PartialReducer<S, UnboxPromise<A>>
-};
-
-export type PartialReducers = {
-  [name: string]: {
-    [type: string]: PartialReducer
-  }
-};
-
-export type PartialReducer<S = any, A = any> = (action: UnboxPromise<A>, state: S) => Partial<S>;
-
-export type CreateAction<S> = <P>(type: string) =>
-  <A>(getAction: (payload: P) => A, reduce: PartialReducer<S, A>) => ActionReducer<S, P, A>;
-
-export type UnboxPromise<A> = A extends { promise: Promise<infer E> } ? Omit<A, 'promise'> & E : A;
 
 export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
-export type ButtonTypes = 'primary' | 'secondary';
+export type PromisePayload<B> = B extends AsyncPayload<infer T> ? Omit<B, keyof AsyncPayload<T>> & T : B;
 
-export type HeadingTypes = 'bold' | 'thin' | 'subtle';
+export type DispatchedPromise<B> = B extends AsyncPayload<infer T> ? Promise<T> : B;
+
+export type CreateAction<P> =
+  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<PromisePayload<B>, P>) => Action<U, DispatchedPromise<B>>
+
+export type Actions = {
+  [type: string]: Action<any, any>
+};
+
+export type Reducers<P, A> = {
+  [T in keyof A]: Reduce<any, P>;
+};
+
+export type Module<N extends keyof State = keyof State, A extends Actions = Actions> = A & {
+  name: N,
+  initialState: State[N],
+  reducers: Reducers<State[N], A>
+};
