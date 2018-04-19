@@ -1,18 +1,18 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component, Fragment } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
 import { push } from 'react-router-redux';
 
-import { withProps } from '../utils/withProps';
-import { State } from '../types';
-import { Container } from './Container';
 import { Page } from '../api/Page';
-import { Menu } from './Menu';
-import { forBreakpoint } from '../utils/forBreakpoint';
 import { TABLET_LANDSCAPE } from '../constants';
-import { findByValue } from '../utils/findByValue';
-import { handle } from '../utils/handle';
 import { content } from '../modules/content';
+import { State } from '../types';
+import { findByValue } from '../utils/findByValue';
+import { forBreakpoint } from '../utils/forBreakpoint';
+import { handle } from '../utils/handle';
+import { withProps } from '../utils/withProps';
+import { Container } from './Container';
+import { Menu } from './Menu';
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages,
@@ -175,7 +175,7 @@ export const Navigation = connect(class extends Component<typeof props> {
                       {item.name}
                     </span>
                     <div
-                      ref={node => this.menuNodes[index] = node || undefined}
+                      ref={(node) => this.menuNodes[index] = node || undefined}
                       className={css(
                         styleSheet.menu,
                         openMenu === index && styleSheet.open,
@@ -209,5 +209,5 @@ export const Navigation = connect(class extends Component<typeof props> {
 
     setOpenMenu({});
     push(page.path);
-  };
+  }
 });

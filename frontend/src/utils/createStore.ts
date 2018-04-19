@@ -1,19 +1,19 @@
-import { AnyAction, applyMiddleware, combineReducers, createStore as createReduxStore } from 'redux';
-import { routerMiddleware, routerReducer } from 'react-router-redux';
-import { createLogger } from 'redux-logger';
-import { reducer as formReducer } from 'redux-form';
 import { createBrowserHistory } from 'history';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { AnyAction, applyMiddleware, combineReducers, createStore as createReduxStore } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import { createLogger } from 'redux-logger';
 
 import { promise } from '../middleware/promise';
-import { getModules } from './getModules';
 import { Module, State } from '../types';
+import { getModules } from './getModules';
 
 export const createStore = () => {
   const history = createBrowserHistory();
   const modules = getModules() as Module[];
 
-  const store = createReduxStore<State>(
-    combineReducers({
+  const store = createReduxStore(
+    combineReducers<State>({
       router: routerReducer,
       form: formReducer,
       ...modules.reduce(
@@ -34,7 +34,7 @@ export const createStore = () => {
         }),
         {}
       )
-    }),
+    } as any),
     applyMiddleware(
       routerMiddleware(history),
       promise(),
@@ -49,5 +49,5 @@ export const createStore = () => {
   return {
     store,
     history
-  }
+  };
 };

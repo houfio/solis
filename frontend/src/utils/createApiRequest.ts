@@ -8,7 +8,7 @@ export const createApiRequest =
     headers: {
       'Content-Type': 'application/json',
       ...token && {
-        'Authorization': token.token
+        Authorization: token.token
       }
     }
-  }).then(response => response.json()) as Promise<ApiResponse<T>>;
+  }).then((response) => response.json()) as Promise<ApiResponse<T>>;

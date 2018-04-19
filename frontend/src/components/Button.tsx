@@ -1,6 +1,5 @@
+import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { CSSProperties } from 'react';
-import { css, StyleSheet, OpenCSSProperties } from 'aphrodite/no-important';
 
 import { ButtonTypes } from '../types';
 
@@ -8,10 +7,10 @@ type Props = {
   text: string,
   type?: ButtonTypes,
   onClick?: () => void,
-  styles?: (CSSProperties | false)[]
-}
+  styles?: StyleDeclaration
+};
 
-const buttonStyles: { [T in ButtonTypes]: OpenCSSProperties } = {
+const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
   primary: {
     backgroundColor: '#1976D2',
     ':hover': {

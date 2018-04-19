@@ -1,8 +1,8 @@
-import { createModule } from '../utils/createModule';
-import { createApiRequest } from '../utils/createApiRequest';
+import { ContentBlock } from '../api/ContentBlock';
 import { Menu } from '../api/Menu';
 import { Page } from '../api/Page';
-import { ContentBlock } from '../api/ContentBlock';
+import { createApiRequest } from '../utils/createApiRequest';
+import { createModule } from '../utils/createModule';
 
 export const content = createModule(
   'content',
@@ -12,18 +12,18 @@ export const content = createModule(
     menus: undefined,
     openMenu: undefined
   },
-  createAction => ({
+  (createAction) => ({
     getPages: createAction('GET_PAGES')(
       () => ({
         promise: createApiRequest<Page[]>('get', 'pages'),
         queue: 'all'
       }),
-      action => ({
+      (action) => ({
         pages: action.data
       })
     ),
     getContentBlocks: createAction<{ pageId: number }>('GET_CONTENT_BLOCKS')(
-      payload => ({
+      (payload) => ({
         pageId: payload.pageId,
         promise: createApiRequest<ContentBlock[]>('get', `pages/${payload.pageId}`),
         queue: 'page'
@@ -40,12 +40,12 @@ export const content = createModule(
         promise: createApiRequest<Menu[]>('get', 'menus'),
         queue: 'all'
       }),
-      action => ({
+      (action) => ({
         menus: action.data
       })
     ),
     setOpenMenu: createAction<{ menuIndex?: number }>('SET_OPEN_MENU')(
-      payload => payload,
+      (payload) => payload,
       (action, state) => ({
         openMenu: state.openMenu === action.menuIndex ? undefined : action.menuIndex
       })

@@ -1,9 +1,9 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
-import { withProps } from '../utils/withProps';
 import { State } from '../types';
+import { withProps } from '../utils/withProps';
 
 type LocalState = {
   progress: number,
@@ -91,5 +91,5 @@ export const Progress = connect(class extends Component<typeof props, LocalState
         progress: Math.min(progress + Math.random() * 4, 90)
       });
     }
-  };
+  }
 });

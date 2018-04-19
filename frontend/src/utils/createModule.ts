@@ -5,17 +5,17 @@ export const createModule = <N extends keyof State, A extends Actions>(
   initialState: State[N],
   getAction: (createAction: CreateAction<State[N]>) => A): Module<N, A> => {
   let reducers = {};
-  const actions = getAction(type => (map, reduce) => {
+  const actions = getAction((type) => (map, reduce) => {
     type = `@@${name}/${type}`;
     reducers = {
       ...reducers,
       [type]: reduce
     };
 
-    return payload => ({
+    return (payload) => ({
       type,
       ...map(payload!) as any
-    })
+    });
   });
 
   return {
@@ -23,5 +23,5 @@ export const createModule = <N extends keyof State, A extends Actions>(
     initialState,
     reducers,
     ...actions as any
-  }
+  };
 };

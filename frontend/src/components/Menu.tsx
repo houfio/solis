@@ -1,23 +1,23 @@
+import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Component, CSSProperties } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
+import { Component } from 'react';
 
-import { PHONE, TABLET_LANDSCAPE } from '../constants';
-import { Column } from './Column';
-import { Heading } from './Heading';
 import { MenuItem } from '../api/Menu';
 import { Page } from '../api/Page';
-import { withProps } from '../utils/withProps';
+import { PHONE, TABLET_LANDSCAPE } from '../constants';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
-import { Row } from './Row';
 import { handle } from '../utils/handle';
+import { withProps } from '../utils/withProps';
+import { Column } from './Column';
+import { Heading } from './Heading';
+import { Row } from './Row';
 
 type Props = {
   menuItem: MenuItem,
   onClick: (page: Page) => void,
-  styles?: (CSSProperties | false)[]
-}
+  styles?: StyleDeclaration
+};
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages
@@ -53,7 +53,7 @@ export const Menu = connect(class extends Component<typeof props> {
       <Row styles={styles}>
         {menuItem.columns
           .sort((a, b) => a.order - b.order)
-          .map(column => (
+          .map((column) => (
             <Column
               key={column.id}
               breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
@@ -62,7 +62,7 @@ export const Menu = connect(class extends Component<typeof props> {
               <Heading text={column.name} light={true} breakpoints={{ [PHONE]: 'thin' }}/>
               {column.targets
                 .sort((a, b) => a.order - b.order)
-                .map(target => {
+                .map((target) => {
                   const page = findByValue(target.target, 'id', pages);
 
                   if (!page) {

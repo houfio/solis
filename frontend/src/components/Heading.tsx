@@ -1,17 +1,16 @@
+import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { CSSProperties } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
 import { BREAKPOINTS } from '../constants';
-import { forBreakpoints } from '../utils/forBreakpoints';
 import { HeadingTypes } from '../types';
+import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   text: string,
   light?: boolean,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
-  styles?: (CSSProperties | false)[]
-}
+  styles?: StyleDeclaration
+};
 
 const headingStyles = (light: boolean): { [T in HeadingTypes]: CSSProperties } => {
   const rgb = light ? '255, 255, 255' : '0, 0, 0';
@@ -43,7 +42,7 @@ export const Heading = ({ text, light = false, breakpoints, styles = [] }: Props
   const styleSheet = StyleSheet.create({
     heading: {
       display: 'block',
-      ...forBreakpoints(breakpoints, value => style[value])
+      ...forBreakpoints(breakpoints, (value) => style[value])
     }
   });
 

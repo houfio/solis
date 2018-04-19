@@ -1,10 +1,10 @@
-import { column } from './renderers/column';
-import { ContentBlockRenderer, State } from './types';
-import { button } from './renderers/button';
-import { text } from './renderers/text';
 import { ContentBlockTypes } from './api/ContentBlock';
 import { PageGuardTypes } from './api/Page';
+import { button } from './renderers/button';
+import { column } from './renderers/column';
 import { hero } from './renderers/hero';
+import { text } from './renderers/text';
+import { ContentBlockRenderer, State } from './types';
 
 export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRenderer<T> } = {
   text,
@@ -14,8 +14,8 @@ export const BLOCK_RENDERERS: { [T in keyof ContentBlockTypes]: ContentBlockRend
 };
 
 export const GUARDS: { [T in PageGuardTypes]: (state: State) => boolean } = {
-  auth: state => Boolean(state.auth.token),
-  no_auth: state => !Boolean(state.auth.token)
+  auth: (state) => Boolean(state.auth.token),
+  no_auth: (state) => !Boolean(state.auth.token)
 };
 
 export const API_URL = '/api';

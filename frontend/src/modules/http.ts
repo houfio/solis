@@ -1,14 +1,14 @@
-import { createModule } from '../utils/createModule';
 import { Queue } from '../types';
+import { createModule } from '../utils/createModule';
 
 export const http = createModule(
   'http',
   {
     queue: {}
   },
-  createAction => ({
+  (createAction) => ({
     increaseQueue: createAction<Queue>('INCREASE_QUEUE')(
-      payload => payload,
+      (payload) => payload,
       (action, state) => {
         const current = state.queue[action.queue] || 0;
 
@@ -21,7 +21,7 @@ export const http = createModule(
       }
     ),
     decreaseQueue: createAction<Queue>('DECREASE_QUEUE')(
-      payload => payload,
+      (payload) => payload,
       (action, state) => {
         const current = state.queue[action.queue] || 0;
 

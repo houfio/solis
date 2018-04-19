@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import { RouterState } from 'react-router-redux';
-import { FormState } from 'redux-form';
 import { Action as ReduxAction } from 'redux';
+import { FormState } from 'redux-form';
 
-import { Page } from './api/Page';
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
 import { Menu } from './api/Menu';
+import { Page } from './api/Page';
 
 export type State = {
   router: RouterState,
@@ -77,7 +77,7 @@ export type PromisePayload<B> = B extends AsyncPayload<infer T> ? Omit<B, keyof 
 export type DispatchedPromise<B> = B extends AsyncPayload<infer T> ? Promise<T> : B;
 
 export type CreateAction<P> =
-  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<PromisePayload<B>, P>) => Action<U, DispatchedPromise<B>>
+  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<PromisePayload<B>, P>) => Action<U, DispatchedPromise<B>>;
 
 export type Actions = {
   [type: string]: Action<any, any>
