@@ -69,7 +69,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         cursor: 'pointer',
         transition: 'opacity .2s ease',
         ':hover': {
-          opacity: '.5'
+          opacity: .5
         }
       },
       logo: {
@@ -98,7 +98,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         lineHeight: 1,
         transition: 'opacity .2s ease',
         ':hover': {
-          opacity: '.5'
+          opacity: .5
         },
         ':last-of-type': {
           marginRight: '-1rem'

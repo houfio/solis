@@ -44,7 +44,7 @@ export const Menu = connect(class extends Component<typeof props> {
         cursor: 'pointer',
         transition: 'opacity .2s ease',
         ':hover': {
-          opacity: '.5'
+          opacity: .5
         }
       }
     });

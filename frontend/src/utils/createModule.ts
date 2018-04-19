@@ -1,26 +1,27 @@
-import { ActionReducers, CreateAction, Module, State } from '../types';
+import { Actions, CreateAction, Module, State } from '../types';
 
-export const createModule =
-  <T extends ActionReducers,
-    M extends keyof State,
-    S extends State[M]>(name: M,
-                        initialState: State[M],
-                        getActions: (createAction: CreateAction<S>) => T): Module<S, T> => ({
+export const createModule = <N extends keyof State, A extends Actions>(
+  name: N,
+  initialState: State[N],
+  getAction: (createAction: CreateAction<State[N]>) => A): Module<N, A> => {
+  let reducers = {};
+  const actions = getAction(type => (map, reduce) => {
+    type = `@@${name}/${type}`;
+    reducers = {
+      ...reducers,
+      [type]: reduce
+    };
+
+    return payload => ({
+      type,
+      ...map(payload!) as any
+    })
+  });
+
+  return {
     name,
     initialState,
-    ...getActions((type) => (getAction, reduce) => {
-      type = `@@${name}/${type}`;
-
-      const actionReducer: any = (payload?: any) => {
-        return {
-          type,
-          ...getAction(payload) as any
-        };
-      };
-
-      actionReducer.type = type;
-      actionReducer.reduce = reduce;
-
-      return actionReducer;
-    }) as any
-  });
+    reducers,
+    ...actions as any
+  }
+};
