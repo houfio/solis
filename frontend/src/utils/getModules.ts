@@ -1,6 +1,6 @@
 import { auth } from '../modules/auth';
-import { http } from '../modules/http';
 import { content } from '../modules/content';
+import { http } from '../modules/http';
 
 export const getModules = () => [
   auth,

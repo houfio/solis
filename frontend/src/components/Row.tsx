@@ -1,12 +1,12 @@
+import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { CSSProperties, ReactNode } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
+import { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode,
-  styles?: (CSSProperties | false)[],
+  styles?: StyleDeclaration,
   tag?: string
-}
+};
 
 export const Row = ({ children, styles = [], tag: Tag = 'div' }: Props) => {
   const styleSheet = StyleSheet.create({

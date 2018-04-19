@@ -1,6 +1,6 @@
-import { Identifiable } from './Identifiable';
-import { Hidable } from './Hidable';
 import { BREAKPOINTS } from '../constants';
+import { Hidable } from './Hidable';
+import { Identifiable } from './Identifiable';
 
 export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable & Hidable & {
   page_id?: number,
@@ -9,7 +9,7 @@ export type ContentBlock<T extends keyof ContentBlockTypes = any> = Identifiable
   order: number,
   children: ContentBlock[],
   data: ContentBlockTypes[T]
-}
+};
 
 export type ContentBlockTypes = {
   text: {
@@ -30,4 +30,4 @@ export type ContentBlockTypes = {
     alignment: number,
     height: number
   }
-}
+};

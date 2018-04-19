@@ -1,10 +1,10 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
-import { createRenderer } from '../utils/createRenderer';
-import { RendererProps } from '../types';
 import { Container } from '../components/Container';
+import { RendererProps } from '../types';
+import { createRenderer } from '../utils/createRenderer';
 
 export const hero = createRenderer(class extends Component<RendererProps<'hero'>> {
   public render() {
@@ -37,7 +37,7 @@ export const hero = createRenderer(class extends Component<RendererProps<'hero'>
           <Container styles={[styleSheet.container]}>
             {children
               .sort((a, b) => a.order - b.order)
-              .map(child => (
+              .map((child) => (
                 child.render()
               ))}
           </Container>

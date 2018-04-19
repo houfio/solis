@@ -1,16 +1,16 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
-
-import { withProps } from '../utils/withProps';
 import { push } from 'react-router-redux';
+
 import { Page } from '../api/Page';
 import { handle } from '../utils/handle';
+import { withProps } from '../utils/withProps';
 
 type Props = {
   last: boolean,
   page?: Page
-}
+};
 
 const getActionCreators = () => ({
   push

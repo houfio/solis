@@ -1,15 +1,15 @@
 import { Component } from 'react';
 
-import { withProps } from '../utils/withProps';
-import { State } from '../types';
-import { content } from '../modules/content';
-import { findByValue } from '../utils/findByValue';
-import { findByKey } from '../utils/findByKey';
 import { BLOCK_RENDERERS } from '../constants';
+import { content } from '../modules/content';
+import { State } from '../types';
+import { findByKey } from '../utils/findByKey';
+import { findByValue } from '../utils/findByValue';
+import { withProps } from '../utils/withProps';
 
 type Props = {
   pageId: number
-}
+};
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages,
@@ -53,7 +53,7 @@ export const ContentPage = connect(class extends Component<typeof props> {
 
     return pageBlocks
       .sort((a, b) => a.order - b.order)
-      .map(block => {
+      .map((block) => {
         const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
         if (!renderer) {

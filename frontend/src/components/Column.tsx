@@ -1,24 +1,23 @@
+import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { CSSProperties, ReactNode } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
+import { ReactNode } from 'react';
 
 import { BREAKPOINTS } from '../constants';
 import { forBreakpoints } from '../utils/forBreakpoints';
-import { isNumber } from 'util';
 
 type Props = {
   children: ReactNode,
   breakpoints: { [B in keyof typeof BREAKPOINTS]?: { size?: number, offset?: number } | number },
-  styles?: (CSSProperties | false)[],
+  styles?: StyleDeclaration,
   tag?: string
-}
+};
 
 export const Column = ({ children, breakpoints, styles = [], tag: Tag = 'div' }: Props) => {
   const styleSheet = StyleSheet.create({
     column: {
       flex: '0 0 100%',
-      ...forBreakpoints(breakpoints, value => {
-        if (isNumber(value)) {
+      ...forBreakpoints(breakpoints, (value) => {
+        if (typeof value === 'number') {
           return {
             flexBasis: value && `${100 / 12 * value}%`,
           };

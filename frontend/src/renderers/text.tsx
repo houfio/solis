@@ -1,12 +1,12 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 import * as ReactMarkdown from 'react-markdown';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
-import { createRenderer } from '../utils/createRenderer';
-import { RendererProps } from '../types';
 import { Heading } from '../components/Heading';
 import { PHONE } from '../constants';
+import { RendererProps } from '../types';
+import { createRenderer } from '../utils/createRenderer';
 
 export const text = createRenderer(class extends Component<RendererProps<'text'>> {
   public render() {

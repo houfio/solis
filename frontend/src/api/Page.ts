@@ -1,5 +1,5 @@
-import { Identifiable } from './Identifiable';
 import { Hidable } from './Hidable';
+import { Identifiable } from './Identifiable';
 
 export type Page = Identifiable & Hidable & {
   name: string,

@@ -1,14 +1,14 @@
-import { CSSProperties } from 'react';
+import { CSSProperties } from 'aphrodite/no-important';
 
-import { forBreakpoint } from './forBreakpoint';
 import { BREAKPOINTS } from '../constants';
+import { forBreakpoint } from './forBreakpoint';
 
 export const forBreakpoints =
   <T, B extends keyof typeof BREAKPOINTS>(breakpoints: { [N in B]?: T },
                                           getProperties: (value: T, breakpoint: B) => CSSProperties) => {
     let properties: CSSProperties = {};
 
-    for (let breakpoint in breakpoints) {
+    for (const breakpoint in breakpoints) {
       if (breakpoints.hasOwnProperty(breakpoint)) {
         properties = {
           ...properties,

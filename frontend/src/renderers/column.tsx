@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import { createRenderer } from '../utils/createRenderer';
-import { Row } from '../components/Row';
 import { Column } from '../components/Column';
+import { Row } from '../components/Row';
 import { RendererProps } from '../types';
+import { createRenderer } from '../utils/createRenderer';
 
 export const column = createRenderer(class extends Component<RendererProps<'column'>> {
   public render() {
@@ -17,7 +17,7 @@ export const column = createRenderer(class extends Component<RendererProps<'colu
       <Row>
         {children
           .sort((a, b) => a.order - b.order)
-          .map(child => {
+          .map((child) => {
             const index = child.data;
             let offset = 0;
 

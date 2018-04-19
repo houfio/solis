@@ -1,22 +1,22 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
+import { createLocation } from 'history';
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import { createLocation } from 'history';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
-import { withProps } from '../utils/withProps';
-import { State } from '../types';
-import { content } from '../modules/content';
-import { findByValue } from '../utils/findByValue';
-import { ContentPage } from './ContentPage';
-import { GUARDS } from '../constants';
-import { Navigation } from './Navigation';
-import { Footer } from './Footer';
-import { Container } from './Container';
-import { Spinner } from './Spinner';
 import { PageGuard } from '../api/Page';
+import { GUARDS } from '../constants';
+import { content } from '../modules/content';
+import { State } from '../types';
+import { findByValue } from '../utils/findByValue';
+import { withProps } from '../utils/withProps';
 import { Breadcrumbs } from './Breadcrumbs';
+import { Container } from './Container';
+import { ContentPage } from './ContentPage';
+import { Footer } from './Footer';
+import { Navigation } from './Navigation';
 import { Progress } from './Progress';
+import { Spinner } from './Spinner';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
@@ -69,7 +69,7 @@ export const Root = connect(class extends Component<typeof props> {
           <Breadcrumbs/>
           <Container>
             <Switch location={location || createLocation(window.location.href)}>
-              {pages.map(page => {
+              {pages.map((page) => {
                 const redirect = this.getRedirect(page.guards);
 
                 return (
@@ -93,7 +93,7 @@ export const Root = connect(class extends Component<typeof props> {
       return;
     }
 
-    for (let routeGuard of routeGuards) {
+    for (const routeGuard of routeGuards) {
       const target = findByValue(routeGuard.target, 'id', pages);
       const guard = GUARDS[routeGuard.type];
 
@@ -105,5 +105,5 @@ export const Root = connect(class extends Component<typeof props> {
     }
 
     return;
-  };
+  }
 });

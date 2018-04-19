@@ -16,24 +16,22 @@
   ],
   "scripts": {
     "start": "BROWSER=none react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom"
+    "build": "react-scripts-ts build"
   },
   "dependencies": {
-    "aphrodite": "^1.2.5",
+    "aphrodite": "^2.1.1",
     "normalize.css": "^8.0.0",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-markdown": "^3.3.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-redux": "^5.0.0-alpha.9",
-    "redux": "^3.7.2",
+    "redux": "^4.0.0",
     "redux-form": "^7.3.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
-    "@types/aphrodite": "^0.5.9",
     "@types/jest": "^22.2.3",
     "@types/react": "^16.3.11",
     "@types/react-dom": "^16.0.5",
@@ -41,7 +39,7 @@
     "@types/react-router": "^4.0.23",
     "@types/react-router-redux": "^5.0.13",
     "@types/redux-form": "^7.2.3",
-    "@types/redux-logger": "^3.0.5",
+    "@types/redux-logger": "^3.0.6",
     "react-scripts-ts": "^2.15.1",
     "redux-logger": "^3.0.6",
     "typescript": "^2.8.1"

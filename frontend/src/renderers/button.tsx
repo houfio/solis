@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import { push } from 'react-router-redux';
 
-import { createRenderer } from '../utils/createRenderer';
-import { RendererProps, State } from '../types';
 import { Button } from '../components/Button';
-import { withProps } from '../utils/withProps';
+import { RendererProps, State } from '../types';
+import { createRenderer } from '../utils/createRenderer';
 import { findByValue } from '../utils/findByValue';
+import { withProps } from '../utils/withProps';
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages
@@ -47,5 +47,5 @@ export const button = createRenderer(connect(class extends Component<typeof prop
     }
 
     push(page.path);
-  };
+  }
 }));

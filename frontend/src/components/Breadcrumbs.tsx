@@ -1,12 +1,12 @@
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { css, StyleSheet } from 'aphrodite/no-important';
 
-import { withProps } from '../utils/withProps';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
-import { Container } from './Container';
+import { withProps } from '../utils/withProps';
 import { Breadcrumb } from './Breadcrumb';
+import { Container } from './Container';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
