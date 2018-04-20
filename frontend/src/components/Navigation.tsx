@@ -83,7 +83,12 @@ export const Navigation = connect(class extends Component<typeof props> {
       text: {
         display: 'none',
         marginLeft: '1rem',
-        lineHeight: '1',
+        background: 'url(/static/text.png)',
+        backgroundSize: '100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        height: '3rem',
+        width: '7rem',
         ...forBreakpoint(TABLET_LANDSCAPE, {
           display: 'block'
         })
@@ -158,7 +163,7 @@ export const Navigation = connect(class extends Component<typeof props> {
             <Container styles={[styleSheet.container]}>
               <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
                 <div className={css(styleSheet.logo)}/>
-                <span className={css(styleSheet.text)}>Jong Nederland</span>
+                <div className={css(styleSheet.text)}/>
               </div>
               <div className={css(styleSheet.push)}/>
               {primaryMenu.items
