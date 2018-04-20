@@ -1,11 +1,11 @@
 import { CSSProperties } from 'aphrodite/no-important';
 
-import { BREAKPOINTS } from '../constants';
+import { Breakpoint } from '../types';
 import { forBreakpoint } from './forBreakpoint';
 
 export const forBreakpoints =
-  <T, B extends keyof typeof BREAKPOINTS>(breakpoints: { [N in B]?: T },
-                                          getProperties: (value: T, breakpoint: B) => CSSProperties) => {
+  <T, B extends Breakpoint>(breakpoints: { [N in B]?: T },
+                            getProperties: (value: T, breakpoint: B) => CSSProperties) => {
     let properties: CSSProperties = {};
 
     for (const breakpoint in breakpoints) {

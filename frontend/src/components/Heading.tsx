@@ -1,14 +1,13 @@
 import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
-import { BREAKPOINTS } from '../constants';
-import { HeadingTypes } from '../types';
+import { Breakpoint, HeadingTypes } from '../types';
 import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   text: string,
   light?: boolean,
-  breakpoints: { [B in keyof typeof BREAKPOINTS]?: HeadingTypes },
+  breakpoints: { [B in Breakpoint]?: HeadingTypes },
   styles?: StyleDeclaration
 };
 

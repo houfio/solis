@@ -14,7 +14,7 @@ class Column extends BlockData
     public $size;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="integer")
      */
     public $breakpoint;
 }

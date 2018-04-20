@@ -6,6 +6,7 @@ import { FormState } from 'redux-form';
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
 import { Menu } from './api/Menu';
 import { Page } from './api/Page';
+import { BREAKPOINTS } from './constants';
 
 export type State = {
   router: RouterState,
@@ -39,6 +40,8 @@ export type Queue = {
 export type ButtonTypes = 'primary' | 'secondary';
 
 export type HeadingTypes = 'bold' | 'thin' | 'subtle';
+
+export type Breakpoint = keyof typeof BREAKPOINTS;
 
 export type ApiResponse<T> = {
   success: boolean,

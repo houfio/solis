@@ -1,8 +1,9 @@
 import { CSSProperties } from 'aphrodite/no-important';
 
 import { BREAKPOINTS } from '../constants';
+import { Breakpoint } from '../types';
 
-export const forBreakpoint = (breakpoint: keyof typeof BREAKPOINTS, style: CSSProperties) => {
+export const forBreakpoint = (breakpoint: Breakpoint, style: CSSProperties) => {
   const size = BREAKPOINTS[breakpoint];
 
   if (size !== '0') {

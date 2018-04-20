@@ -2,12 +2,12 @@ import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { ReactNode } from 'react';
 
-import { BREAKPOINTS } from '../constants';
+import { Breakpoint } from '../types';
 import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   children: ReactNode,
-  breakpoints: { [B in keyof typeof BREAKPOINTS]?: { size?: number, offset?: number } | number },
+  breakpoints: { [B in Breakpoint]?: { size?: number, offset?: number } | number },
   styles?: StyleDeclaration,
   tag?: string
 };
