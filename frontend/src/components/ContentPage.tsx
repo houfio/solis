@@ -1,4 +1,6 @@
+import * as React from 'react';
 import { Component } from 'react';
+import { Helmet } from 'react-helmet';
 
 import { BLOCK_RENDERERS } from '../constants';
 import { content } from '../modules/content';
@@ -51,16 +53,21 @@ export const ContentPage = connect(class extends Component<typeof props> {
       return false;
     }
 
-    return pageBlocks
-      .sort((a, b) => a.order - b.order)
-      .map((block) => {
-        const renderer = findByKey(block.type, BLOCK_RENDERERS);
+    return (
+      <>
+        <Helmet title={`${page.name} / Jong Nederland`} />
+        {pageBlocks
+          .sort((a, b) => a.order - b.order)
+          .map((block) => {
+            const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
-        if (!renderer) {
-          return false;
-        }
+            if (!renderer) {
+              return false;
+            }
 
-        return renderer(block);
-      });
+            return renderer(block);
+          })}
+      </>
+    );
   }
 });
