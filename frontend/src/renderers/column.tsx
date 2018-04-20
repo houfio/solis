@@ -3,13 +3,22 @@ import { Component } from 'react';
 
 import { Column } from '../components/Column';
 import { Row } from '../components/Row';
-import { RendererProps } from '../types';
+import { BREAKPOINTS } from '../constants';
+import { Breakpoint, RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
 
 export const column = createRenderer(class extends Component<RendererProps<'column'>> {
   public render() {
     const { children, data: { size, breakpoint } } = this.props;
 
+    let breakpointIndex = breakpoint;
+    const breakpoints = Object.keys(BREAKPOINTS);
+
+    if (breakpointIndex >= breakpoints.length) {
+      breakpointIndex = 0;
+    }
+
+    const namedBreakpoint = BREAKPOINTS[breakpoints[breakpointIndex] as Breakpoint];
     const childSize = 12 / size;
     let lastColumn = 0;
 
@@ -28,7 +37,7 @@ export const column = createRenderer(class extends Component<RendererProps<'colu
             lastColumn = index;
 
             return (
-              <Column key={index} breakpoints={{ [breakpoint]: { size: childSize, offset } }}>
+              <Column key={index} breakpoints={{ [namedBreakpoint]: { size: childSize, offset } }}>
                 {child.render()}
               </Column>
             );

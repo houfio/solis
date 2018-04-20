@@ -1,4 +1,3 @@
-import { BREAKPOINTS } from '../constants';
 import { Hidable } from './Hidable';
 import { Identifiable } from './Identifiable';
 
@@ -23,7 +22,7 @@ export type ContentBlockTypes = {
   },
   column: {
     size: number,
-    breakpoint: keyof typeof BREAKPOINTS;
+    breakpoint: number
   },
   hero: {
     image: string,
