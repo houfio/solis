@@ -17,7 +17,8 @@ import { Menu } from './Menu';
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages,
   menus: state.content.menus,
-  openMenu: state.content.openMenu
+  openMenu: state.content.openMenu,
+  user: state.auth.user
 });
 
 const getActionCreators = () => ({
@@ -31,8 +32,8 @@ export const Navigation = connect(class extends Component<typeof props> {
   private menuNodes: { [key: number]: HTMLElement | undefined } = {};
 
   public render() {
-    const { pages, menus, openMenu } = this.props;
-    const { setOpenMenu } = this.props;
+    const { pages, menus, openMenu, user } = this.props;
+    const { setOpenMenu, push } = this.props;
 
     if (!pages || !menus) {
       return false;
@@ -52,7 +53,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         position: 'fixed',
         width: '100%',
         top: '0',
-        color: 'white',
+        color: '#fff',
         zIndex: 2
       },
       bar: {
@@ -72,10 +73,15 @@ export const Navigation = connect(class extends Component<typeof props> {
           opacity: .5
         }
       },
+      image: {
+        flexShrink: 0,
+        backgroundSize: '100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      },
       logo: {
         display: 'block',
-        background: 'url(/static/logo.png)',
-        backgroundSize: '100%',
+        backgroundImage: 'url(/static/logo.png)',
         width: '3rem',
         height: '3rem',
         margin: '1rem 0'
@@ -83,10 +89,7 @@ export const Navigation = connect(class extends Component<typeof props> {
       text: {
         display: 'none',
         marginLeft: '1rem',
-        background: 'url(/static/text.png)',
-        backgroundSize: '100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        backgroundImage: 'url(/static/text.png)',
         height: '3rem',
         width: '7rem',
         ...forBreakpoint(TABLET_LANDSCAPE, {
@@ -162,8 +165,8 @@ export const Navigation = connect(class extends Component<typeof props> {
           <div className={css(styleSheet.bar)}>
             <Container styles={[styleSheet.container]}>
               <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
-                <div className={css(styleSheet.logo)}/>
-                <div className={css(styleSheet.text)}/>
+                <div className={css(styleSheet.image, styleSheet.logo)}/>
+                <div className={css(styleSheet.image, styleSheet.text)}/>
               </div>
               <div className={css(styleSheet.push)}/>
               {primaryMenu.items
@@ -194,6 +197,9 @@ export const Navigation = connect(class extends Component<typeof props> {
                     </div>
                   </Fragment>
                 ))}
+              {user && user.admin && (
+                <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
+              )}
             </Container>
           </div>
           <div

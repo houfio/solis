@@ -65,7 +65,7 @@ class User
 
     public function __construct()
     {
-        $this->creation_date = new DateTime();
+        $this->creation_date = new DateTime('now');
         $this->tokens = new ArrayCollection();
     }
 }

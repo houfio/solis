@@ -6,10 +6,12 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import { PageGuard } from '../api/Page';
 import { GUARDS } from '../constants';
+import { auth } from '../modules/auth';
 import { content } from '../modules/content';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
 import { withProps } from '../utils/withProps';
+import { Admin } from './Admin';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { ContentPage } from './ContentPage';
@@ -21,23 +23,30 @@ import { Spinner } from './Spinner';
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
   pages: state.content.pages,
-  queue: state.http.queue,
+  queue: state.http,
+  token: state.auth.token,
   state
 });
 
 const getActionCreators = () => ({
   getPages: content.getPages,
-  getMenus: content.getMenus
+  getMenus: content.getMenus,
+  getUser: auth.getUser
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
 export const Root = connect(class extends Component<typeof props> {
   public componentDidMount() {
-    const { getPages, getMenus } = this.props;
+    const { token } = this.props;
+    const { getPages, getMenus, getUser } = this.props;
 
     getPages();
     getMenus();
+
+    if (token) {
+      getUser({ token });
+    }
   }
 
   public render() {
@@ -64,24 +73,31 @@ export const Root = connect(class extends Component<typeof props> {
     return (
       <div className={css(styleSheet.body)}>
         <Progress/>
-        <Navigation/>
-        <main className={css(styleSheet.main)}>
-          <Breadcrumbs/>
-          <Container>
-            <Switch location={location || createLocation(window.location.href)}>
-              {pages.map((page) => {
-                const redirect = this.getRedirect(page.guards);
+        <Switch location={location || createLocation(window.location.href)}>
+          <Route path="/admin" exact={true} component={Admin}/>
+          <Route path="/">
+            <>
+              <Navigation/>
+              <main className={css(styleSheet.main)}>
+                <Breadcrumbs/>
+                <Container>
+                  <Switch>
+                    {pages.map((page) => {
+                      const redirect = this.getRedirect(page.guards);
 
-                return (
-                  <Route key={page.id} path={page.path} exact={true}>
-                    {redirect || <ContentPage pageId={page.id}/>}
-                  </Route>
-                );
-              })}
-            </Switch>
-          </Container>
-        </main>
-        <Footer/>
+                      return (
+                        <Route key={page.id} path={page.path} exact={true}>
+                          {redirect || <ContentPage pageId={page.id}/>}
+                        </Route>
+                      );
+                    })}
+                  </Switch>
+                </Container>
+              </main>
+              <Footer/>
+            </>
+          </Route>
+        </Switch>
       </div>
     );
   }

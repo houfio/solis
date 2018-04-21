@@ -6,12 +6,14 @@ import { FormState } from 'redux-form';
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
 import { Menu } from './api/Menu';
 import { Page } from './api/Page';
+import { User } from './api/User';
 import { BREAKPOINTS } from './constants';
 
 export type State = {
   router: RouterState,
   form: FormState,
   auth: {
+    user?: User,
     token?: string
   },
   content: {
@@ -23,18 +25,12 @@ export type State = {
     openMenu?: number
   },
   http: {
-    queue: {
-      [T in Queue['queue']]?: number
-    }
+    [queue: string]: number
   }
 };
 
 export type Token = {
   token: string
-};
-
-export type Queue = {
-  queue: 'all' | 'page'
 };
 
 export type ButtonTypes = 'primary' | 'secondary';
@@ -43,11 +39,15 @@ export type HeadingTypes = 'bold' | 'thin' | 'subtle';
 
 export type Breakpoint = keyof typeof BREAKPOINTS;
 
-export type ApiResponse<T> = {
-  success: boolean,
-  data?: T,
-  code?: number,
-  message?: string
+export type ApiResponseSuccess<T> = {
+  success: true,
+  data: T
+};
+
+export type ApiResponseFailure = {
+  success: false,
+  code: number,
+  message: string
 };
 
 export type RendererProps<T extends keyof ContentBlockTypes> = {

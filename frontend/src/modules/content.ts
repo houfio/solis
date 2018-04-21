@@ -18,20 +18,20 @@ export const content = createModule(
         promise: createApiRequest<Page[]>('get', 'pages'),
         queue: 'all'
       }),
-      (action) => ({
-        pages: action.data
+      ({ data }) => ({
+        pages: data
       })
     ),
     getContentBlocks: createAction<{ pageId: number }>('GET_CONTENT_BLOCKS')(
-      (payload) => ({
-        pageId: payload.pageId,
-        promise: createApiRequest<ContentBlock[]>('get', `pages/${payload.pageId}`),
+      ({ pageId }) => ({
+        pageId,
+        promise: createApiRequest<ContentBlock[]>('get', `pages/${pageId}`),
         queue: 'page'
       }),
-      (action, state) => ({
+      ({ pageId, data }, state) => ({
         contentBlocks: {
           ...state.contentBlocks,
-          [action.pageId]: action.data!
+          [pageId]: data
         }
       })
     ),
@@ -40,14 +40,14 @@ export const content = createModule(
         promise: createApiRequest<Menu[]>('get', 'menus'),
         queue: 'all'
       }),
-      (action) => ({
-        menus: action.data
+      ({ data }) => ({
+        menus: data
       })
     ),
     setOpenMenu: createAction<{ menuIndex?: number }>('SET_OPEN_MENU')(
       (payload) => payload,
-      (action, state) => ({
-        openMenu: state.openMenu === action.menuIndex ? undefined : action.menuIndex
+      ({ menuIndex }, { openMenu }) => ({
+        openMenu: openMenu === menuIndex ? undefined : menuIndex
       })
     )
   })

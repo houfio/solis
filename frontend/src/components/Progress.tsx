@@ -11,7 +11,7 @@ type LocalState = {
 };
 
 const mapStateToProps = (state: State) => ({
-  queue: state.http.queue
+  queue: state.http
 });
 
 const { props, connect } = withProps()(mapStateToProps);
@@ -59,7 +59,7 @@ export const Progress = connect(class extends Component<typeof props, LocalState
         position: 'fixed',
         height: '4px',
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
         zIndex: 3,
         opacity: 0,
         transition: 'opacity .2s ease .2s, transform .2s ease',

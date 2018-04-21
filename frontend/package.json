@@ -19,6 +19,9 @@
     "build": "react-scripts-ts build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/fontawesome-free-solid": "^5.0.10",
+    "@fortawesome/react-fontawesome": "0.0.18",
     "aphrodite": "^2.2.0",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",

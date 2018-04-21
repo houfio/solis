@@ -30,7 +30,7 @@ export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) 
     button: {
       display: 'inline-block',
       padding: '.75rem',
-      color: 'white',
+      color: '#fff',
       cursor: 'pointer',
       borderRadius: '.25rem',
       transition: 'background-color .2s ease',

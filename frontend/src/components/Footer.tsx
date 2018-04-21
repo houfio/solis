@@ -7,7 +7,7 @@ export const Footer = () => {
   const styleSheet = StyleSheet.create({
     footer: {
       padding: '2rem 0',
-      color: 'white',
+      color: '#fff',
       backgroundColor: '#414756'
     }
   });

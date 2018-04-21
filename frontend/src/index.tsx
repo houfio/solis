@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import 'whatwg-fetch';
 
 import { Root } from './components/Root';
+import './icons';
 import { createStore } from './utils/createStore';
 
 const { store, history } = createStore();
