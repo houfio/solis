@@ -48,7 +48,7 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         transition: 'all .2s ease',
         ':hover': {
           color: '#414756',
-          backgroundColor: '#fff'
+          backgroundColor: 'rgba(255, 255, 255, .8)'
         }
       },
       itemIcon: {
@@ -61,7 +61,10 @@ export const SidebarItem = connect(class extends Component<typeof props> {
       active: {
         color: '#414756',
         backgroundColor: '#fff',
-        cursor: 'default'
+        cursor: 'default',
+        ':hover': {
+          backgroundColor: '#fff'
+        }
       }
     });
 
@@ -70,7 +73,7 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         {({ match }) => (
           <div
             className={css(styleSheet.item, Boolean(match) && styleSheet.active)}
-            onClick={handle(push, path)}
+            onClick={Boolean(match) ? undefined : handle(push, path)}
           >
             <FontAwesomeIcon icon={icon} className={css(styleSheet.itemIcon)}/>
             <span className={css(styleSheet.itemText)}>{name}</span>
