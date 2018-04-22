@@ -34,7 +34,7 @@ export type Token = {
   token: string
 };
 
-export type ButtonTypes = 'primary' | 'secondary';
+export type ButtonTypes = 'primary' | 'secondary' | 'tertiary';
 
 export type HeadingTypes = 'bold' | 'thin' | 'subtle';
 

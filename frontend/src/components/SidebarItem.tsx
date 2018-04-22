@@ -56,7 +56,8 @@ export const SidebarItem = connect(class extends Component<typeof props> {
       },
       itemText: {
         transition: 'opacity .2s ease',
-        opacity: collapsed ? 0 : 1
+        opacity: collapsed ? 0 : 1,
+        whiteSpace: 'nowrap'
       },
       active: {
         color: '#414756',

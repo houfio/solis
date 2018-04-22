@@ -22,6 +22,13 @@ const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
     ':hover': {
       backgroundColor: '#303540'
     }
+  },
+  tertiary: {
+    color: '#303540',
+    backgroundColor: '#fff',
+    ':hover': {
+      backgroundColor: '#eee'
+    }
   }
 };
 
@@ -32,7 +39,7 @@ export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) 
       padding: '.75rem',
       color: '#fff',
       cursor: 'pointer',
-      borderRadius: '.25rem',
+      borderRadius: '.5rem',
       transition: 'background-color .2s ease',
       ...buttonStyles[type]
     }

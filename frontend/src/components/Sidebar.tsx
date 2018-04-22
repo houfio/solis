@@ -1,7 +1,6 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { push } from 'react-router-redux';
 
 import { content } from '../modules/content';
 import { State } from '../types';
@@ -14,8 +13,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const getActionCreators = () => ({
-  toggleCollapsed: content.toggleCollapsed,
-  push
+  toggleCollapsed: content.toggleCollapsed
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
@@ -23,15 +21,18 @@ const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 export const Sidebar = connect(class extends Component<typeof props> {
   public render() {
     const { collapsed } = this.props;
-    const { toggleCollapsed, push } = this.props;
+    const { toggleCollapsed } = this.props;
 
     const styleSheet = StyleSheet.create({
       sidebar: {
-        position: 'relative',
+        position: 'fixed',
         width: collapsed ? '75px' : '300px',
+        height: '100%',
         color: '#fff',
-        backgroundColor: '#414756',
-        transition: 'width .2s ease'
+        background: 'linear-gradient(145deg, rgba(65,71,86,1) 0%, rgba(48,53,64,1) 100%);',
+        transition: 'width .2s ease',
+        flexShrink: 0,
+        zIndex: 50
       },
       inner: {
         display: 'flex',
@@ -65,11 +66,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
       brand: {
         display: 'flex',
         margin: collapsed ? '1rem .8rem' : '4rem 3.5rem',
-        cursor: 'pointer',
-        transition: 'all .2s ease',
-        ':hover': {
-          opacity: .5
-        }
+        transition: 'margin .2s ease'
       },
       image: {
         flexShrink: 0,
@@ -89,18 +86,24 @@ export const Sidebar = connect(class extends Component<typeof props> {
         marginLeft: '1rem',
         transition: 'opacity .2s ease',
         opacity: collapsed ? 0 : 1
+      },
+      items: {
+        flex: 1
       }
     });
 
     return (
       <nav className={css(styleSheet.sidebar)}>
         <div className={css(styleSheet.inner)}>
-          <div className={css(styleSheet.brand)} onClick={handle(push, '/')}>
+          <div className={css(styleSheet.brand)}>
             <div className={css(styleSheet.image, styleSheet.brandIcon)}/>
             <div className={css(styleSheet.image, styleSheet.brandText)}/>
           </div>
-          <SidebarItem path="/admin" name="Dashboard" icon="chart-pie"/>
-          <SidebarItem path="/admin/test" name="Test" icon="coffee"/>
+          <div className={css(styleSheet.items)}>
+            <SidebarItem path="/admin" name="Dashboard" icon="chart-pie"/>
+            <SidebarItem path="/admin/pages" name="Pagina's" icon="columns"/>
+          </div>
+          <SidebarItem path="/" name="Terug naar site" icon="sign-out-alt"/>
         </div>
         <div className={css(styleSheet.arrow)} onClick={handle(toggleCollapsed, undefined)}/>
       </nav>
