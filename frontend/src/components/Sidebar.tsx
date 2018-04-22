@@ -97,7 +97,7 @@ export const Sidebar = connect(class extends Component<typeof props, LocalState>
         width: collapsed ? '1rem' : '220px',
         height: '1rem',
         marginLeft: collapsed ? '14px' : '25px',
-        marginBottom: collapsed ? '10px' : '15px',
+        marginBottom: collapsed ? '10px' : '20px',
         padding: '15px',
         cursor: 'pointer',
         borderRadius: '.5rem',
