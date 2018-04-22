@@ -31,20 +31,19 @@ export const AdminPage = connect(class extends Component<typeof props> {
         alignItems: 'center',
         padding: '0 4rem',
         backgroundColor: '#fff',
-        width: `calc(100% - 8rem - ${collapsed ? '75px' : '300px'})`,
+        width: `calc(100% - ${collapsed ? '75px' : '300px'})`,
         lineHeight: 1,
         height: '8rem',
-        transition: 'width .2s ease',
-        boxShadow: '0 0 10px 0 rgba(0, 0, 0, .15)'
+        transition: 'width .2s ease'
       },
       heading: {
         flex: 1
       },
       content: {
-        width: 'calc(100% - 8rem)',
+        width: 'calc(100%)',
         marginTop: '8rem',
         backgroundColor: '#eee',
-        minHeight: 'calc(100vh - 12rem)',
+        minHeight: 'calc(100vh - 8rem)',
         padding: '2rem 4rem'
       }
     });

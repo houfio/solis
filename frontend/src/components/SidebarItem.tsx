@@ -37,19 +37,18 @@ export const SidebarItem = connect(class extends Component<typeof props> {
       item: {
         display: 'flex',
         flexWrap: 'nowrap',
-        width: collapsed ? '1rem' : '220px',
-        height: '1rem',
-        marginLeft: collapsed ? '14px' : '25px',
-        marginBottom: collapsed ? '10px' : '20px',
-        padding: '15px',
+        width: collapsed ? '3rem' : '250px',
+        height: '3rem',
+        marginLeft: collapsed ? '13px' : '25px',
+        marginBottom: collapsed ? '13px' : '25px',
+        padding: '1rem',
         cursor: 'pointer',
         borderRadius: '.5rem',
         lineHeight: 1,
         transition: 'all .2s ease',
         ':hover': {
           color: '#414756',
-          backgroundColor: 'rgba(255, 255, 255, .8)',
-          boxShadow: '0 0 10px 0 rgba(0, 0, 0, .15)'
+          backgroundColor: 'rgba(255, 255, 255, .8)'
         }
       },
       itemIcon: {
@@ -64,10 +63,8 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         color: '#414756',
         backgroundColor: '#fff',
         cursor: 'default',
-        boxShadow: '0 0 25px 0 rgba(0, 0, 0, .5)',
         ':hover': {
-          backgroundColor: '#fff',
-          boxShadow: '0 0 25px 0 rgba(0, 0, 0, .5)'
+          backgroundColor: '#fff'
         }
       }
     });

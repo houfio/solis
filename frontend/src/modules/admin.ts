@@ -3,8 +3,7 @@ import { createModule } from '../utils/createModule';
 export const admin = createModule(
   'admin',
   {
-    collapsed: Boolean(Number(localStorage.getItem('collapsed'))),
-    openPage: undefined
+    collapsed: Boolean(Number(localStorage.getItem('collapsed')))
   },
   (createAction) => ({
     toggleCollapsed: createAction('TOGGLE_COLLAPSED')(
@@ -16,12 +15,6 @@ export const admin = createModule(
           collapsed: !collapsed
         };
       }
-    ),
-    setOpenPage: createAction<{ pageId: number }>('SET_OPEN_PAGE')(
-      (payload) => payload,
-      ({ pageId }, { openPage }) => ({
-        openPage: openPage === pageId ? undefined : pageId
-      })
     )
   })
 );

@@ -28,8 +28,7 @@ export type State = {
     [queue: string]: number
   },
   admin: {
-    collapsed: boolean,
-    openPage?: number
+    collapsed: boolean
   }
 };
 

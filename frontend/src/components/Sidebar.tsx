@@ -32,8 +32,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
         background: 'linear-gradient(145deg, #414756 0%, #303540 100%)',
         transition: 'width .2s ease',
         flexShrink: 0,
-        zIndex: 50,
-        boxShadow: '0 0 25px 0 rgba(0, 0, 0, .5)'
+        zIndex: 50
       },
       inner: {
         display: 'flex',
