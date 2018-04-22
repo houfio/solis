@@ -2,17 +2,28 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
+import { push } from 'react-router-redux';
+
+import { handle } from '../utils/handle';
+import { withProps } from '../utils/withProps';
 
 type LocalState = {
   collapsed: boolean
 };
 
-export class Sidebar extends Component<{}, LocalState> {
+const getActionCreators = () => ({
+  push
+});
+
+const { props, connect } = withProps()(undefined, getActionCreators);
+
+export const Sidebar = connect(class extends Component<typeof props, LocalState> {
   public state = {
     collapsed: !!Number(localStorage.getItem('collapsed'))
   };
 
   public render() {
+    const { push } = this.props;
     const { collapsed } = this.state;
 
     const styleSheet = StyleSheet.create({
@@ -54,8 +65,12 @@ export class Sidebar extends Component<{}, LocalState> {
       },
       brand: {
         display: 'flex',
-        padding: collapsed ? '1rem .8rem' : '4rem 3.5rem',
-        transition: 'padding .2s ease'
+        margin: collapsed ? '1rem .8rem' : '4rem 3.5rem',
+        cursor: 'pointer',
+        transition: 'all .2s ease',
+        ':hover': {
+          opacity: .5
+        }
       },
       image: {
         flexShrink: 0,
@@ -111,7 +126,7 @@ export class Sidebar extends Component<{}, LocalState> {
     return (
       <nav className={css(styleSheet.sidebar)}>
         <div className={css(styleSheet.inner)}>
-          <div className={css(styleSheet.brand)}>
+          <div className={css(styleSheet.brand)} onClick={handle(push, '/')}>
             <div className={css(styleSheet.image, styleSheet.brandIcon)}/>
             <div className={css(styleSheet.image, styleSheet.brandText)}/>
           </div>
@@ -138,4 +153,4 @@ export class Sidebar extends Component<{}, LocalState> {
       collapsed: !collapsed
     });
   }
-}
+});
