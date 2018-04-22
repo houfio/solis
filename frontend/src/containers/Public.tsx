@@ -4,16 +4,16 @@ import { Component, ReactNode } from 'react';
 import { Redirect, Route } from 'react-router';
 
 import { Page, PageGuard } from '../api/Page';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { Container } from '../components/Container';
+import { Footer } from '../components/Footer';
+import { Navigation } from '../components/Navigation';
+import { Progress } from '../components/Progress';
 import { GUARDS } from '../constants';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
 import { withProps } from '../utils/withProps';
-import { Breadcrumbs } from './Breadcrumbs';
-import { Container } from './Container';
 import { ContentPage } from './ContentPage';
-import { Footer } from './Footer';
-import { Navigation } from './Navigation';
-import { Progress } from './Progress';
 
 const mapStateToProps = (state: State) => ({
   pages: state.content.pages,

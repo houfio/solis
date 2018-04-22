@@ -1,5 +1,5 @@
 declare module '@fortawesome/react-fontawesome' {
-  import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+  import { IconDefinition, IconName } from '@fortawesome/fontawesome-common-types';
   import { Component } from 'react';
 
   type FontAwesomeProps = {
@@ -8,7 +8,7 @@ declare module '@fortawesome/react-fontawesome' {
     mask?: string | string[],
     fixedWidth?: boolean,
     flip?: 'horizontal' | 'vertical' | 'both',
-    icon?: string | string[] | IconDefinition | IconDefinition[],
+    icon?: IconName | IconName[] | IconDefinition | IconDefinition[],
     listItem?: boolean,
     pull?: 'left' | 'right',
     pulse?: boolean,

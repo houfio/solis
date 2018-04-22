@@ -1,30 +1,29 @@
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 import { push } from 'react-router-redux';
 
+import { content } from '../modules/content';
+import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
+import { SidebarItem } from './SidebarItem';
 
-type LocalState = {
-  collapsed: boolean
-};
+const mapStateToProps = (state: State) => ({
+  collapsed: state.content.collapsed
+});
 
 const getActionCreators = () => ({
+  toggleCollapsed: content.toggleCollapsed,
   push
 });
 
-const { props, connect } = withProps()(undefined, getActionCreators);
+const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
-export const Sidebar = connect(class extends Component<typeof props, LocalState> {
-  public state = {
-    collapsed: !!Number(localStorage.getItem('collapsed'))
-  };
-
+export const Sidebar = connect(class extends Component<typeof props> {
   public render() {
-    const { push } = this.props;
-    const { collapsed } = this.state;
+    const { collapsed } = this.props;
+    const { toggleCollapsed, push } = this.props;
 
     const styleSheet = StyleSheet.create({
       sidebar: {
@@ -90,36 +89,6 @@ export const Sidebar = connect(class extends Component<typeof props, LocalState>
         marginLeft: '1rem',
         transition: 'opacity .2s ease',
         opacity: collapsed ? 0 : 1
-      },
-      item: {
-        display: 'flex',
-        flexWrap: 'nowrap',
-        width: collapsed ? '1rem' : '220px',
-        height: '1rem',
-        marginLeft: collapsed ? '14px' : '25px',
-        marginBottom: collapsed ? '10px' : '20px',
-        padding: '15px',
-        cursor: 'pointer',
-        borderRadius: '.5rem',
-        lineHeight: 1,
-        transition: 'all .2s ease',
-        ':hover': {
-          color: '#414756',
-          backgroundColor: '#fff'
-        }
-      },
-      itemIcon: {
-        marginLeft: collapsed ? '-2px' : 0,
-        marginRight: '10px'
-      },
-      itemText: {
-        transition: 'opacity .2s ease',
-        opacity: collapsed ? 0 : 1
-      },
-      active: {
-        color: '#414756',
-        backgroundColor: '#fff',
-        cursor: 'default'
       }
     });
 
@@ -130,27 +99,11 @@ export const Sidebar = connect(class extends Component<typeof props, LocalState>
             <div className={css(styleSheet.image, styleSheet.brandIcon)}/>
             <div className={css(styleSheet.image, styleSheet.brandText)}/>
           </div>
-          <div className={css(styleSheet.item, styleSheet.active)}>
-            <FontAwesomeIcon icon="coffee" className={css(styleSheet.itemIcon)}/>
-            <span className={css(styleSheet.itemText)}>Test item</span>
-          </div>
-          <div className={css(styleSheet.item)}>
-            <FontAwesomeIcon icon="coffee" className={css(styleSheet.itemIcon)}/>
-            <span className={css(styleSheet.itemText)}>Test item 2</span>
-          </div>
+          <SidebarItem path="/admin" name="Dashboard" icon="chart-pie"/>
+          <SidebarItem path="/admin/test" name="Test" icon="coffee"/>
         </div>
-        <div className={css(styleSheet.arrow)} onClick={this.toggleCollapsed}/>
+        <div className={css(styleSheet.arrow)} onClick={handle(toggleCollapsed, undefined)}/>
       </nav>
     );
-  }
-
-  private toggleCollapsed = () => {
-    const { collapsed } = this.state;
-
-    localStorage.setItem('collapsed', collapsed ? '0' : '1');
-
-    this.setState({
-      collapsed: !collapsed
-    });
   }
 });

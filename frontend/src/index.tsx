@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import 'whatwg-fetch';
 
-import { Root } from './components/Root';
+import { Root } from './containers/Root';
 import './icons';
 import { createStore } from './utils/createStore';
 

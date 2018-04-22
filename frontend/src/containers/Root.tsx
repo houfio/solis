@@ -4,13 +4,13 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
+import { Spinner } from '../components/Spinner';
 import { auth } from '../modules/auth';
 import { content } from '../modules/content';
 import { State } from '../types';
 import { withProps } from '../utils/withProps';
 import { Private } from './Private';
 import { Public } from './Public';
-import { Spinner } from './Spinner';
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
