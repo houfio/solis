@@ -8,7 +8,7 @@ import { auth } from '../modules/auth';
 import { content } from '../modules/content';
 import { State } from '../types';
 import { withProps } from '../utils/withProps';
-import { Admin } from './Admin';
+import { Private } from './Private';
 import { Public } from './Public';
 import { Spinner } from './Spinner';
 
@@ -60,7 +60,7 @@ export const Root = connect(class extends Component<typeof props> {
     return (
       <div className={css(styleSheet.body)}>
         <Switch location={location || createLocation(window.location.href)}>
-          <Route path="/admin" component={Admin}/>
+          <Route path="/admin" component={Private}/>
           <Route path="/" component={Public}/>
         </Switch>
       </div>

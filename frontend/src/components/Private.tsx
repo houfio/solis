@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 import { Sidebar } from './Sidebar';
 
-export const Admin = () => {
+export const Private = () => {
   const stylesheet = StyleSheet.create({
     admin: {
       display: 'flex',
