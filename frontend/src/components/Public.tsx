@@ -1,9 +1,9 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
+import { Redirect, Route } from 'react-router';
 
-import { Redirect, Route, Switch } from 'react-router';
-import { PageGuard } from '../api/Page';
+import { Page, PageGuard } from '../api/Page';
 import { GUARDS } from '../constants';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
@@ -40,23 +40,24 @@ export const Public = connect(class extends Component<typeof props> {
         <main className={css(styleSheet.main)}>
           <Breadcrumbs/>
           <Container>
-            <Switch>
-              {pages!.map((page) => {
-                const redirect = this.getRedirect(page.guards);
-
-                return (
-                  <Route key={page.id} path={page.path} exact={true}>
-                    {redirect || <ContentPage pageId={page.id}/>}
-                  </Route>
-                );
-              })}
-            </Switch>
+            {pages!.map((page) => (
+              <Route
+                key={page.id}
+                path={page.path}
+                exact={true}
+                render={this.renderPage(page)}
+              />
+            ))}
           </Container>
         </main>
         <Footer/>
       </>
     );
   }
+
+  private renderPage = (page: Page) => () => this.getRedirect(page.guards) || (
+    <ContentPage pageId={page.id}/>
+  )
 
   private getRedirect = (routeGuards: PageGuard[]): ReactNode | undefined => {
     const { pages, state } = this.props;
