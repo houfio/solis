@@ -178,7 +178,7 @@ export const Navigation = connect(class extends Component<typeof props> {
                         styleSheet.item,
                         openMenu === index && styleSheet.active
                       )}
-                      onClick={handle(setOpenMenu, { menuIndex: index })}
+                      onClick={handle(setOpenMenu, { index })}
                     >
                       {item.name}
                     </span>

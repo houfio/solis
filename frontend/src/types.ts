@@ -22,11 +22,14 @@ export type State = {
       [id: number]: ContentBlock[]
     },
     menus?: Menu[],
-    openMenu?: number,
-    collapsed: boolean
+    openMenu?: number
   },
   http: {
     [queue: string]: number
+  },
+  admin: {
+    collapsed: boolean,
+    openPage?: number
   }
 };
 

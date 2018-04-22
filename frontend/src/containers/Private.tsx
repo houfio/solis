@@ -11,7 +11,7 @@ import { Dashboard } from './Dashboard';
 import { Pages } from './Pages';
 
 const mapStateToProps = (state: State) => ({
-  collapsed: state.content.collapsed
+  collapsed: state.admin.collapsed
 });
 
 const { props, connect } = withProps()(mapStateToProps);

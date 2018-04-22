@@ -10,8 +10,7 @@ export const content = createModule(
     pages: undefined,
     contentBlocks: {},
     menus: undefined,
-    openMenu: undefined,
-    collapsed: Boolean(Number(localStorage.getItem('collapsed')))
+    openMenu: undefined
   },
   (createAction) => ({
     getPages: createAction('GET_PAGES')(
@@ -45,21 +44,11 @@ export const content = createModule(
         menus: data
       })
     ),
-    setOpenMenu: createAction<{ menuIndex?: number }>('SET_OPEN_MENU')(
+    setOpenMenu: createAction<{ index?: number }>('SET_OPEN_MENU')(
       (payload) => payload,
-      ({ menuIndex }, { openMenu }) => ({
-        openMenu: openMenu === menuIndex ? undefined : menuIndex
+      ({ index }, { openMenu }) => ({
+        openMenu: openMenu === index ? undefined : index
       })
-    ),
-    toggleCollapsed: createAction('TOGGLE_COLLAPSED')(
-      (payload) => payload,
-      (_, { collapsed }) => {
-        localStorage.setItem('collapsed', collapsed ? '0' : '1');
-
-        return {
-          collapsed: !collapsed
-        };
-      }
     )
   })
 );

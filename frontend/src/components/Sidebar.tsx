@@ -2,18 +2,18 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
-import { content } from '../modules/content';
+import { admin } from '../modules/admin';
 import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 import { SidebarItem } from './SidebarItem';
 
 const mapStateToProps = (state: State) => ({
-  collapsed: state.content.collapsed
+  collapsed: state.admin.collapsed
 });
 
 const getActionCreators = () => ({
-  toggleCollapsed: content.toggleCollapsed
+  toggleCollapsed: admin.toggleCollapsed
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
@@ -29,7 +29,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
         width: collapsed ? '75px' : '300px',
         height: '100%',
         color: '#fff',
-        background: 'linear-gradient(145deg, rgba(65,71,86,1) 0%, rgba(48,53,64,1) 100%);',
+        background: 'linear-gradient(145deg, #414756 0%, #303540 100%)',
         transition: 'width .2s ease',
         flexShrink: 0,
         zIndex: 50
@@ -53,8 +53,10 @@ export const Sidebar = connect(class extends Component<typeof props> {
         '::after': {
           content: '""',
           display: 'block',
-          width: '2px',
-          height: '15px',
+          width: '3px',
+          height: '30px',
+          borderRadius: '3px',
+          marginLeft: '-3px',
           backgroundColor: '#414756',
           transition: 'opacity .2s ease .2s',
           opacity: 0

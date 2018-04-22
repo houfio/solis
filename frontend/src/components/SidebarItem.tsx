@@ -18,7 +18,7 @@ type Props = {
 
 const mapStateToProps = (state: State) => ({
   location: state.router.location,
-  collapsed: state.content.collapsed
+  collapsed: state.admin.collapsed
 });
 
 const getActionCreators = () => ({
