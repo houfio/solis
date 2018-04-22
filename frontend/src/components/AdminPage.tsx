@@ -29,12 +29,13 @@ export const AdminPage = connect(class extends Component<typeof props> {
         position: 'fixed',
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: '4rem',
+        padding: '0 4rem',
         backgroundColor: '#fff',
         width: `calc(100% - 8rem - ${collapsed ? '75px' : '300px'})`,
         lineHeight: 1,
         height: '8rem',
-        transition: 'width .2s ease'
+        transition: 'width .2s ease',
+        boxShadow: '0 0 10px 0 rgba(0, 0, 0, .15)'
       },
       heading: {
         flex: 1

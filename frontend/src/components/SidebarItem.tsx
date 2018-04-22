@@ -48,7 +48,8 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         transition: 'all .2s ease',
         ':hover': {
           color: '#414756',
-          backgroundColor: 'rgba(255, 255, 255, .8)'
+          backgroundColor: 'rgba(255, 255, 255, .8)',
+          boxShadow: '0 0 10px 0 rgba(0, 0, 0, .15)'
         }
       },
       itemIcon: {
@@ -63,8 +64,10 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         color: '#414756',
         backgroundColor: '#fff',
         cursor: 'default',
+        boxShadow: '0 0 25px 0 rgba(0, 0, 0, .5)',
         ':hover': {
-          backgroundColor: '#fff'
+          backgroundColor: '#fff',
+          boxShadow: '0 0 25px 0 rgba(0, 0, 0, .5)'
         }
       }
     });
