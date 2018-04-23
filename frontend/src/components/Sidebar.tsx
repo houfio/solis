@@ -32,7 +32,8 @@ export const Sidebar = connect(class extends Component<typeof props> {
         background: 'linear-gradient(145deg, #414756 0%, #303540 100%)',
         transition: 'width .2s ease',
         flexShrink: 0,
-        zIndex: 50
+        zIndex: 50,
+        borderRadius: '0 .5rem .5rem 0'
       },
       inner: {
         display: 'flex',
@@ -46,7 +47,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
         alignItems: 'center',
         justifyContent: 'center',
         top: 0,
-        right: '-15px',
+        right: 0,
         width: '15px',
         height: '100%',
         cursor: 'pointer',
@@ -57,7 +58,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
           height: '30px',
           borderRadius: '3px',
           marginLeft: '-3px',
-          backgroundColor: '#414756',
+          backgroundColor: '#fff',
           transition: 'opacity .2s ease .2s',
           opacity: 0
         },

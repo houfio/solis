@@ -43,7 +43,7 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         marginBottom: collapsed ? '13px' : '25px',
         padding: '1rem',
         cursor: 'pointer',
-        borderRadius: '.5rem',
+        borderRadius: '3rem',
         lineHeight: 1,
         transition: 'all .2s ease',
         ':hover': {
