@@ -7,14 +7,14 @@ import { State } from '../types';
 export const withProps = <O, C = {}>() =>
   <S, D extends ActionCreatorsMapObject, M>(mapStateToProps?: MapStateToPropsParam<S, O, State>,
                                             getActionCreators?: () => D,
-                                            connectProps?: MergeProps<S, D, O, M>) => {
+                                            connectProps?: MergeProps<S, D, O & C, M>) => {
     const mapDispatchToProps = getActionCreators ? (dispatch: Dispatch) =>
       bindActionCreators(getActionCreators(), dispatch) : undefined;
     const mergeProps = (stateProps: S, dispatchProps: D, ownProps: O) => ({
       ...ownProps as any,
       ...stateProps as any,
       ...dispatchProps as any,
-      ...connectProps ? connectProps(stateProps, dispatchProps, ownProps) : {}
+      ...connectProps ? connectProps(stateProps, dispatchProps, ownProps as O & C) : {}
     });
     const props: O & C & S & D & M = undefined!;
 

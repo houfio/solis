@@ -1,6 +1,7 @@
 import { ContentBlock } from '../api/ContentBlock';
 import { Menu } from '../api/Menu';
 import { Page } from '../api/Page';
+import { Notification } from '../types';
 import { createApiRequest } from '../utils/createApiRequest';
 import { createModule } from '../utils/createModule';
 
@@ -10,7 +11,8 @@ export const content = createModule(
     pages: undefined,
     contentBlocks: {},
     menus: undefined,
-    openMenu: undefined
+    openMenu: undefined,
+    notifications: []
   },
   (createAction) => ({
     getPages: createAction('GET_PAGES')(
@@ -28,9 +30,9 @@ export const content = createModule(
         promise: createApiRequest<ContentBlock[]>('get', `pages/${pageId}`),
         queue: 'page'
       }),
-      ({ pageId, data }, state) => ({
+      ({ pageId, data }, { contentBlocks }) => ({
         contentBlocks: {
-          ...state.contentBlocks,
+          ...contentBlocks,
           [pageId]: data
         }
       })
@@ -48,6 +50,36 @@ export const content = createModule(
       (payload) => payload,
       ({ index }, { openMenu }) => ({
         openMenu: openMenu === index ? undefined : index
+      })
+    ),
+    addNotification: createAction<Notification>('ADD_NOTIFICATION')(
+      (payload) => payload,
+      (payload, { notifications }) => ({
+        notifications: [
+          ...notifications,
+          payload
+        ]
+      })
+    ),
+    dismissNotification: createAction<{ notificationId: number }>('DISMISS_NOTIFICATION')(
+      (payload) => payload,
+      ({ notificationId }, { notifications }) => ({
+        notifications: notifications.map((notification) => {
+          if (notification.id !== notificationId) {
+            return notification;
+          }
+
+          return {
+            ...notification,
+            dismissed: true
+          };
+        })
+      })
+    ),
+    removeNotification: createAction<{ notificationId: number }>('REMOVE_NOTIFICATION')(
+      (payload) => payload,
+      ({ notificationId }, { notifications }) => ({
+        notifications: notifications.filter((notification) => notification.id !== notificationId)
       })
     )
   })

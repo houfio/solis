@@ -8,6 +8,7 @@ import { Sidebar } from '../components/Sidebar';
 import { State } from '../types';
 import { withProps } from '../utils/withProps';
 import { Dashboard } from './Dashboard';
+import { Page } from './Page';
 import { Pages } from './Pages';
 
 const mapStateToProps = (state: State) => ({
@@ -21,26 +22,23 @@ export const Private = connect(class extends Component<typeof props> {
     const { collapsed } = this.props;
 
     const stylesheet = StyleSheet.create({
-      admin: {
-        display: 'flex',
-        height: '100vh'
-      },
       main: {
         width: '100%',
-        paddingLeft: collapsed ? '75px' : '300px',
+        paddingLeft: `calc(${collapsed ? '75px' : '300px'} - .5rem)`,
         transition: 'padding .2s ease'
       }
     });
 
     return (
-      <div className={css(stylesheet.admin)}>
+      <>
         <Helmet title={`Admin / Jong Nederland`}/>
         <Sidebar/>
         <main className={css(stylesheet.main)}>
           <Route path="/admin" exact={true} component={Dashboard}/>
           <Route path="/admin/pages" exact={true} component={Pages}/>
+          <Route path="/admin/pages/:id" exact={true} component={Page}/>
         </main>
-      </div>
+      </>
     );
   }
 });

@@ -1,17 +1,17 @@
 import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
-import { Breakpoint, HeadingTypes } from '../types';
+import { Breakpoint, HeadingType } from '../types';
 import { forBreakpoints } from '../utils/forBreakpoints';
 
 type Props = {
   text: string,
   light?: boolean,
-  breakpoints: { [B in Breakpoint]?: HeadingTypes },
+  breakpoints: { [B in Breakpoint]?: HeadingType },
   styles?: StyleDeclaration
 };
 
-const headingStyles = (light: boolean): { [T in HeadingTypes]: CSSProperties } => {
+const headingStyles = (light: boolean): { [T in HeadingType]: CSSProperties } => {
   const rgb = light ? '255, 255, 255' : '0, 0, 0';
 
   return {

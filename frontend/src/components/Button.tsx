@@ -1,23 +1,25 @@
 import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
-import { ButtonTypes } from '../types';
+import { ColorType } from '../types';
 
 type Props = {
   text: string,
-  type?: ButtonTypes,
+  type?: ColorType,
   onClick?: () => void,
   styles?: StyleDeclaration
 };
 
-const buttonStyles: { [T in ButtonTypes]: CSSProperties } = {
+const buttonStyles: { [T in ColorType]: CSSProperties } = {
   primary: {
-    backgroundColor: '#1976D2',
+    color: '#fff',
+    backgroundColor: '#1976d2',
     ':hover': {
-      backgroundColor: '#12589D'
+      backgroundColor: '#12589d'
     }
   },
   secondary: {
+    color: '#fff',
     backgroundColor: '#414756',
     ':hover': {
       backgroundColor: '#303540'
@@ -36,10 +38,9 @@ export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) 
   const styleSheet = StyleSheet.create({
     button: {
       display: 'inline-block',
-      padding: '.75rem',
-      color: '#fff',
+      padding: '.75rem 1rem',
       cursor: 'pointer',
-      borderRadius: '.5rem',
+      borderRadius: '2.5rem',
       transition: 'background-color .2s ease',
       ...buttonStyles[type]
     }

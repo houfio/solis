@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Route, Switch } from 'react-router';
 
+import { Notifications } from '../components/Notifications';
 import { Spinner } from '../components/Spinner';
 import { auth } from '../modules/auth';
 import { content } from '../modules/content';
@@ -59,6 +60,7 @@ export const Root = connect(class extends Component<typeof props> {
 
     return (
       <div className={css(styleSheet.body)}>
+        <Notifications/>
         <Switch location={location || createLocation(window.location.href)}>
           <Route path="/admin" component={Private}/>
           <Route path="/" component={Public}/>

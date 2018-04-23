@@ -4,6 +4,7 @@ import { Action as ReduxAction } from 'redux';
 import { FormState } from 'redux-form';
 
 import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
+import { Identifiable } from './api/Identifiable';
 import { Menu } from './api/Menu';
 import { Page } from './api/Page';
 import { User } from './api/User';
@@ -22,7 +23,8 @@ export type State = {
       [id: number]: ContentBlock[]
     },
     menus?: Menu[],
-    openMenu?: number
+    openMenu?: number,
+    notifications: Notification[]
   },
   http: {
     [queue: string]: number
@@ -32,13 +34,9 @@ export type State = {
   }
 };
 
-export type Token = {
-  token: string
-};
+export type ColorType = 'primary' | 'secondary' | 'tertiary';
 
-export type ButtonTypes = 'primary' | 'secondary' | 'tertiary';
-
-export type HeadingTypes = 'bold' | 'thin' | 'subtle';
+export type HeadingType = 'bold' | 'thin' | 'subtle';
 
 export type Breakpoint = keyof typeof BREAKPOINTS;
 
@@ -97,4 +95,11 @@ export type Module<N extends keyof State = keyof State, A extends Actions = Acti
   name: N,
   initialState: State[N],
   reducers: Reducers<State[N], A>
+};
+
+export type Notification = Identifiable & {
+  text: string,
+  timeout?: number,
+  color?: ColorType,
+  dismissed?: boolean
 };

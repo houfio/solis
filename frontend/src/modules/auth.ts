@@ -1,5 +1,4 @@
 import { User } from '../api/User';
-import { Token } from '../types';
 import { createApiRequest } from '../utils/createApiRequest';
 import { createModule } from '../utils/createModule';
 
@@ -14,7 +13,7 @@ export const auth = createModule(
       password: string
     }>('GET_TOKEN')(
       (payload) => ({
-        promise: createApiRequest<Token>('post', 'user/login', payload),
+        promise: createApiRequest<{ token: string }>('post', 'user/login', payload),
         queue: 'page'
       }),
       ({ data: { token } }) => {
@@ -25,7 +24,7 @@ export const auth = createModule(
         };
       }
     ),
-    getUser: createAction<Token>('GET_USER')(
+    getUser: createAction<{ token: string }>('GET_USER')(
       ({ token }) => ({
         promise: createApiRequest<User>('get', 'user', undefined, token),
         queue: 'page'
