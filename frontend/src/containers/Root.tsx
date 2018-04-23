@@ -46,7 +46,10 @@ export const Root = connect(class extends Component<typeof props> {
 
     if (queue.all || !pages) {
       return (
-        <Spinner/>
+        <>
+          <Notifications/>
+          <Spinner/>
+        </>
       );
     }
 

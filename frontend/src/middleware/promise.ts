@@ -1,5 +1,6 @@
 import { AnyAction, Middleware } from 'redux';
 
+import { content } from '../modules/content';
 import { http } from '../modules/http';
 
 export const promise = (): Middleware => (api) => (next) => (action) => {
@@ -20,7 +21,15 @@ export const promise = (): Middleware => (api) => (next) => (action) => {
 
     return value;
   }).catch((error: any) => {
-    console.error(error);
+    if (error.message) {
+      api.dispatch(content.addNotification({
+        id: Date.now(),
+        text: error.message,
+        timeout: 5000
+      }));
+    }
+
+    console.log(error);
 
     return error;
   }).finally(() => {

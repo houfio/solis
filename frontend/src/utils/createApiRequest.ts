@@ -13,6 +13,12 @@ export const createApiRequest = async <T>(method: string, url: string, data?: an
     }
   });
 
+  const contentType = response.headers.get('content-type');
+
+  if (!contentType || contentType.indexOf('application/json') === -1) {
+    return Promise.reject(new Error(response.statusText));
+  }
+
   const json = await response.json() as { success: boolean };
 
   if (!response.ok || !json.success) {
