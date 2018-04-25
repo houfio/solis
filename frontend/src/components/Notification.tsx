@@ -38,20 +38,16 @@ export const Notification = connect(class extends Component<typeof props> {
   private timeoutId?: number;
 
   public componentDidMount() {
-    const { notification } = this.props;
-    const { dismissNotification } = this.props;
+    const { index } = this.props;
 
-    if (notification.timeout) {
-      this.timeoutId = setTimeout(
-        handle(dismissNotification, { notificationId: notification.id }),
-        notification.timeout
-      ) as any;
+    if (index === 0) {
+      this.createDismissTimer();
     }
   }
 
   public componentWillReceiveProps(nextProps: typeof props) {
-    const { notification: nextNotification } = nextProps;
-    const { notification } = this.props;
+    const { notification: nextNotification, index: nextIndex } = nextProps;
+    const { notification, index } = this.props;
     const { removeNotification } = this.props;
 
     if (notification.dismissed !== nextNotification.dismissed && nextNotification.dismissed) {
@@ -60,6 +56,8 @@ export const Notification = connect(class extends Component<typeof props> {
       }
 
       setTimeout(handle(removeNotification, { notificationId: notification.id }), 200);
+    } else if (index !== nextIndex && nextIndex === 0) {
+      this.createDismissTimer();
     }
   }
 
@@ -100,7 +98,7 @@ export const Notification = connect(class extends Component<typeof props> {
         animationName: slideIn as any,
         animationDuration: '.2s',
         boxShadow: '0 0 1rem 0 rgba(0, 0, 0, .5)',
-        transition: 'bottom .2s ease .2s',
+        transition: `bottom .2s ease ${.2 + index * .05}s`,
         zIndex: 100,
         ...notificationStyles[notification.color || 'primary']
       },
@@ -117,5 +115,14 @@ export const Notification = connect(class extends Component<typeof props> {
         {notification.text}
       </div>
     );
+  }
+
+  private createDismissTimer = () => {
+    const { notification, dismissNotification } = this.props;
+
+    this.timeoutId = setTimeout(
+      handle(dismissNotification, { notificationId: notification.id }),
+      notification.timeout
+    ) as any;
   }
 });

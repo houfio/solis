@@ -61,7 +61,7 @@ export const Page = connect(class extends Component<typeof props> {
             onClick={handle(addNotification, () => ({
               id: Date.now(),
               text: 'Opgeslagen',
-              timeout: 2000
+              timeout: 1000
             }))}
           />,
           <Action key="1" icon="trash"/>

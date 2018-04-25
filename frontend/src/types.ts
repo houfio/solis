@@ -99,7 +99,7 @@ export type Module<N extends keyof State = keyof State, A extends Actions = Acti
 
 export type Notification = Identifiable & {
   text: string,
-  timeout?: number,
+  timeout: number,
   color?: ColorType,
   dismissed?: boolean
 };
