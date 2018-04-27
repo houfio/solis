@@ -4,44 +4,28 @@ import { Component } from 'react';
 import { Column } from '../components/Column';
 import { Row } from '../components/Row';
 import { BREAKPOINTS } from '../constants';
-import { Breakpoint, RendererProps } from '../types';
+import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
+import { findByIndex } from '../utils/findByIndex';
+import { findByValue } from '../utils/findByValue';
 
 export const column = createRenderer(class extends Component<RendererProps<'column'>> {
   public render() {
-    const { children, data: { size, breakpoint } } = this.props;
+    const { data: { size, breakpoint }, drop, children } = this.props;
 
-    let breakpointIndex = breakpoint;
-    const breakpoints = Object.keys(BREAKPOINTS);
-
-    if (breakpointIndex >= breakpoints.length) {
-      breakpointIndex = 0;
-    }
-
-    const namedBreakpoint = BREAKPOINTS[breakpoints[breakpointIndex] as Breakpoint];
-    const childSize = 12 / size;
-    let lastColumn = 0;
+    const [namedBreakpoint] = findByIndex(breakpoint, BREAKPOINTS);
 
     return (
       <Row>
-        {children
-          .sort((a, b) => a.order - b.order)
-          .map((child) => {
-            const index = child.data;
-            let offset = 0;
+        {Array.from(new Array(size)).map((_, index) => {
+          const child = findByValue(index, 'data', children);
 
-            if (index - 1 > lastColumn) {
-              offset = (index - lastColumn - 1) * childSize;
-            }
-
-            lastColumn = index;
-
-            return (
-              <Column key={index} breakpoints={{ [namedBreakpoint]: { size: childSize, offset } }}>
-                {child.render()}
-              </Column>
-            );
-          })}
+          return (
+            <Column key={index} breakpoints={{ [namedBreakpoint]: 12 / size }}>
+              {child ? child.render() : drop(index)}
+            </Column>
+          );
+        })}
       </Row>
     );
   }

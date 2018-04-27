@@ -53,10 +53,12 @@ export type ApiResponseFailure = {
 
 export type RendererProps<T extends keyof ContentBlockTypes> = {
   data: ContentBlockTypes[T],
+  drop: (data?: number) => ReactNode | undefined,
   children: ContentBlockChild[]
 };
 
-export type ContentBlockRenderer<T extends keyof ContentBlockTypes> = (block: ContentBlock<T>) => ReactNode;
+export type ContentBlockRenderer<T extends keyof ContentBlockTypes> =
+  (block: ContentBlock<T>, drop?: (data?: number) => ReactNode | undefined) => ReactNode;
 
 export type ContentBlockChild = {
   data: number,

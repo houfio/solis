@@ -9,6 +9,7 @@ import { State } from '../types';
 import { withProps } from '../utils/withProps';
 import { Dashboard } from './Dashboard';
 import { Page } from './Page';
+import { PageContent } from './PageContent';
 import { Pages } from './Pages';
 
 const mapStateToProps = (state: State) => ({
@@ -37,6 +38,7 @@ export const Private = connect(class extends Component<typeof props> {
           <Route path="/admin" exact={true} component={Dashboard}/>
           <Route path="/admin/pages" exact={true} component={Pages}/>
           <Route path="/admin/pages/:id" exact={true} component={Page}/>
+          <Route path="/admin/pages/:id/content" exact={true} component={PageContent}/>
         </main>
       </>
     );

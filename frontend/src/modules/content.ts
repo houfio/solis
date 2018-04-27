@@ -1,4 +1,4 @@
-import { ContentBlock } from '../api/ContentBlock';
+import { ContentBlock, ContentBlockTypes } from '../api/ContentBlock';
 import { Menu } from '../api/Menu';
 import { Page } from '../api/Page';
 import { Notification } from '../types';
@@ -36,6 +36,70 @@ export const content = createModule(
           [pageId]: data
         }
       })
+    ),
+    setContentBlock: createAction<{
+      blockType: keyof ContentBlockTypes,
+      data: ContentBlockTypes[keyof ContentBlockTypes],
+      page: number,
+      order?: number,
+      parent?: number,
+      parentData?: number
+    }>('SET_CONTENT_BLOCK')(
+      (payload) => payload,
+      (payload, { contentBlocks }) => {
+        let blocks = contentBlocks[payload.page];
+
+        if (!blocks) {
+          return {};
+        }
+
+        const newBlock = {
+          id: Math.random(),
+          page_id: payload.page,
+          type: payload.blockType,
+          order: payload.order!,
+          children: [],
+          data: payload.data,
+          hidden: false
+        };
+
+        if (!payload.parent && payload.order !== undefined) {
+          blocks = [
+            ...blocks.map((block) => {
+              if (block.order < payload.order!) {
+                return block;
+              }
+
+              return {
+                ...block,
+                order: block.order + 1
+              };
+            }),
+            newBlock
+          ];
+        } else if (payload.parent) {
+          blocks = blocks.map((block) => {
+            if (block.id !== payload.parent) {
+              return block;
+            }
+
+            return {
+              ...block,
+              children: [
+                ...block.children,
+                newBlock
+              ]
+            };
+          });
+        }
+
+        return {
+          contentBlocks: {
+            ...contentBlocks,
+            [payload.page]: blocks
+          }
+        };
+      }
     ),
     getMenus: createAction('GET_MENUS')(
       () => ({

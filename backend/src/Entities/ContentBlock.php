@@ -29,7 +29,7 @@ class ContentBlock
     public $data;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     public $order;
 

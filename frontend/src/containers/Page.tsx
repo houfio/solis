@@ -21,8 +21,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const getActionCreators = () => ({
-  push,
-  addNotification: content.addNotification
+  addNotification: content.addNotification,
+  push
 });
 
 const { props, connect } = withProps<{}, RouteComponentProps<Params>>()(mapStateToProps, getActionCreators);
@@ -43,7 +43,7 @@ export const Page = connect(class extends Component<typeof props> {
   public render() {
     const { match: { params: { id } } } = this.props;
     const { pages } = this.props;
-    const { addNotification } = this.props;
+    const { push, addNotification } = this.props;
 
     const page = findByValue(+id, 'id', pages!);
 
@@ -64,7 +64,8 @@ export const Page = connect(class extends Component<typeof props> {
               timeout: 1000
             }))}
           />,
-          <Action key="1" icon="trash"/>
+          <Action key="1" icon="arrows-alt" onClick={handle(push, `/admin/pages/${id}/content`)}/>,
+          <Action key="2" icon="trash"/>
         ]}
       >
         <PageSettings page={page}/>
