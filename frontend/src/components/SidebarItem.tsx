@@ -1,5 +1,5 @@
-import { IconName } from '@fortawesome/fontawesome-common-types';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
@@ -13,7 +13,7 @@ import { withProps } from '../utils/withProps';
 type Props = {
   path: string,
   name: string,
-  icon: IconName
+  icon: IconProp
 };
 
 const mapStateToProps = (state: State) => ({

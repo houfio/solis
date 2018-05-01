@@ -1,3 +1,4 @@
+import { faPlus } from '@fortawesome/fontawesome-free-solid';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
@@ -48,7 +49,7 @@ export const Pages = connect(class extends Component<typeof props> {
       <AdminPage
         title="Pagina's"
         actions={[
-          <Action key="0" icon="plus"/>
+          <Action key="0" icon={faPlus}/>
         ]}
       >
         {pages!.map((page) => (

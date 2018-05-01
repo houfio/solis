@@ -1,4 +1,5 @@
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faArrowsAlt } from '@fortawesome/fontawesome-free-solid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
@@ -62,7 +63,7 @@ export const DropZone = connect(DropTarget<typeof props>(
 
     return connectDropTarget(
       <div className={css(styleSheet.zone)}>
-        <FontAwesomeIcon icon="arrows-alt" size="lg"/>
+        <FontAwesomeIcon icon={faArrowsAlt} size="lg"/>
       </div>
     );
   }

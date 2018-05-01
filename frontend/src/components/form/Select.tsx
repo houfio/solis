@@ -1,4 +1,5 @@
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/fontawesome-free-solid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { ReactNode } from 'react';
@@ -32,7 +33,7 @@ export const Select = ({ input, label, children }: Props) => {
       <select className={css(styleSheet.select)} {...input} id={input.name}>
         {children}
       </select>
-      <FontAwesomeIcon icon="caret-down" className={css(styleSheet.caret)}/>
+      <FontAwesomeIcon icon={faCaretDown} className={css(styleSheet.caret)}/>
     </Label>
   );
 };

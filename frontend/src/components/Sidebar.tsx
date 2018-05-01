@@ -1,3 +1,4 @@
+import { faChartPie, faColumns, faSignOutAlt } from '@fortawesome/fontawesome-free-solid';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
@@ -103,10 +104,10 @@ export const Sidebar = connect(class extends Component<typeof props> {
             <div className={css(styleSheet.image, styleSheet.brandText)}/>
           </div>
           <div className={css(styleSheet.items)}>
-            <SidebarItem path="/admin" name="Dashboard" icon="chart-pie"/>
-            <SidebarItem path="/admin/pages" name="Pagina's" icon="columns"/>
+            <SidebarItem path="/admin" name="Dashboard" icon={faChartPie}/>
+            <SidebarItem path="/admin/pages" name="Pagina's" icon={faColumns}/>
           </div>
-          <SidebarItem path="/" name="Terug naar site" icon="sign-out-alt"/>
+          <SidebarItem path="/" name="Terug naar site" icon={faSignOutAlt}/>
         </div>
         <div className={css(styleSheet.arrow)} onClick={handle(toggleCollapsed, undefined)}/>
       </nav>

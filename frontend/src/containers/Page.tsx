@@ -1,3 +1,4 @@
+import { faArrowsAlt, faSave, faTrash } from '@fortawesome/fontawesome-free-solid';
 import * as React from 'react';
 import { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
@@ -57,15 +58,15 @@ export const Page = connect(class extends Component<typeof props> {
         actions={[
           <Action
             key="0"
-            icon="save"
+            icon={faSave}
             onClick={handle(addNotification, () => ({
               id: Date.now(),
               text: 'Opgeslagen',
               timeout: 1000
             }))}
           />,
-          <Action key="1" icon="arrows-alt" onClick={handle(push, `/admin/pages/${id}/content`)}/>,
-          <Action key="2" icon="trash"/>
+          <Action key="1" icon={faArrowsAlt} onClick={handle(push, `/admin/pages/${id}/content`)}/>,
+          <Action key="2" icon={faTrash}/>
         ]}
       >
         <PageSettings page={page}/>

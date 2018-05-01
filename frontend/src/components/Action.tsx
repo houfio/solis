@@ -1,10 +1,10 @@
-import { IconName } from '@fortawesome/fontawesome-common-types';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
 type Props = {
-  icon: IconName,
+  icon: IconProp,
   onClick?: () => void
 };
 
