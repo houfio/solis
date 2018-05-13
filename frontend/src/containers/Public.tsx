@@ -1,31 +1,22 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Component, ReactNode } from 'react';
+import { Component } from 'react';
+import { Query } from 'react-apollo';
 import { Redirect, Route } from 'react-router';
 
-import { Page, PageGuard } from '../api/Page';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Container } from '../components/Container';
 import { Footer } from '../components/Footer';
 import { Navigation } from '../components/Navigation';
-import { Progress } from '../components/Progress';
 import { GUARDS } from '../constants';
-import { State } from '../types';
-import { findByValue } from '../utils/findByValue';
-import { withProps } from '../utils/withProps';
+import { PublicQuery, PublicQuery_pages } from '../schema/__generated__/PublicQuery';
+import { PageGuardType } from '../types';
 import { ContentPage } from './ContentPage';
 
-const mapStateToProps = (state: State) => ({
-  pages: state.content.pages,
-  state
-});
+import query from '../schema/public.graphql';
 
-const { props, connect } = withProps()(mapStateToProps);
-
-export const Public = connect(class extends Component<typeof props> {
+export class Public extends Component {
   public render() {
-    const { pages } = this.props;
-
     const styleSheet = StyleSheet.create({
       main: {
         flex: '1',
@@ -34,49 +25,45 @@ export const Public = connect(class extends Component<typeof props> {
     });
 
     return (
-      <>
-        <Progress/>
-        <Navigation/>
-        <main className={css(styleSheet.main)}>
-          <Breadcrumbs/>
-          <Container>
-            {pages!.map((page) => (
-              <Route
-                key={page.id}
-                path={page.path}
-                exact={true}
-                render={this.renderPage(page)}
-              />
-            ))}
-          </Container>
-        </main>
-        <Footer/>
-      </>
+      <Query<PublicQuery> query={query}>
+        {({ data, loading }) => (
+          <>
+            <Navigation/>
+              <main className={css(styleSheet.main)}>
+                {loading || !data ? 'loading haha' : (
+                  <>
+                    <Breadcrumbs pages={data.pages}/>
+                    <Container>
+                      {data.pages.map((page) => (
+                        <Route
+                          key={page.id}
+                          path={page.path}
+                          exact={true}
+                          render={this.renderPage(page)}
+                        />
+                      ))}
+                    </Container>
+                  </>
+                )}
+              </main>
+            <Footer/>
+          </>
+        )}
+      </Query>
     );
   }
 
-  private renderPage = (page: Page) => () => this.getRedirect(page.guards) || (
-    <ContentPage pageId={page.id}/>
-  )
+  private renderPage = (page: PublicQuery_pages) => () => {
+    for (const routeGuard of page.guards) {
+      const guard = GUARDS[ routeGuard.type as PageGuardType ];
 
-  private getRedirect = (routeGuards: PageGuard[]): ReactNode | undefined => {
-    const { pages, state } = this.props;
-
-    if (!pages) {
-      return;
-    }
-
-    for (const routeGuard of routeGuards) {
-      const target = findByValue(routeGuard.target, 'id', pages);
-      const guard = GUARDS[routeGuard.type];
-
-      if (!guard(state) && target) {
+      if (!guard()) {
         return (
-          <Redirect to={target.path}/>
+          <Redirect to={routeGuard.target.path}/>
         );
       }
     }
 
-    return;
+    return <ContentPage page={page}/>;
   }
-});
+}

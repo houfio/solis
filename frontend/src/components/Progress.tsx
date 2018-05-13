@@ -2,21 +2,16 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
-import { State } from '../types';
-import { withProps } from '../utils/withProps';
+type Props = {
+  loading: boolean
+};
 
 type LocalState = {
   progress: number,
   working: boolean
 };
 
-const mapStateToProps = (state: State) => ({
-  queue: state.http
-});
-
-const { props, connect } = withProps()(mapStateToProps);
-
-export const Progress = connect(class extends Component<typeof props, LocalState> {
+export class Progress extends Component<Props, LocalState> {
   public state = {
     progress: 0,
     working: false
@@ -26,25 +21,6 @@ export const Progress = connect(class extends Component<typeof props, LocalState
 
   public componentDidMount() {
     this.intervalId = setInterval(this.incrementProgress, 100) as any;
-  }
-
-  public componentWillReceiveProps(nextProps: typeof props) {
-    const { queue } = this.props;
-    const { queue: nextQueue } = nextProps;
-
-    if (queue.page !== nextQueue.page) {
-      if (!nextQueue.page) {
-        this.setState({
-          progress: 100,
-          working: false
-        });
-      } else if (!queue.page) {
-        this.setState({
-          progress: 0,
-          working: true
-        });
-      }
-    }
   }
 
   public componentWillUnmount() {
@@ -92,4 +68,4 @@ export const Progress = connect(class extends Component<typeof props, LocalState
       });
     }
   }
-});
+}

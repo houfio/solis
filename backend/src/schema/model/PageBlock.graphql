@@ -1,0 +1,10 @@
+type PageBlock {
+  id: ID!
+  page: Page!
+  data: PageBlockData!
+  parent: PageBlock
+  type: String!
+  order: Int!
+  parentData: Int
+  hidden: Boolean!
+}

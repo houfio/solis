@@ -1,4 +1,6 @@
-import { faChartPie, faColumns, faSignOutAlt } from '@fortawesome/fontawesome-free-solid';
+import { faChartPie } from '@fortawesome/fontawesome-free-solid/faChartPie';
+import { faColumns } from '@fortawesome/fontawesome-free-solid/faColumns';
+import { faSignOutAlt } from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
@@ -8,6 +10,9 @@ import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 import { SidebarItem } from './SidebarItem';
+
+import logo from '../assets/logo.png';
+import text from '../assets/text.png';
 
 const mapStateToProps = (state: State) => ({
   collapsed: state.admin.collapsed
@@ -79,12 +84,12 @@ export const Sidebar = connect(class extends Component<typeof props> {
         backgroundRepeat: 'no-repeat'
       },
       brandIcon: {
-        backgroundImage: 'url(/static/logo.png)',
+        backgroundImage: `url(${logo})`,
         width: '3rem',
         height: '3rem'
       },
       brandText: {
-        backgroundImage: 'url(/static/text.png)',
+        backgroundImage: `url(${text})`,
         height: '3rem',
         width: '7rem',
         marginLeft: '1rem',

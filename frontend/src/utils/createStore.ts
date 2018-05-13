@@ -1,21 +1,22 @@
 import { createBrowserHistory } from 'history';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { AnyAction, applyMiddleware, combineReducers, createStore as createReduxStore } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import { createLogger } from 'redux-logger';
 
-import { promise } from '../middleware/promise';
+import { admin } from '../modules/admin';
+import { content } from '../modules/content';
 import { Module, State } from '../types';
-import { getModules } from './getModules';
 
 export const createStore = () => {
   const history = createBrowserHistory();
-  const modules = getModules() as Module[];
+  const modules = [
+    content,
+    admin
+  ] as Module[];
 
   const store = createReduxStore(
     combineReducers<State>({
       router: routerReducer,
-      form: formReducer,
       ...modules.reduce(
         (previous, current) => ({
           ...previous,
@@ -37,8 +38,7 @@ export const createStore = () => {
     } as any),
     applyMiddleware(
       routerMiddleware(history),
-      promise(),
-      ...process.env.NODE_ENV !== 'development' ? [] : [
+      ...process.env.NODE_ENV === 'production' ? [] : [
         createLogger({
           collapsed: true
         })

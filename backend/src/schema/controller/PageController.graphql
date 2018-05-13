@@ -1,0 +1,4 @@
+type Query {
+  pages: [Page!]!
+  page(id: ID!): Page
+}

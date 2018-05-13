@@ -1,23 +1,20 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import { Column } from '../components/Column';
 import { Row } from '../components/Row';
-import { BREAKPOINTS } from '../constants';
+import { ContentPageQuery_page_blocks_data_Column } from '../schema/__generated__/ContentPageQuery';
 import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
-import { findByIndex } from '../utils/findByIndex';
-import { findByValue } from '../utils/findByValue';
 
-export const column = createRenderer(class extends Component<RendererProps<'column'>> {
+export const column = createRenderer(class extends Component<RendererProps<ContentPageQuery_page_blocks_data_Column>> {
   public render() {
-    const { data: { size, breakpoint }, drop, children } = this.props;
+    // const { data: { size, breakpoint } } = this.props;
 
-    const [namedBreakpoint] = findByIndex(breakpoint, BREAKPOINTS);
+    // const [namedBreakpoint] = findByIndex(breakpoint, BREAKPOINTS);
 
     return (
       <Row>
-        {Array.from(new Array(size)).map((_, index) => {
+        {/*{Array.from(new Array(size)).map((_, index) => {
           const child = findByValue(index, 'data', children);
 
           return (
@@ -25,7 +22,7 @@ export const column = createRenderer(class extends Component<RendererProps<'colu
               {child ? child.render() : drop(index)}
             </Column>
           );
-        })}
+        })}*/}
       </Row>
     );
   }

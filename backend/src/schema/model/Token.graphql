@@ -1,0 +1,8 @@
+type Token {
+  id: ID!
+  user: User!
+  active: Boolean!
+  creationDate: Date!
+  userAgent: String!
+  ipAddress: String!
+}

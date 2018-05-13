@@ -1,0 +1,23 @@
+query NavigationQuery {
+  user {
+    admin
+  }
+  menu {
+    id
+    name
+    order
+    columns {
+      id
+      name
+      order
+      targets {
+        id
+        order
+        target {
+          name
+          path
+        }
+      }
+    }
+  }
+}

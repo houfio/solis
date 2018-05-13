@@ -1,0 +1,7 @@
+type MenuColumn {
+  id: ID!
+  item: MenuItem!
+  targets: [MenuTarget!]!
+  name: String!
+  order: Int!
+}

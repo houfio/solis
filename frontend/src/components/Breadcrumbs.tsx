@@ -2,24 +2,29 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
+import { PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
 import { withProps } from '../utils/withProps';
 import { Breadcrumb } from './Breadcrumb';
 import { Container } from './Container';
 
+type Props = {
+  pages: PublicQuery_pages[]
+};
+
 const mapStateToProps = (state: State) => ({
-  location: state.router.location,
-  pages: state.content.pages
+  location: state.router.location
 });
 
-const { props, connect } = withProps()(mapStateToProps);
+const { props, connect } = withProps<Props>()(mapStateToProps);
 
 export const Breadcrumbs = connect(class extends Component<typeof props> {
   public render() {
-    const { location, pages } = this.props;
+    const { pages } = this.props;
+    const { location } = this.props;
 
-    if (!location || !pages) {
+    if (!location) {
       return false;
     }
 
@@ -36,12 +41,12 @@ export const Breadcrumbs = connect(class extends Component<typeof props> {
       .reduce<string[]>(
         (previous, current, index) => ([
           ...previous,
-          `${previous[index - 1] || ''}/${current}`
+          `${previous[ index - 1 ] || ''}/${current}`
         ]),
         []
       );
 
-    if (paths[0] !== '/') {
+    if (paths[ 0 ] !== '/') {
       paths = [
         '/',
         ...paths

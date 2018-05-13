@@ -2,11 +2,8 @@ import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
-import { MenuItem } from '../api/Menu';
-import { Page } from '../api/Page';
 import { PHONE, TABLET_LANDSCAPE } from '../constants';
-import { State } from '../types';
-import { findByValue } from '../utils/findByValue';
+import { NavigationQuery_menu } from '../schema/__generated__/NavigationQuery';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 import { Column } from './Column';
@@ -14,25 +11,16 @@ import { Heading } from './Heading';
 import { Row } from './Row';
 
 type Props = {
-  menuItem: MenuItem,
-  onClick: (page: Page) => void,
+  item: NavigationQuery_menu,
+  onClick: (path: string) => void,
   styles?: StyleDeclaration
 };
 
-const mapStateToProps = (state: State) => ({
-  pages: state.content.pages
-});
-
-const { props, connect } = withProps<Props>()(mapStateToProps);
+const { props, connect } = withProps<Props>()();
 
 export const Menu = connect(class extends Component<typeof props> {
   public render() {
-    const { menuItem, onClick, styles = [] } = this.props;
-    const { pages } = this.props;
-
-    if (!pages) {
-      return false;
-    }
+    const { item, onClick, styles = [] } = this.props;
 
     const styleSheet = StyleSheet.create({
       category: {
@@ -51,31 +39,25 @@ export const Menu = connect(class extends Component<typeof props> {
 
     return (
       <Row styles={styles}>
-        {menuItem.columns
+        {[ ...item.columns ]
           .sort((a, b) => a.order - b.order)
           .map((column) => (
             <Column
               key={column.id}
-              breakpoints={{ [PHONE]: 6, [TABLET_LANDSCAPE]: 3 }}
-              styles={[styleSheet.category]}
+              breakpoints={{ [ PHONE ]: 6, [ TABLET_LANDSCAPE ]: 3 }}
+              styles={[ styleSheet.category ]}
             >
-              <Heading text={column.name} light={true} breakpoints={{ [PHONE]: 'thin' }}/>
-              {column.targets
+              <Heading text={column.name} light={true} breakpoints={{ [ PHONE ]: 'thin' }}/>
+              {[ ...column.targets ]
                 .sort((a, b) => a.order - b.order)
                 .map((target) => {
-                  const page = findByValue(target.target, 'id', pages);
-
-                  if (!page) {
-                    return false;
-                  }
-
                   return (
                     <a
                       key={target.id}
                       className={css(styleSheet.link)}
-                      onClick={handle(onClick, page)}
+                      onClick={handle(onClick, target.target.path)}
                     >
-                      {page.name}
+                      {target.target.name}
                     </a>
                   );
                 })}

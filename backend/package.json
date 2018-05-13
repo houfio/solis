@@ -1,0 +1,25 @@
+{
+  "name": "@solis/backend",
+  "private": true,
+  "scripts": {
+    "lint": "tslint \"src/**/*.ts\"",
+    "prebuild": "rimraf \"build\"",
+    "build": "tsc",
+    "postbuild": "copyfiles \"src/**/*.graphql\" \"build\" --up 1",
+    "start": "nodemon --watch \"src\" --exec \"npm run build && node \"build\"\" --ext ts,graphql"
+  },
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "class-validator": "^0.8.5",
+    "pg": "^7.4.3",
+    "vesper": "^0.1.9"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^2.0.0",
+    "copyfiles": "^2.0.0",
+    "nodemon": "^1.17.4",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}

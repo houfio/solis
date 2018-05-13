@@ -1,0 +1,40 @@
+interface PageBlockData {
+  id: ID!
+  block: PageBlock!
+}
+
+type Text implements PageBlockData {
+  id: ID!
+  block: PageBlock!
+  text: String!
+  type: Int!
+}
+
+type Button implements PageBlockData {
+  id: ID!
+  block: PageBlock!
+  text: String!
+  type: Int!
+  target: Page!
+}
+
+type Image implements PageBlockData {
+  id: ID!
+  block: PageBlock!
+  image: String!
+}
+
+type Column implements PageBlockData {
+  id: ID!
+  block: PageBlock!
+  size: Int!
+  breakpoint: Int!
+}
+
+type Hero implements PageBlockData {
+  id: ID!
+  block: PageBlock!
+  image: String!
+  type: Int!
+  height: Int!
+}

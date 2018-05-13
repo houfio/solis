@@ -1,30 +1,26 @@
-import { faPlus } from '@fortawesome/fontawesome-free-solid';
+import { faPlus } from '@fortawesome/fontawesome-free-solid/faPlus';
 import { css, StyleSheet } from 'aphrodite/no-important';
+import gql from 'graphql-tag';
 import * as React from 'react';
 import { Component } from 'react';
+import { Query } from 'react-apollo';
 import { push } from 'react-router-redux';
 
 import { Action } from '../components/Action';
 import { AdminPage } from '../components/AdminPage';
 import { Heading } from '../components/Heading';
 import { PHONE } from '../constants';
-import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
-
-const mapStateToProps = (state: State) => ({
-  pages: state.content.pages
-});
 
 const getActionCreators = () => ({
   push
 });
 
-const { props, connect } = withProps()(mapStateToProps, getActionCreators);
+const { props, connect } = withProps()(undefined, getActionCreators);
 
 export const Pages = connect(class extends Component<typeof props> {
   public render() {
-    const { pages } = this.props;
     const { push } = this.props;
 
     const stylesheet = StyleSheet.create({
@@ -46,22 +42,53 @@ export const Pages = connect(class extends Component<typeof props> {
     });
 
     return (
-      <AdminPage
-        title="Pagina's"
-        actions={[
-          <Action key="0" icon={faPlus}/>
-        ]}
+      <Query
+        query={gql`
+          {
+            pages {
+              id
+              name
+            }
+          }
+        `}
       >
-        {pages!.map((page) => (
-          <div
-            key={page.id}
-            className={css(stylesheet.header)}
-            onClick={handle(push, `/admin/pages/${page.id}`)}
-          >
-            <Heading text={page.name} light={true} breakpoints={{ [PHONE]: 'thin' }} styles={[stylesheet.heading]}/>
-          </div>
-        ))}
-      </AdminPage>
+        {({ data, loading, error }) => {
+          if (loading) {
+            return 'loading haha';
+          } else if (error) {
+            console.log(error);
+
+            return false;
+          }
+
+          return (
+            <AdminPage
+              title="Pagina's"
+              actions={[
+                <Action key="0" icon={faPlus}/>
+              ]}
+            >
+              {data.pages.map((page: {
+                id: string,
+                name: string
+              }) => (
+                <div
+                  key={page.id}
+                  className={css(stylesheet.header)}
+                  onClick={handle(push, `/admin/pages/${page.id}`)}
+                >
+                  <Heading
+                    text={page.name}
+                    light={true}
+                    breakpoints={{ [ PHONE ]: 'thin' }}
+                    styles={[ stylesheet.heading ]}
+                  />
+                </div>
+              ))}
+            </AdminPage>
+          );
+        }}
+      </Query>
     );
   }
 });

@@ -1,0 +1,36 @@
+{
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "interface-over-type-literal": false,
+    "no-conditional-assignment": false,
+    "no-console": false,
+    "no-shadowed-variable": false,
+    "object-literal-sort-keys": false,
+    "trailing-comma": [
+      true,
+      "never"
+    ],
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double",
+      "avoid-escape"
+    ]
+  },
+  "linterOptions": {
+    "exclude": [
+      "src/migration"
+    ]
+  }
+}

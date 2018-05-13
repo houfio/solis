@@ -1,0 +1,6 @@
+type PageGuard {
+  id: ID!
+  page: Page!
+  type: String!
+  target: Page!
+}

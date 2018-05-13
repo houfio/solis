@@ -1,24 +1,25 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component, Fragment } from 'react';
+import { Query } from 'react-apollo';
 import { push } from 'react-router-redux';
 
-import { Page } from '../api/Page';
 import { TABLET_LANDSCAPE } from '../constants';
 import { content } from '../modules/content';
+import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { State } from '../types';
-import { findByValue } from '../utils/findByValue';
 import { forBreakpoint } from '../utils/forBreakpoint';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 import { Container } from './Container';
 import { Menu } from './Menu';
 
+import logo from '../assets/logo.png';
+import text from '../assets/text.png';
+import query from '../schema/navigation.graphql';
+
 const mapStateToProps = (state: State) => ({
-  pages: state.content.pages,
-  menus: state.content.menus,
-  openMenu: state.content.openMenu,
-  user: state.auth.user
+  openMenu: state.content.openMenu
 });
 
 const getActionCreators = () => ({
@@ -29,24 +30,13 @@ const getActionCreators = () => ({
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
 export const Navigation = connect(class extends Component<typeof props> {
-  private menuNodes: { [key: number]: HTMLElement | undefined } = {};
+  private menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
 
   public render() {
-    const { pages, menus, openMenu, user } = this.props;
+    const { openMenu } = this.props;
     const { setOpenMenu, push } = this.props;
 
-    if (!pages || !menus) {
-      return false;
-    }
-
-    const primaryMenu = findByValue('primary', 'name', menus);
-    const homePage = findByValue('home', 'type', pages);
-
-    if (!primaryMenu || !homePage) {
-      return false;
-    }
-
-    const openNode = openMenu !== undefined ? this.menuNodes[openMenu] : undefined;
+    const openNode = openMenu !== undefined ? this.menuNodes[ openMenu ] : undefined;
 
     const styleSheet = StyleSheet.create({
       navigation: {
@@ -81,7 +71,7 @@ export const Navigation = connect(class extends Component<typeof props> {
       },
       logo: {
         display: 'block',
-        backgroundImage: 'url(/static/logo.png)',
+        backgroundImage: `url(${logo})`,
         width: '3rem',
         height: '3rem',
         margin: '1rem 0'
@@ -89,7 +79,7 @@ export const Navigation = connect(class extends Component<typeof props> {
       text: {
         display: 'none',
         marginLeft: '1rem',
-        backgroundImage: 'url(/static/text.png)',
+        backgroundImage: `url(${text})`,
         height: '3rem',
         width: '7rem',
         ...forBreakpoint(TABLET_LANDSCAPE, {
@@ -160,65 +150,75 @@ export const Navigation = connect(class extends Component<typeof props> {
     });
 
     return (
-      <>
-        <nav className={css(styleSheet.navigation)}>
-          <div className={css(styleSheet.bar)}>
-            <Container styles={[styleSheet.container]}>
-              <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, homePage)}>
-                <div className={css(styleSheet.image, styleSheet.logo)}/>
-                <div className={css(styleSheet.image, styleSheet.text)}/>
-              </div>
-              <div className={css(styleSheet.push)}/>
-              {primaryMenu.items
-                .sort((a, b) => a.order - b.order)
-                .map((item, index) => (
-                  <Fragment key={item.id}>
-                    <span
-                      className={css(
-                        styleSheet.item,
-                        openMenu === index && styleSheet.active
-                      )}
-                      onClick={handle(setOpenMenu, { index })}
-                    >
-                      {item.name}
-                    </span>
-                    <div
-                      ref={(node) => this.menuNodes[index] = node || undefined}
-                      className={css(
-                        styleSheet.menu,
-                        openMenu === index && styleSheet.open,
-                        Number(openMenu) > index && styleSheet.menuRight,
-                        Number(openMenu) < index && styleSheet.menuLeft
-                      )}
-                    >
-                      <Container>
-                        <Menu menuItem={item} onClick={this.navigateTo}/>
-                      </Container>
+      <Query<NavigationQuery> query={query}>
+        {({ data, loading }) => {
+          if (loading || !data) {
+            return 'loading haha';
+          }
+
+          return (
+            <>
+              <nav className={css(styleSheet.navigation)}>
+                <div className={css(styleSheet.bar)}>
+                  <Container styles={[ styleSheet.container ]}>
+                    <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, '/')}>
+                      <div className={css(styleSheet.image, styleSheet.logo)}/>
+                      <div className={css(styleSheet.image, styleSheet.text)}/>
                     </div>
-                  </Fragment>
-                ))}
-              {user && user.admin && (
-                <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
-              )}
-            </Container>
-          </div>
-          <div
-            className={css(styleSheet.backDrop)}
-            style={{ transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})` }}
-          />
-        </nav>
-        <div
-          className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
-          onClick={handle(setOpenMenu, {})}
-        />
-      </>
+                    <div className={css(styleSheet.push)}/>
+                    {[ ...data.menu ]
+                      .sort((a, b) => a.order - b.order)
+                      .map((item, index) => (
+                        <Fragment key={item.id}>
+                          <span
+                            className={css(
+                              styleSheet.item,
+                              openMenu === index && styleSheet.active
+                            )}
+                            onClick={handle(setOpenMenu, { index })}
+                          >
+                            {item.name}
+                          </span>
+                          <div
+                            ref={(node) => this.menuNodes[ index ] = node || undefined}
+                            className={css(
+                              styleSheet.menu,
+                              openMenu === index && styleSheet.open,
+                              Number(openMenu) > index && styleSheet.menuRight,
+                              Number(openMenu) < index && styleSheet.menuLeft
+                            )}
+                          >
+                            <Container>
+                              <Menu item={item} onClick={this.navigateTo}/>
+                            </Container>
+                          </div>
+                        </Fragment>
+                      ))}
+                    {data.user && data.user.admin && (
+                      <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
+                    )}
+                  </Container>
+                </div>
+                <div
+                  className={css(styleSheet.backDrop)}
+                  style={{ transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})` }}
+                />
+              </nav>
+              <div
+                className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
+                onClick={handle(setOpenMenu, {})}
+              />
+            </>
+          );
+        }}
+      </Query>
     );
   }
 
-  private navigateTo = (page: Page) => {
+  private navigateTo = (page: string) => {
     const { setOpenMenu, push } = this.props;
 
     setOpenMenu({});
-    push(page.path);
+    push(page);
   }
 });

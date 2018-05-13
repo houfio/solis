@@ -1,0 +1,7 @@
+type BlogPost {
+  id: ID!
+  tags: [BlogTag!]!
+  title: String!
+  content: String!
+  creationDate: Date!
+}

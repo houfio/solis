@@ -3,13 +3,13 @@ import * as React from 'react';
 import { Component } from 'react';
 import { push } from 'react-router-redux';
 
-import { Page } from '../api/Page';
+import { PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 
 type Props = {
-  last: boolean,
-  page?: Page
+  page?: PublicQuery_pages,
+  last: boolean
 };
 
 const getActionCreators = () => ({
@@ -20,7 +20,7 @@ const { props, connect } = withProps<Props>()(undefined, getActionCreators);
 
 export const Breadcrumb = connect(class extends Component<typeof props> {
   public render() {
-    const { last, page } = this.props;
+    const { page, last } = this.props;
     const { push } = this.props;
 
     const styleSheet = StyleSheet.create({

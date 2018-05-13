@@ -3,31 +3,18 @@ import { RouterState } from 'react-router-redux';
 import { Action as ReduxAction } from 'redux';
 import { FormState } from 'redux-form';
 
-import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
-import { Identifiable } from './api/Identifiable';
-import { Menu } from './api/Menu';
-import { Page } from './api/Page';
-import { User } from './api/User';
 import { BREAKPOINTS } from './constants';
+import {
+  ContentPageQuery_page_blocks,
+  ContentPageQuery_page_blocks_data
+} from './schema/__generated__/ContentPageQuery';
 
 export type State = {
   router: RouterState,
   form: FormState,
-  auth: {
-    user?: User,
-    token?: string
-  },
   content: {
-    pages?: Page[],
-    contentBlocks: {
-      [id: number]: ContentBlock[]
-    },
-    menus?: Menu[],
     openMenu?: number,
     notifications: Notification[]
-  },
-  http: {
-    [queue: string]: number
   },
   admin: {
     collapsed: boolean
@@ -38,33 +25,17 @@ export type ColorType = 'primary' | 'secondary' | 'tertiary';
 
 export type HeadingType = 'bold' | 'thin' | 'subtle';
 
+export type PageGuardType = 'auth' | 'no_auth';
+
 export type Breakpoint = keyof typeof BREAKPOINTS;
 
-export type ApiResponseSuccess<T> = {
-  success: true,
-  data: T
+export type RendererProps<T extends ContentPageQuery_page_blocks_data> = {
+  data: T,
+  drop: (data?: number) => ReactNode | undefined
 };
 
-export type ApiResponseFailure = {
-  success: false,
-  code: number,
-  message: string
-};
-
-export type RendererProps<T extends keyof ContentBlockTypes> = {
-  data: ContentBlockTypes[T],
-  drop: (data?: number) => ReactNode | undefined,
-  children: ContentBlockChild[]
-};
-
-export type ContentBlockRenderer<T extends keyof ContentBlockTypes> =
-  (block: ContentBlock<T>, drop?: (data?: number) => ReactNode | undefined) => ReactNode;
-
-export type ContentBlockChild = {
-  data: number,
-  order: number,
-  render: () => ReactNode
-};
+export type ContentBlockRenderer =
+  (block: ContentPageQuery_page_blocks, drop?: (data?: number) => ReactNode | undefined) => ReactNode;
 
 export type Map<U, B> = (payload: U) => B;
 
@@ -72,18 +43,8 @@ export type Reduce<M, P> = (payload: M, state: P) => Partial<P>;
 
 export type Action<U, Y> = (payload?: U) => ReduxAction & Y;
 
-export type AsyncPayload<T> = {
-  promise: Promise<T>
-};
-
-export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
-export type PromisePayload<B> = B extends AsyncPayload<infer T> ? Omit<B, keyof AsyncPayload<T>> & T : B;
-
-export type DispatchedPromise<B> = B extends AsyncPayload<infer T> ? Promise<T> : B;
-
 export type CreateAction<P> =
-  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<PromisePayload<B>, P>) => Action<U, DispatchedPromise<B>>;
+  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<B, P>) => Action<U, B>;
 
 export type Actions = {
   [type: string]: Action<any, any>
@@ -99,7 +60,8 @@ export type Module<N extends keyof State = keyof State, A extends Actions = Acti
   reducers: Reducers<State[N], A>
 };
 
-export type Notification = Identifiable & {
+export type Notification = {
+  id: number,
   text: string,
   timeout: number,
   color?: ColorType,

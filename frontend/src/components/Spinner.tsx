@@ -20,8 +20,8 @@ export const Spinner = () => {
       flexDirection: 'column'
     },
     spinner: {
-      width: '1rem',
-      height: '1rem',
+      width: '1.25rem',
+      height: '1.25rem',
       border: '.25rem solid #BDC1C6',
       borderLeft: '.25rem solid #1976D2',
       borderRadius: '50%',

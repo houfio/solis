@@ -1,0 +1,7 @@
+type MenuItem {
+  id: ID!
+  columns: [MenuColumn!]!
+  name: String!
+  order: Int!
+  hidden: Boolean!
+}

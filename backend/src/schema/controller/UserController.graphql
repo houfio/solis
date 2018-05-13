@@ -1,0 +1,22 @@
+type Query {
+  user: User
+}
+
+type Mutation {
+  login(
+    email: String!
+    password: String!
+  ): Token
+  register(
+    membershipId: Int!
+    membershipSection: String!
+    email: String!
+    password: String!
+  ): User
+  approveUser(
+    id: ID!
+  ): Boolean!
+  deleteUser(
+    id: ID!
+  ): Boolean!
+}

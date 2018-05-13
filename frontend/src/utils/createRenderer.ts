@@ -1,26 +1,14 @@
 import { ComponentClass, createElement } from 'react';
 
-import { ContentBlockTypes } from '../api/ContentBlock';
-import { BLOCK_RENDERERS } from '../constants';
+import { ContentPageQuery_page_blocks_data } from '../schema/__generated__/ContentPageQuery';
 import { ContentBlockRenderer, RendererProps } from '../types';
-import { findByKey } from './findByKey';
 
-export const createRenderer = <T extends keyof ContentBlockTypes>(
-  component: ComponentClass<RendererProps<T>>): ContentBlockRenderer<T> => (block, drop = () => undefined) => {
-  const children = block.children.map((child) => {
-    const renderer = findByKey(child.type, BLOCK_RENDERERS);
-
-    return {
-      data: child.parent_data || 0,
-      order: child.order,
-      render: () => renderer(child, drop)
-    };
-  });
-
+export const createRenderer = <T extends ContentPageQuery_page_blocks_data>(
+  component: ComponentClass<RendererProps<T>>
+): ContentBlockRenderer => (block, drop = () => undefined) => {
   return createElement(component, {
     key: block.id,
-    data: block.data,
-    drop,
-    children
+    data: block.data as T,
+    drop
   });
 };

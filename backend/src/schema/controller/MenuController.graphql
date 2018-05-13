@@ -1,0 +1,21 @@
+type Query {
+  menu: [MenuItem!]!
+}
+
+type Mutation {
+  createItem(
+    name: String!
+    order: Int!
+    hidden: Boolean!
+  ): MenuItem
+  createColumn(
+    item: ID!
+    name: String!
+    order: Int!
+  ): MenuColumn
+  createTarget(
+    column: ID!
+    target: Int!
+    order: Int!
+  ): MenuTarget
+}

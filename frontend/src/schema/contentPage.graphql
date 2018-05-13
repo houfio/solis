@@ -1,0 +1,39 @@
+query ContentPageQuery($id: ID!) {
+  page(id: $id) {
+    blocks {
+      id
+      type
+      order
+      parent {
+        id
+      }
+      parentData
+      data {
+        id
+        ... on Text {
+          text
+          type
+        }
+        ... on Button {
+          text
+          type
+          target {
+            path
+          }
+        }
+        ... on Image {
+          image
+        }
+        ... on Column {
+          size
+          breakpoint
+        }
+        ... on Hero {
+          image
+          type
+          height
+        }
+      }
+    }
+  }
+}
