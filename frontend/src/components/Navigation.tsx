@@ -14,27 +14,32 @@ import { withProps } from '../utils/withProps';
 import { Container } from './Container';
 import { Menu } from './Menu';
 
+import full from '../assets/full.png';
 import logo from '../assets/logo.png';
 import text from '../assets/text.png';
 import query from '../schema/navigation.graphql';
 
 const mapStateToProps = (state: State) => ({
-  openMenu: state.content.openMenu
+  openMenu: state.content.openMenu,
+  breadcrumbs: state.content.breadcrumbs
 });
 
 const getActionCreators = () => ({
   setOpenMenu: content.setOpenMenu,
+  toggleBreadcrumbs: content.toggleBreadcrumbs,
   push
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
 
+export const old = true;
+
 export const Navigation = connect(class extends Component<typeof props> {
   private menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
 
   public render() {
-    const { openMenu } = this.props;
-    const { setOpenMenu, push } = this.props;
+    const { openMenu, breadcrumbs } = this.props;
+    const { setOpenMenu, toggleBreadcrumbs, push } = this.props;
 
     const openNode = openMenu !== undefined ? this.menuNodes[ openMenu ] : undefined;
 
@@ -47,7 +52,9 @@ export const Navigation = connect(class extends Component<typeof props> {
         zIndex: 2
       },
       bar: {
-        backgroundColor: '#1976D2'
+        backgroundColor: '#0094FF',
+        borderRadius: breadcrumbs ? '' : '0 0 .5rem .5rem',
+        transition: 'all .2s ease'
       },
       container: {
         display: 'flex'
@@ -86,12 +93,19 @@ export const Navigation = connect(class extends Component<typeof props> {
           display: 'block'
         })
       },
+      full: {
+        display: 'block',
+        backgroundImage: `url(${full})`,
+        width: '5rem',
+        height: '8rem',
+        margin: '1rem 0'
+      },
       push: {
         flex: '1'
       },
       item: {
         display: 'inline-block',
-        padding: '2rem 1rem',
+        padding: old ? '2rem 1rem' : '4.5rem 1rem',
         cursor: 'pointer',
         lineHeight: 1,
         transition: 'opacity .2s ease',
@@ -131,7 +145,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         position: 'absolute',
         width: '100%',
         height: '1px',
-        backgroundColor: '#1976D2',
+        backgroundColor: '#0094FF',
         transformOrigin: '50% 0 0',
         transition: 'transform .2s ease'
       },
@@ -146,6 +160,26 @@ export const Navigation = connect(class extends Component<typeof props> {
         transition: 'opacity .2s ease, visibility 0s linear .2s',
         backgroundColor: 'rgba(255, 255, 255, .5)',
         opacity: 0
+      },
+      arrow: {
+        position: 'absolute',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: 0,
+        bottom: 0,
+        height: '15px',
+        width: '100%',
+        cursor: 'pointer',
+        '::after': {
+          content: '""',
+          display: 'block',
+          width: '20px',
+          height: '3px',
+          borderRadius: '3px',
+          marginBottom: '-3px',
+          backgroundColor: 'rgba(255, 255, 255, .9)'
+        }
       }
     });
 
@@ -162,8 +196,16 @@ export const Navigation = connect(class extends Component<typeof props> {
                 <div className={css(styleSheet.bar)}>
                   <Container styles={[ styleSheet.container ]}>
                     <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, '/')}>
-                      <div className={css(styleSheet.image, styleSheet.logo)}/>
-                      <div className={css(styleSheet.image, styleSheet.text)}/>
+                      {old ? (
+                        <>
+                          <div className={css(styleSheet.image, styleSheet.logo)}/>
+                          <div className={css(styleSheet.image, styleSheet.text)}/>
+                          </>
+                      ) : (
+                        <>
+                          <div className={css(styleSheet.image, styleSheet.full)}/>
+                        </>
+                      )}
                     </div>
                     <div className={css(styleSheet.push)}/>
                     {[ ...data.menu ]
@@ -198,6 +240,7 @@ export const Navigation = connect(class extends Component<typeof props> {
                       <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
                     )}
                   </Container>
+                  <div className={css(styleSheet.arrow)} onClick={handle(toggleBreadcrumbs, undefined)}/>
                 </div>
                 <div
                   className={css(styleSheet.backDrop)}

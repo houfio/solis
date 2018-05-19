@@ -27,7 +27,7 @@ export const Pages = connect(class extends Component<typeof props> {
       header: {
         padding: '2rem',
         borderRadius: '.5rem',
-        background: 'linear-gradient(145deg, #1976d2 0%, #12589d 100%)',
+        background: 'linear-gradient(145deg, #0094FF 0%, #12589d 100%)',
         lineHeight: 1,
         cursor: 'pointer',
         marginBottom: '1rem',

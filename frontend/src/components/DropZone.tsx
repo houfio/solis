@@ -46,7 +46,7 @@ export const DropZone = DropTarget<Props>(
         margin: '.5rem',
         borderRadius: '.5rem',
         color: '#fff',
-        backgroundColor: isOver ? '#1976d2' : '#414756',
+        backgroundColor: isOver ? '#0094FF' : '#414756',
         transition: 'all .2s ease'
       }
     });

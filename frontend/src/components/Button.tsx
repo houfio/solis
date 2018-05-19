@@ -13,9 +13,9 @@ type Props = {
 const buttonStyles: { [T in ColorType]: CSSProperties } = {
   primary: {
     color: '#fff',
-    backgroundColor: '#1976d2',
+    backgroundColor: '#0094FF',
     ':hover': {
-      backgroundColor: '#12589d'
+      backgroundColor: '#1976d2'
     }
   },
   secondary: {

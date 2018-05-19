@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { RouterState } from 'react-router-redux';
 import { Action as ReduxAction } from 'redux';
-import { FormState } from 'redux-form';
 
 import { BREAKPOINTS } from './constants';
 import {
@@ -11,10 +10,10 @@ import {
 
 export type State = {
   router: RouterState,
-  form: FormState,
   content: {
     openMenu?: number,
-    notifications: Notification[]
+    notifications: Notification[],
+    breadcrumbs: boolean
   },
   admin: {
     collapsed: boolean

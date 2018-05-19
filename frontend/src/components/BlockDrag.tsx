@@ -35,6 +35,7 @@ export const BlockDrag = DragSource<Props>(
 
     const styleSheet = StyleSheet.create({
       block: {
+        position: 'relative',
         padding: '1rem',
         marginBottom: '2rem',
         borderRadius: '.5rem',

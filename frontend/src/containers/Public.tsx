@@ -7,7 +7,7 @@ import { Redirect, Route } from 'react-router';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Container } from '../components/Container';
 import { Footer } from '../components/Footer';
-import { Navigation } from '../components/Navigation';
+import { Navigation, old } from '../components/Navigation';
 import { GUARDS } from '../constants';
 import { PublicQuery, PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { PageGuardType } from '../types';
@@ -19,8 +19,9 @@ export class Public extends Component {
   public render() {
     const styleSheet = StyleSheet.create({
       main: {
+        position: 'relative',
         flex: '1',
-        marginTop: '5rem'
+        marginTop: old ? '4.5rem' : '9.5rem'
       }
     });
 

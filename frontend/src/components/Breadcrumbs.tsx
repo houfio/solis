@@ -14,7 +14,8 @@ type Props = {
 };
 
 const mapStateToProps = (state: State) => ({
-  location: state.router.location
+  location: state.router.location,
+  breadcrumbs: state.content.breadcrumbs
 });
 
 const { props, connect } = withProps<Props>()(mapStateToProps);
@@ -22,7 +23,7 @@ const { props, connect } = withProps<Props>()(mapStateToProps);
 export const Breadcrumbs = connect(class extends Component<typeof props> {
   public render() {
     const { pages } = this.props;
-    const { location } = this.props;
+    const { location, breadcrumbs } = this.props;
 
     if (!location) {
       return false;
@@ -30,8 +31,15 @@ export const Breadcrumbs = connect(class extends Component<typeof props> {
 
     const styleSheet = StyleSheet.create({
       breadcrumbs: {
-        padding: '1rem 0',
-        backgroundColor: '#F6F6F6'
+        position: 'absolute',
+        width: '100%',
+        padding: '1.5rem 0 1rem 0',
+        backgroundColor: '#fff',
+        border: '2px solid #eee',
+        borderRadius: '0 0 .5rem .5rem',
+        transform: breadcrumbs ? '' : 'translateY(-3.5rem)',
+        transition: 'transform .2s ease',
+        zIndex: 1
       }
     });
 

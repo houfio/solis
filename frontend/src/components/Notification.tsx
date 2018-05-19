@@ -22,7 +22,7 @@ const { props, connect } = withProps<Props>()(undefined, getActionCreators);
 const notificationStyles: { [T in ColorType]: CSSProperties } = {
   primary: {
     color: '#fff',
-    background: 'linear-gradient(145deg, #1976d2 0%, #12589d 100%)'
+    background: 'linear-gradient(145deg, #0094FF 0%, #12589d 100%)'
   },
   secondary: {
     color: '#fff',

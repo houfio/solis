@@ -42,7 +42,8 @@ export const PageContent = DragDropContext(HTML5Backend)(connect(class extends C
         overflowY: 'scroll'
       },
       page: {
-        padding: '1rem'
+        padding: '1rem',
+        position: 'relative'
       }
     });
 
@@ -78,7 +79,7 @@ export const PageContent = DragDropContext(HTML5Backend)(connect(class extends C
                 <Column breakpoints={{ [ PHONE ]: 9 }}>
                   <div className={css(styleSheet.page)}>
                     <DropZone pageId={data.page.id} order={0}/>
-                    {data.page.blocks
+                    {[ ...data.page.blocks ]
                       .sort((a, b) => a.order - b.order)
                       .map((block) => {
                         const renderer = findByKey(block.type, BLOCK_RENDERERS);

@@ -5,7 +5,8 @@ export const content = createModule(
   'content',
   {
     openMenu: undefined,
-    notifications: []
+    notifications: [],
+    breadcrumbs: true
   },
   (createAction) => ({
     setOpenMenu: createAction<{ index?: number }>('SET_OPEN_MENU')(
@@ -42,6 +43,12 @@ export const content = createModule(
       (payload) => payload,
       ({ notificationId }, { notifications }) => ({
         notifications: notifications.filter((notification) => notification.id !== notificationId)
+      })
+    ),
+    toggleBreadcrumbs: createAction('TOGGLE_BREADCRUMBS')(
+      () => ({}),
+      (_, { breadcrumbs }) => ({
+        breadcrumbs: !breadcrumbs
       })
     )
   })

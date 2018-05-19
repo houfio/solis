@@ -17,7 +17,9 @@ export const text = createRenderer(class extends Component<RendererProps<Content
     });
 
     return (
-      <span className={css(type === 1 && styleSheet.light)}>{text}</span>
+      <div className={css(type === 1 && styleSheet.light)}>
+        {text}
+      </div>
     );
   }
 });

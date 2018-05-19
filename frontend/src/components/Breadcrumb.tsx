@@ -28,7 +28,7 @@ export const Breadcrumb = connect(class extends Component<typeof props> {
         ':not(:last-child)::after': {
           content: '"/"',
           padding: '0 .5rem',
-          color: '#1976D2',
+          color: '#0094FF',
           fontWeight: 'bold'
         }
       },
