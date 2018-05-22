@@ -6,7 +6,7 @@ export const Admin = (fail?: any): MethodDecorator => {
   return (_, __, descriptor: TypedPropertyDescriptor<any>) => {
     const func = descriptor.value;
 
-    descriptor.value = async function(args: any, context: { container: ContainerInstance }, info: object) {
+    descriptor.value = function(_: any, context: { container: ContainerInstance }) {
       const currentUser = context.container.get(User);
 
       if (!currentUser || !currentUser.admin) {
@@ -17,7 +17,7 @@ export const Admin = (fail?: any): MethodDecorator => {
         return fail;
       }
 
-      return func.apply(this, [ args, context, info ]);
+      return func.apply(this, arguments);
     };
 
     return descriptor;

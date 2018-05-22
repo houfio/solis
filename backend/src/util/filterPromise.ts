@@ -1,8 +1,8 @@
-export function filterPromise<E, I>(
+export const filterPromise = <E, I>(
   entities: E | E[],
   get: (entity: E) => Promise<I[]>,
   check: (item: I) => boolean
-): Promise<I[]> | Array<Promise<I[]>> {
+): Promise<I[]> | Array<Promise<I[]>> => {
   async function filter(entity: E): Promise<I[]> {
     const items = await get(entity);
 
@@ -14,4 +14,4 @@ export function filterPromise<E, I>(
   }
 
   return filter(entities);
-}
+};

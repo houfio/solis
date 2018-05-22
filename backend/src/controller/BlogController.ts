@@ -10,6 +10,8 @@ import { BlogPost } from '../entity/BlogPost';
 import { BlogTag } from '../entity/BlogTag';
 import { User } from '../entity/User';
 import { TagCreate } from '../argument/TagCreate';
+import { PostUpdate } from '../argument/PostUpdate';
+import { updateObject } from '../util/updateObject';
 
 @Controller()
 export class BlogController {
@@ -37,13 +39,11 @@ export class BlogController {
   }
 
   @Query()
-  @Validate(Identifier)
   public post({ id }: Identifier) {
     return this.entityManager.findOne(BlogPost, { id, deleted: false });
   }
 
   @Mutation()
-  @Validate(PostCreate)
   @Admin()
   public async createPost(args: PostCreate) {
     const post = new BlogPost();
@@ -62,7 +62,6 @@ export class BlogController {
   }
 
   @Mutation()
-  @Validate(Identifier)
   @Admin(false)
   public async deletePost({ id }: Identifier) {
     await this.entityManager.update(BlogPost, id, {
@@ -73,18 +72,27 @@ export class BlogController {
   }
 
   @Mutation()
-  @Validate(TagCreate)
-  @Admin(false)
-  public async createTag(args: TagCreate) {
+  @Validate<PostUpdate>((obj) => {
+
+  })
+  @Admin()
+  public async updatePost(args: PostUpdate) {
     const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
 
-    await this.addTag(post, args.tag);
+    updateObject(post, args.input);
 
-    return true;
+    return this.entityManager.save(post);
   }
 
   @Mutation()
-  @Validate(Identifier)
+  @Admin()
+  public async createTag(args: TagCreate) {
+    const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
+
+    return this.addTag(post, args.tag);
+  }
+
+  @Mutation()
   @Admin(false)
   public async deleteTag({ id }: Identifier) {
     await this.entityManager.update(BlogTag, id, {

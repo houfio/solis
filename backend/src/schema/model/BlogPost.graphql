@@ -5,3 +5,8 @@ type BlogPost {
   content: String!
   creationDate: Date!
 }
+
+input BlogPostInput {
+  title: String
+  content: String
+}
