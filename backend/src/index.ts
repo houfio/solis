@@ -19,10 +19,10 @@ bootstrap({
   setupContainer: async (container, action) => {
     if (action.request && (action.request.headers.authorization || debug)) {
       const repo = getRepository(Token);
-      const token = await repo.findOneOrFail(action.request.headers.authorization);
+      const token = await repo.findOne(action.request.headers.authorization);
 
-      if (!token.active) {
-        throw new Error('Ongeldige token');
+      if (!token || !token.active) {
+        throw new Error('Unauthorized');
       }
 
       token.lastUsed = new Date();

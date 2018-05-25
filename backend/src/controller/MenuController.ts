@@ -45,7 +45,12 @@ export class MenuController {
   })
   @Admin()
   public async createColumn(args: ColumnCreate) {
-    const item = await this.entityManager.findOneOrFail(MenuItem, args.id);
+    const item = await this.entityManager.findOne(MenuItem, args.id);
+
+    if (!item) {
+      return null;
+    }
+
     const column = new MenuColumn();
     column.name = args.name;
     column.order = args.order;
@@ -62,8 +67,13 @@ export class MenuController {
   })
   @Admin()
   public async createTarget(args: TargetCreate) {
-    const column = await this.entityManager.findOneOrFail(MenuColumn, args.id);
-    const t = await this.entityManager.findOneOrFail(Page, args.target);
+    const column = await this.entityManager.findOne(MenuColumn, args.id);
+    const t = await this.entityManager.findOne(Page, args.target);
+
+    if (!column || !t) {
+      return null;
+    }
+
     const target = new MenuTarget();
     target.target = Promise.resolve(t);
     target.order = args.order;

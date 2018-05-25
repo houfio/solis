@@ -26,14 +26,52 @@ export class UserController {
   }
 
   @Mutation()
-  @Validate<UserLogin>((obj) => {
-    return !(isEmail(obj.email) && isLength(obj.password, 8));
+  @Validate<UserRegister>((obj) => {
+    return isEmail(obj.email) && isLength(obj.password, 8);
   })
-  public async login(args: UserLogin, context: { container: ContainerInstance }) {
-    const user = await this.entityManager.findOneOrFail(User, { email: args.email, deleted: false });
+  public async createUser(args: UserRegister) {
+    const user = new User();
+    user.membershipId = args.membershipId;
+    user.membershipSection = args.membershipSection;
+    user.email = args.email;
+    user.password = await hash(args.password, 10);
+    user.creationDate = new Date();
 
-    if (user.deleted || !user.approved || !await compare(args.password, user.password)) {
-      throw new Error('Ongeldige inloggegevens');
+    return this.entityManager.save(user);
+  }
+
+  @Mutation()
+  @Validate(undefined, false)
+  @Admin(false)
+  public async deleteUser({ id }: Identifier) {
+    const user = await this.entityManager.findOne(User, id);
+
+    if (!user) {
+      return false;
+    }
+
+    for (const token of await user.tokens) {
+      token.active = false;
+
+      await this.entityManager.save(token);
+    }
+
+    user.deleted = true;
+
+    await this.entityManager.save(user);
+
+    return true;
+  }
+
+  @Mutation()
+  @Validate<UserLogin>((obj) => {
+    return isEmail(obj.email) && isLength(obj.password, 8);
+  })
+  public async createToken(args: UserLogin, context: { container: ContainerInstance }) {
+    const user = await this.entityManager.findOne(User, { email: args.email, deleted: false });
+
+    if (!user || user.deleted || !user.approved || !await compare(args.password, user.password)) {
+      return null;
     }
 
     const request = context.container.get(CurrentRequest);
@@ -42,7 +80,7 @@ export class UserController {
     let ip = request.headers[ 'x-forwarded-for' ];
 
     if (typeof userAgent !== 'string' || (typeof ip !== 'string' && !(ip = request.connection.remoteAddress))) {
-      throw new Error();
+      return null;
     }
 
     const token = new Token();
@@ -55,46 +93,15 @@ export class UserController {
   }
 
   @Mutation()
-  @Validate<UserRegister>((obj) => {
-    return !(isEmail(obj.email) && isLength(obj.password, 8));
-  })
-  public async register(args: UserRegister) {
-    const user = new User();
-    user.membershipId = args.membershipId;
-    user.membershipSection = args.membershipSection;
-    user.email = args.email;
-    user.password = await hash(args.password, 10);
-    user.creationDate = new Date();
-
-    return this.entityManager.save(user);
-  }
-
-  @Mutation()
-  @Validate()
-  @Admin(false)
-  public async approveUser({ id }: Identifier) {
-    await this.entityManager.update(User, id, {
-      approved: true
-    });
-
-    return true;
-  }
-
-  @Mutation()
-  @Validate()
-  @Admin(false)
-  public async deleteUser({ id }: Identifier) {
-    const user = await this.entityManager.findOneOrFail(User, id);
-
-    for (const token of await user.tokens) {
-      token.active = false;
-
-      await this.entityManager.save(token);
+  @Validate(undefined, false)
+  public async deleteToken({ id }: Identifier) {
+    if (!this.currentUser) {
+      return false;
     }
 
-    user.deleted = true;
-
-    await this.entityManager.save(user);
+    await this.entityManager.update(Token, { id, user: Promise.resolve(this.currentUser) }, {
+      active: false
+    });
 
     return true;
   }

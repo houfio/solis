@@ -78,7 +78,7 @@ export class BlogController {
   }
 
   @Mutation()
-  @Validate()
+  @Validate(undefined, false)
   @Admin(false)
   public async deletePost({ id }: Identifier) {
     await this.entityManager.update(BlogPost, id, {
@@ -94,7 +94,11 @@ export class BlogController {
   })
   @Admin()
   public async updatePost(args: PostUpdate) {
-    const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
+    const post = await this.entityManager.findOne(BlogPost, { id: args.id, deleted: false });
+
+    if (!post) {
+      return null;
+    }
 
     return this.entityManager.save(updateObject(post, args.input));
   }
@@ -105,13 +109,17 @@ export class BlogController {
   })
   @Admin()
   public async createTag(args: TagCreate) {
-    const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
+    const post = await this.entityManager.findOne(BlogPost, { id: args.id, deleted: false });
+
+    if (!post) {
+      return null;
+    }
 
     return this.addTag(post, args.tag);
   }
 
   @Mutation()
-  @Validate()
+  @Validate(undefined, false)
   @Admin(false)
   public async deleteTag({ id }: Identifier) {
     await this.entityManager.update(BlogTag, id, {
