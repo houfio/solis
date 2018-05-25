@@ -1,16 +1,18 @@
 import { Inject } from 'typedi';
 import { EntityManager } from 'typeorm';
+import { isLength } from 'validator';
 import { Controller, Mutation, Query } from 'vesper';
 
 import { Identifier } from '../argument/Identifier';
 import { PostCreate } from '../argument/PostCreate';
+import { Posts } from '../argument/Posts';
+import { PostUpdate } from '../argument/PostUpdate';
+import { TagCreate } from '../argument/TagCreate';
 import { Admin } from '../decorator/Admin';
 import { Validate } from '../decorator/Validate';
 import { BlogPost } from '../entity/BlogPost';
 import { BlogTag } from '../entity/BlogTag';
 import { User } from '../entity/User';
-import { TagCreate } from '../argument/TagCreate';
-import { PostUpdate } from '../argument/PostUpdate';
 import { updateObject } from '../util/updateObject';
 
 @Controller()
@@ -22,7 +24,7 @@ export class BlogController {
   private currentUser?: User;
 
   @Query()
-  public posts(args: { limit?: number, offset?: number, tag?: string }) {
+  public posts(args: Posts) {
     let query = this.entityManager
       .createQueryBuilder(BlogPost, 'post')
       .where('deleted = false')
@@ -39,11 +41,25 @@ export class BlogController {
   }
 
   @Query()
+  @Validate()
   public post({ id }: Identifier) {
     return this.entityManager.findOne(BlogPost, { id, deleted: false });
   }
 
   @Mutation()
+  @Validate<PostCreate>((obj) => {
+    if (!isLength(obj.title, 1, 255)) {
+      return false;
+    }
+
+    for (const tag of obj.tags) {
+      if (!isLength(tag, 1, 32)) {
+        return false;
+      }
+    }
+
+    return true;
+  })
   @Admin()
   public async createPost(args: PostCreate) {
     const post = new BlogPost();
@@ -62,6 +78,7 @@ export class BlogController {
   }
 
   @Mutation()
+  @Validate()
   @Admin(false)
   public async deletePost({ id }: Identifier) {
     await this.entityManager.update(BlogPost, id, {
@@ -73,18 +90,19 @@ export class BlogController {
 
   @Mutation()
   @Validate<PostUpdate>((obj) => {
-
+    return !(obj.input.title && isLength(obj.input.title, 1, 255));
   })
   @Admin()
   public async updatePost(args: PostUpdate) {
     const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
 
-    updateObject(post, args.input);
-
-    return this.entityManager.save(post);
+    return this.entityManager.save(updateObject(post, args.input));
   }
 
   @Mutation()
+  @Validate<TagCreate>((obj) => {
+    return isLength(obj.tag, 1, 32);
+  })
   @Admin()
   public async createTag(args: TagCreate) {
     const post = await this.entityManager.findOneOrFail(BlogPost, { id: args.id, deleted: false });
@@ -93,6 +111,7 @@ export class BlogController {
   }
 
   @Mutation()
+  @Validate()
   @Admin(false)
   public async deleteTag({ id }: Identifier) {
     await this.entityManager.update(BlogTag, id, {

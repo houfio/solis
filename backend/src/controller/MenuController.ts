@@ -1,5 +1,6 @@
 import { Inject } from 'typedi';
 import { EntityManager, LessThan, Not, ObjectType } from 'typeorm';
+import { isLength, isUUID } from 'validator';
 import { Controller, Mutation, Query } from 'vesper';
 
 import { ColumnCreate } from '../argument/ColumnCreate';
@@ -23,7 +24,9 @@ export class MenuController {
   }
 
   @Mutation()
-  @Validate(ItemCreate)
+  @Validate<ItemCreate>((obj) => {
+    return isLength(obj.name, 1, 255);
+  })
   @Admin()
   public async createItem(args: ItemCreate) {
     const item = new MenuItem();
@@ -37,10 +40,12 @@ export class MenuController {
   }
 
   @Mutation()
-  @Validate(ColumnCreate)
+  @Validate<ColumnCreate>((obj) => {
+    return isLength(obj.name, 1, 255);
+  })
   @Admin()
   public async createColumn(args: ColumnCreate) {
-    const item = await this.entityManager.findOneOrFail(MenuItem, args.item);
+    const item = await this.entityManager.findOneOrFail(MenuItem, args.id);
     const column = new MenuColumn();
     column.name = args.name;
     column.order = args.order;
@@ -52,10 +57,12 @@ export class MenuController {
   }
 
   @Mutation()
-  @Validate(TargetCreate)
+  @Validate<TargetCreate>((obj) => {
+    return isUUID(obj.target, 4);
+  })
   @Admin()
   public async createTarget(args: TargetCreate) {
-    const column = await this.entityManager.findOneOrFail(MenuColumn, args.column);
+    const column = await this.entityManager.findOneOrFail(MenuColumn, args.id);
     const t = await this.entityManager.findOneOrFail(Page, args.target);
     const target = new MenuTarget();
     target.target = Promise.resolve(t);

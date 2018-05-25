@@ -18,7 +18,7 @@
     "@types/bcrypt": "^2.0.0",
     "@types/validator": "^9.4.1",
     "copyfiles": "^2.0.0",
-    "nodemon": "^1.17.4",
+    "nodemon": "^1.17.5",
     "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"

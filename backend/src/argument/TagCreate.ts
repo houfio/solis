@@ -1,9 +1,6 @@
-import { IsUUID, MaxLength } from 'class-validator';
+import { Identifier } from './Identifier';
 
-export class TagCreate {
-  @IsUUID('4')
-  public id!: string;
-
-  @MaxLength(32)
-  public tag!: string;
-}
+export type TagCreate = Identifier & {
+  id: string,
+  tag: string
+};

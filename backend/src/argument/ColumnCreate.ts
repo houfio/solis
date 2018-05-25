@@ -1,11 +1,6 @@
-import { IsUUID, MaxLength } from 'class-validator';
+import { Identifier } from './Identifier';
 
-export class ColumnCreate {
-  @IsUUID('4')
-  public item!: string;
-
-  @MaxLength(255)
-  public name!: string;
-
-  public order!: number;
-}
+export type ColumnCreate = Identifier & {
+  name: string,
+  order: number
+};

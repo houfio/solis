@@ -17,7 +17,7 @@ export class PageController {
   }
 
   @Query()
-  @Validate(Identifier)
+  @Validate()
   public page({ id }: Identifier) {
     return this.entityManager.findOne(Page, id);
   }

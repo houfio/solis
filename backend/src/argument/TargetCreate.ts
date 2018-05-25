@@ -1,10 +1,6 @@
-import { IsUUID } from 'class-validator';
+import { Identifier } from './Identifier';
 
-export class TargetCreate {
-  @IsUUID('4')
-  public column!: string;
-
-  public target!: number;
-
-  public order!: number;
-}
+export type TargetCreate = Identifier & {
+  target: string,
+  order: number
+};

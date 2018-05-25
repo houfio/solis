@@ -9,13 +9,13 @@ type Mutation {
     hidden: Boolean!
   ): MenuItem
   createColumn(
-    item: ID!
+    id: ID!
     name: String!
     order: Int!
   ): MenuColumn
   createTarget(
-    column: ID!
-    target: Int!
+    id: ID!
+    target: ID!
     order: Int!
   ): MenuTarget
 }
