@@ -4,7 +4,7 @@ import { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { push } from 'react-router-redux';
 
-import { TABLET_LANDSCAPE } from '../constants';
+import { BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { content } from '../modules/content';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { State } from '../types';
@@ -48,11 +48,11 @@ export const Navigation = connect(class extends Component<typeof props> {
         position: 'fixed',
         width: '100%',
         top: '0',
-        color: '#fff',
+        color: WHITE,
         zIndex: 2
       },
       bar: {
-        backgroundColor: '#0094FF',
+        backgroundColor: BLUE,
         borderRadius: breadcrumbs ? '' : '0 0 .5rem .5rem',
         transition: 'all .2s ease'
       },
@@ -145,7 +145,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         position: 'absolute',
         width: '100%',
         height: '1px',
-        backgroundColor: '#0094FF',
+        backgroundColor: BLUE,
         transformOrigin: '50% 0 0',
         transition: 'transform .2s ease'
       },

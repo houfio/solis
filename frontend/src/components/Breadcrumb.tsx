@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { push } from 'react-router-redux';
 
+import { BLUE, RED } from '../constants';
 import { PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
@@ -28,19 +29,19 @@ export const Breadcrumb = connect(class extends Component<typeof props> {
         ':not(:last-child)::after': {
           content: '"/"',
           padding: '0 .5rem',
-          color: '#0094FF',
+          color: BLUE,
           fontWeight: 'bold'
         }
       },
       link: {
         cursor: 'pointer',
-        transition: 'color .2s ease',
+        transition: 'opacity .2s ease',
         ':hover': {
-          color: 'rgba(0, 0, 0, .5)'
+          opacity: .5
         }
       },
       unknown: {
-        color: '#FF3232'
+        color: RED
       }
     });
 

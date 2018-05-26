@@ -2,6 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
+import { GRAY, WHITE } from '../constants';
 import { PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { State } from '../types';
 import { findByValue } from '../utils/findByValue';
@@ -34,8 +35,8 @@ export const Breadcrumbs = connect(class extends Component<typeof props> {
         position: 'absolute',
         width: '100%',
         padding: '1.5rem 0 1rem 0',
-        backgroundColor: '#fff',
-        border: '2px solid #eee',
+        backgroundColor: WHITE,
+        border: `2px solid ${GRAY}`,
         borderRadius: '0 0 .5rem .5rem',
         transform: breadcrumbs ? '' : 'translateY(-3.5rem)',
         transition: 'transform .2s ease',

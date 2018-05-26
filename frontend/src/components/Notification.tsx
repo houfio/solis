@@ -2,6 +2,7 @@ import { css, CSSProperties, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
+import { BLACK, BLUE, BLUE_ACCENT, DARK_BLUE, DARK_BLUE_ACCENT, GRAY, GRAY_ACCENT, WHITE } from '../constants';
 import { content } from '../modules/content';
 import { ColorType, Notification as NotificationType } from '../types';
 import { handle } from '../utils/handle';
@@ -21,16 +22,16 @@ const { props, connect } = withProps<Props>()(undefined, getActionCreators);
 
 const notificationStyles: { [T in ColorType]: CSSProperties } = {
   primary: {
-    color: '#fff',
-    background: 'linear-gradient(145deg, #0094FF 0%, #12589d 100%)'
+    color: WHITE,
+    background: `linear-gradient(145deg, ${BLUE} 0%, ${BLUE_ACCENT} 100%)`
   },
   secondary: {
-    color: '#fff',
-    background: 'linear-gradient(145deg, #414756 0%, #303540 100%)'
+    color: WHITE,
+    background: `linear-gradient(145deg, ${DARK_BLUE} 0%, ${DARK_BLUE_ACCENT} 100%)`
   },
   tertiary: {
-    color: '#303540',
-    background: 'linear-gradient(145deg, #fff 0%, #eee 100%)'
+    color: BLACK,
+    background: `linear-gradient(145deg, ${GRAY} 0%, ${GRAY_ACCENT} 100%)`
   }
 };
 

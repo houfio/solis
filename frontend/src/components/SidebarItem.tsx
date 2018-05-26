@@ -6,6 +6,7 @@ import { Component } from 'react';
 import { Route } from 'react-router';
 import { push } from 'react-router-redux';
 
+import { BLACK, GRAY, WHITE } from '../constants';
 import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
@@ -47,8 +48,8 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         lineHeight: 1,
         transition: 'all .2s ease',
         ':hover': {
-          color: '#414756',
-          backgroundColor: 'rgba(255, 255, 255, .8)'
+          color: BLACK,
+          backgroundColor: GRAY
         }
       },
       itemIcon: {
@@ -60,11 +61,11 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         whiteSpace: 'nowrap'
       },
       active: {
-        color: '#414756',
-        backgroundColor: '#fff',
+        color: BLACK,
+        backgroundColor: WHITE,
         cursor: 'default',
         ':hover': {
-          backgroundColor: '#fff'
+          backgroundColor: WHITE
         }
       }
     });

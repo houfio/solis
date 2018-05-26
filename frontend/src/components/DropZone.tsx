@@ -5,6 +5,8 @@ import * as React from 'react';
 import { Component } from 'react';
 import { ConnectDropTarget, DropTarget } from 'react-dnd';
 
+import { BLUE, DARK_GRAY, WHITE } from '../constants';
+
 type Props = {
   pageId: string,
   order?: number,
@@ -45,8 +47,8 @@ export const DropZone = DropTarget<Props>(
         padding: '1rem',
         margin: '.5rem',
         borderRadius: '.5rem',
-        color: '#fff',
-        backgroundColor: isOver ? '#0094FF' : '#414756',
+        color: WHITE,
+        backgroundColor: isOver ? BLUE : DARK_GRAY,
         transition: 'all .2s ease'
       }
     });

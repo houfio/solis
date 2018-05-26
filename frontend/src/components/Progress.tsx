@@ -2,6 +2,8 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
+import { WHITE } from '../constants';
+
 type Props = {
   loading: boolean
 };
@@ -35,7 +37,7 @@ export class Progress extends Component<Props, LocalState> {
         position: 'fixed',
         height: '4px',
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: WHITE,
         zIndex: 3,
         opacity: 0,
         transition: 'opacity .2s ease .2s, transform .2s ease',

@@ -12,7 +12,7 @@ import { BlockDrag } from '../components/BlockDrag';
 import { Column } from '../components/Column';
 import { DropZone } from '../components/DropZone';
 import { Row } from '../components/Row';
-import { BLOCK_RENDERERS, PHONE } from '../constants';
+import { BLOCK_RENDERERS, PHONE, WHITE } from '../constants';
 import { PageContentQuery, PageContentQueryVariables } from '../schema/__generated__/PageContentQuery';
 import { findByKey } from '../utils/findByKey';
 import { withProps } from '../utils/withProps';
@@ -36,7 +36,7 @@ export const PageContent = DragDropContext(HTML5Backend)(connect(class extends C
 
     const styleSheet = StyleSheet.create({
       sidebar: {
-        backgroundColor: '#fff',
+        backgroundColor: WHITE,
         padding: '0 2rem 1px',
         height: 'calc(100vh - 8rem)',
         overflowY: 'scroll'

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { ConnectDragSource, DragSource } from 'react-dnd';
 
-import { BLOCK_RENDERERS, PHONE } from '../constants';
+import { BLOCK_RENDERERS, GRAY, PHONE } from '../constants';
 import { findByKey } from '../utils/findByKey';
 import { Heading } from './Heading';
 
@@ -39,7 +39,7 @@ export const BlockDrag = DragSource<Props>(
         padding: '1rem',
         marginBottom: '2rem',
         borderRadius: '.5rem',
-        backgroundColor: '#eee',
+        backgroundColor: GRAY,
         cursor: 'move',
         opacity: isDragging ? .5 : 1,
         transition: 'opacity .2s ease'

@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 import { Action } from '../components/Action';
 import { AdminPage } from '../components/AdminPage';
 import { Heading } from '../components/Heading';
-import { PHONE } from '../constants';
+import { PHONE, PURPLE, PURPLE_ACCENT } from '../constants';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
 
@@ -27,7 +27,7 @@ export const Pages = connect(class extends Component<typeof props> {
       header: {
         padding: '2rem',
         borderRadius: '.5rem',
-        background: 'linear-gradient(145deg, #0094FF 0%, #12589d 100%)',
+        background: `linear-gradient(145deg, ${PURPLE} 0%, ${PURPLE_ACCENT} 100%)`,
         lineHeight: 1,
         cursor: 'pointer',
         marginBottom: '1rem',

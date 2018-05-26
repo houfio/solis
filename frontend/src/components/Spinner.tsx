@@ -1,6 +1,8 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
+import { BLUE, WHITE } from '../constants';
+
 export const Spinner = () => {
   const rotate = {
     from: {
@@ -22,8 +24,8 @@ export const Spinner = () => {
     spinner: {
       width: '1.25rem',
       height: '1.25rem',
-      border: '.25rem solid #BDC1C6',
-      borderLeft: '.25rem solid #0094FF',
+      border: `.25rem solid ${WHITE}`,
+      borderLeft: `.25rem solid ${BLUE}`,
       borderRadius: '50%',
       animationName: rotate as any,
       animationTimingFunction: 'linear',

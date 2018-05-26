@@ -5,6 +5,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
+import { DARK_BLUE, DARK_BLUE_ACCENT, WHITE } from '../constants';
 import { admin } from '../modules/admin';
 import { State } from '../types';
 import { handle } from '../utils/handle';
@@ -34,8 +35,8 @@ export const Sidebar = connect(class extends Component<typeof props> {
         position: 'fixed',
         width: collapsed ? '75px' : '300px',
         height: '100%',
-        color: '#fff',
-        background: 'linear-gradient(145deg, #414756 0%, #303540 100%)',
+        color: WHITE,
+        background: `linear-gradient(145deg, ${DARK_BLUE} 0%, ${DARK_BLUE_ACCENT} 100%)`,
         transition: 'width .2s ease',
         flexShrink: 0,
         zIndex: 50,
@@ -64,12 +65,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
           height: '30px',
           borderRadius: '3px',
           marginLeft: '-3px',
-          backgroundColor: '#fff',
-          transition: 'opacity .2s ease .2s',
-          opacity: 0
-        },
-        ':hover::after': {
-          opacity: 1
+          backgroundColor: '#fff'
         }
       },
       brand: {

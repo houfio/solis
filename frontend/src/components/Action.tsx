@@ -3,12 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
+import { PURPLE, WHITE } from '../constants';
+
 type Props = {
   icon: IconProp,
-  onClick?: () => void
+  onClick?: () => void,
+  color?: string
 };
 
-export const Action = ({ icon, onClick }: Props) => {
+export const Action = ({ icon, onClick, color = PURPLE }: Props) => {
   const styleSheet = StyleSheet.create({
     action: {
       display: 'flex',
@@ -17,14 +20,15 @@ export const Action = ({ icon, onClick }: Props) => {
       width: '2.5rem',
       height: '2.5rem',
       marginLeft: '1rem',
-      color: '#414756',
-      backgroundColor: '#eee',
+      color,
+      border: '1px solid #eee',
       borderRadius: '50%',
       cursor: 'pointer',
       transition: 'all .2s ease',
       ':hover': {
-        color: '#fff',
-        backgroundColor: '#414756'
+        color: WHITE,
+        backgroundColor: color,
+        border: 'none'
       }
     }
   });

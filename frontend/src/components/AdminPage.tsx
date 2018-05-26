@@ -31,7 +31,6 @@ export const AdminPage = connect(class extends Component<typeof props> {
         display: 'flex',
         alignItems: 'center',
         padding: '0 4rem 0 4.5rem',
-        backgroundColor: '#fff',
         width: `calc(100% - ${collapsed ? '75px' : '300px'} + .5rem)`,
         lineHeight: 1,
         height: '8rem',
@@ -43,7 +42,6 @@ export const AdminPage = connect(class extends Component<typeof props> {
       content: {
         width: 'calc(100%)',
         marginTop: '8rem',
-        backgroundColor: '#eee',
         minHeight: 'calc(100vh - 8rem)',
         padding: padding ? '2rem 4rem 2rem 4.5rem' : '0 0 0 .5rem'
       }

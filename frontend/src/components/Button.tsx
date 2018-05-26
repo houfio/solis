@@ -1,6 +1,7 @@
 import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
+import { BLACK, BLUE, BLUE_ACCENT, DARK_BLUE, DARK_BLUE_ACCENT, DARK_GRAY, GRAY, WHITE } from '../constants';
 import { ColorType } from '../types';
 
 type Props = {
@@ -12,24 +13,24 @@ type Props = {
 
 const buttonStyles: { [T in ColorType]: CSSProperties } = {
   primary: {
-    color: '#fff',
-    backgroundColor: '#0094FF',
+    color: WHITE,
+    backgroundColor: BLUE,
     ':hover': {
-      backgroundColor: '#1976d2'
+      backgroundColor: BLUE_ACCENT
     }
   },
   secondary: {
-    color: '#fff',
-    backgroundColor: '#414756',
+    color: WHITE,
+    backgroundColor: DARK_BLUE,
     ':hover': {
-      backgroundColor: '#303540'
+      backgroundColor: DARK_BLUE_ACCENT
     }
   },
   tertiary: {
-    color: '#303540',
-    backgroundColor: '#fff',
+    color: BLACK,
+    backgroundColor: GRAY,
     ':hover': {
-      backgroundColor: '#eee'
+      backgroundColor: DARK_GRAY
     }
   }
 };
