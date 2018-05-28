@@ -5,7 +5,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
 
-import { DARK_BLUE, DARK_BLUE_ACCENT, WHITE } from '../constants';
+import { DARK_BLUE, TURQUOISE_ACCENT, WHITE } from '../constants';
 import { admin } from '../modules/admin';
 import { State } from '../types';
 import { handle } from '../utils/handle';
@@ -36,7 +36,7 @@ export const Sidebar = connect(class extends Component<typeof props> {
         width: collapsed ? '75px' : '300px',
         height: '100%',
         color: WHITE,
-        background: `linear-gradient(145deg, ${DARK_BLUE} 0%, ${DARK_BLUE_ACCENT} 100%)`,
+        background: `linear-gradient(145deg, ${DARK_BLUE} 0%, ${TURQUOISE_ACCENT} 100%)`,
         transition: 'width .2s ease',
         flexShrink: 0,
         zIndex: 50,
@@ -61,15 +61,17 @@ export const Sidebar = connect(class extends Component<typeof props> {
         '::after': {
           content: '""',
           display: 'block',
-          width: '3px',
-          height: '30px',
-          borderRadius: '3px',
-          marginLeft: '-3px',
+          width: '4px',
+          height: '25px',
+          borderRadius: '4px',
+          marginLeft: '-1px',
           backgroundColor: '#fff'
         }
       },
       brand: {
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         margin: collapsed ? '1rem .8rem' : '4rem 3.5rem',
         transition: 'margin .2s ease'
       },
@@ -81,15 +83,16 @@ export const Sidebar = connect(class extends Component<typeof props> {
       },
       brandIcon: {
         backgroundImage: `url(${logo})`,
-        width: '3rem',
-        height: '3rem'
+        width: collapsed ? '3rem' : '4rem',
+        height: collapsed ? '3rem' : '4rem',
+        transition: 'all .2s ease'
       },
       brandText: {
         backgroundImage: `url(${text})`,
-        height: '3rem',
+        height: collapsed ? 0 : '3rem',
         width: '7rem',
-        marginLeft: '1rem',
-        transition: 'opacity .2s ease',
+        marginTop: '.5rem',
+        transition: 'all .2s ease',
         opacity: collapsed ? 0 : 1
       },
       items: {

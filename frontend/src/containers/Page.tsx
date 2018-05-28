@@ -10,6 +10,7 @@ import { push } from 'react-router-redux';
 import { Action } from '../components/Action';
 import { AdminPage } from '../components/AdminPage';
 import { PageSettings } from '../components/PageSettings';
+import { GREEN, RED } from '../constants';
 import { content } from '../modules/content';
 import { PageQuery, PageQueryVariables } from '../schema/__generated__/PageQuery';
 import { handle } from '../utils/handle';
@@ -56,9 +57,10 @@ export const Page = connect(class extends Component<typeof props> {
                     text: 'Opgeslagen',
                     timeout: 1000
                   }))}
+                  color={GREEN}
                 />,
                 <Action key="1" icon={faArrowsAlt} onClick={handle(push, `/admin/pages/${id}/content`)}/>,
-                <Action key="2" icon={faTrash}/>
+                <Action key="2" icon={faTrash} color={RED}/>
               ]}
             >
               <PageSettings page={data.page}/>

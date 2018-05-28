@@ -4,7 +4,7 @@ import { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { push } from 'react-router-redux';
 
-import { BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
+import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { content } from '../modules/content';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { State } from '../types';
@@ -14,7 +14,6 @@ import { withProps } from '../utils/withProps';
 import { Container } from './Container';
 import { Menu } from './Menu';
 
-import full from '../assets/full.png';
 import logo from '../assets/logo.png';
 import text from '../assets/text.png';
 import query from '../schema/navigation.graphql';
@@ -31,8 +30,6 @@ const getActionCreators = () => ({
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
-
-export const old = true;
 
 export const Navigation = connect(class extends Component<typeof props> {
   private menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
@@ -52,7 +49,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         zIndex: 2
       },
       bar: {
-        backgroundColor: BLUE,
+        background: `linear-gradient(90deg, ${BLUE} 0%, ${DARK_BLUE} 100%)`,
         borderRadius: breadcrumbs ? '' : '0 0 .5rem .5rem',
         transition: 'all .2s ease'
       },
@@ -63,7 +60,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         display: 'flex',
         alignItems: 'center',
         padding: '0 1rem',
-        marginLeft: '-1rem',
+        margin: '1rem 0 0 -1rem',
         cursor: 'pointer',
         transition: 'opacity .2s ease',
         ':hover': {
@@ -80,8 +77,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         display: 'block',
         backgroundImage: `url(${logo})`,
         width: '3rem',
-        height: '3rem',
-        margin: '1rem 0'
+        height: '3rem'
       },
       text: {
         display: 'none',
@@ -93,31 +89,28 @@ export const Navigation = connect(class extends Component<typeof props> {
           display: 'block'
         })
       },
-      full: {
-        display: 'block',
-        backgroundImage: `url(${full})`,
-        width: '5rem',
-        height: '8rem',
-        margin: '1rem 0'
-      },
       push: {
         flex: '1'
       },
       item: {
         display: 'inline-block',
-        padding: old ? '2rem 1rem' : '4.5rem 1rem',
+        padding: '.5rem 1rem',
+        margin: '1.5rem 0 .5rem 0',
         cursor: 'pointer',
         lineHeight: 1,
-        transition: 'opacity .2s ease',
+        transition: 'all .2s ease',
+        borderRadius: '2rem',
         ':hover': {
-          opacity: .5
+          color: BLACK,
+          backgroundColor: 'rgba(255, 255, 255, .75)'
         },
         ':last-of-type': {
           marginRight: '-1rem'
         }
       },
       active: {
-        opacity: .5
+        color: BLACK,
+        backgroundColor: WHITE
       },
       menu: {
         visibility: 'hidden',
@@ -142,12 +135,8 @@ export const Navigation = connect(class extends Component<typeof props> {
         transform: 'translateX(-10rem)'
       },
       backDrop: {
-        position: 'absolute',
-        width: '100%',
-        height: '1px',
-        backgroundColor: BLUE,
-        transformOrigin: '50% 0 0',
-        transition: 'transform .2s ease'
+        backgroundColor: `linear-gradient(90deg, ${BLUE} 0%, ${DARK_BLUE} 100%)`,
+        transition: 'height .2s ease'
       },
       shadow: {
         visibility: 'hidden',
@@ -162,23 +151,20 @@ export const Navigation = connect(class extends Component<typeof props> {
         opacity: 0
       },
       arrow: {
-        position: 'absolute',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        left: 0,
-        bottom: 0,
-        height: '15px',
-        width: '100%',
+        transform: breadcrumbs ? 'translateY(3.125rem)' : '',
+        height: '1rem',
         cursor: 'pointer',
+        transition: 'transform .2s ease',
         '::after': {
           content: '""',
           display: 'block',
-          width: '20px',
-          height: '3px',
-          borderRadius: '3px',
-          marginBottom: '-3px',
-          backgroundColor: 'rgba(255, 255, 255, .9)'
+          width: '1.5rem',
+          height: '4px',
+          borderRadius: '4px',
+          backgroundColor: 'rgba(0, 0, 0, .9)'
         }
       }
     });
@@ -196,16 +182,8 @@ export const Navigation = connect(class extends Component<typeof props> {
                 <div className={css(styleSheet.bar)}>
                   <Container styles={[ styleSheet.container ]}>
                     <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, '/')}>
-                      {old ? (
-                        <>
-                          <div className={css(styleSheet.image, styleSheet.logo)}/>
-                          <div className={css(styleSheet.image, styleSheet.text)}/>
-                          </>
-                      ) : (
-                        <>
-                          <div className={css(styleSheet.image, styleSheet.full)}/>
-                        </>
-                      )}
+                      <div className={css(styleSheet.image, styleSheet.logo)}/>
+                      <div className={css(styleSheet.image, styleSheet.text)}/>
                     </div>
                     <div className={css(styleSheet.push)}/>
                     {[ ...data.menu ]
@@ -240,12 +218,12 @@ export const Navigation = connect(class extends Component<typeof props> {
                       <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
                     )}
                   </Container>
+                  <div
+                    className={css(styleSheet.backDrop)}
+                    style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
+                  />
                   <div className={css(styleSheet.arrow)} onClick={handle(toggleBreadcrumbs, undefined)}/>
                 </div>
-                <div
-                  className={css(styleSheet.backDrop)}
-                  style={{ transform: `scaleY(${openNode ? openNode.scrollHeight : '0'})` }}
-                />
               </nav>
               <div
                 className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}

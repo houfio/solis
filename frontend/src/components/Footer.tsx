@@ -1,7 +1,7 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
-import { DARK_BLUE, WHITE } from '../constants';
+import { BLUE, TURQUOISE_ACCENT, WHITE } from '../constants';
 import { Container } from './Container';
 
 export const Footer = () => {
@@ -9,7 +9,8 @@ export const Footer = () => {
     footer: {
       padding: '2rem 0',
       color: WHITE,
-      backgroundColor: DARK_BLUE
+      background: `linear-gradient(90deg, ${BLUE} 0%, ${TURQUOISE_ACCENT} 100%)`,
+      borderRadius: '.5rem .5rem 0 0'
     }
   });
 

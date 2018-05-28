@@ -6,7 +6,7 @@ import { Component } from 'react';
 import { Route } from 'react-router';
 import { push } from 'react-router-redux';
 
-import { BLACK, GRAY, WHITE } from '../constants';
+import { BLACK, WHITE } from '../constants';
 import { State } from '../types';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
@@ -49,7 +49,7 @@ export const SidebarItem = connect(class extends Component<typeof props> {
         transition: 'all .2s ease',
         ':hover': {
           color: BLACK,
-          backgroundColor: GRAY
+          backgroundColor: 'rgba(255, 255, 255, .75)'
         }
       },
       itemIcon: {
