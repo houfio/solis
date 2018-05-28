@@ -2,7 +2,7 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component, ReactNode } from 'react';
 
-import { PHONE } from '../constants';
+import { PHONE, WHITE } from '../constants';
 import { State } from '../types';
 import { withProps } from '../utils/withProps';
 import { Heading } from './Heading';
@@ -30,8 +30,9 @@ export const AdminPage = connect(class extends Component<typeof props> {
         position: 'fixed',
         display: 'flex',
         alignItems: 'center',
-        padding: '0 4rem 0 4.5rem',
-        width: `calc(100% - ${collapsed ? '75px' : '300px'} + .5rem)`,
+        padding: '0 4rem',
+        width: `calc(100% - ${collapsed ? '75px' : '300px'})`,
+        backgroundColor: WHITE,
         lineHeight: 1,
         height: '8rem',
         transition: 'width .2s ease'
@@ -40,10 +41,8 @@ export const AdminPage = connect(class extends Component<typeof props> {
         flex: 1
       },
       content: {
-        width: 'calc(100%)',
         marginTop: '8rem',
-        minHeight: 'calc(100vh - 8rem)',
-        padding: padding ? '2rem 4rem 2rem 4.5rem' : '0 0 0 .5rem'
+        padding: padding ? '2rem 4rem' : 0
       }
     });
 

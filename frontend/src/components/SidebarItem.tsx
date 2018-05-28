@@ -3,13 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { Route } from 'react-router';
-import { push } from 'react-router-redux';
 
+import { Route } from 'react-router';
 import { BLACK, WHITE } from '../constants';
 import { State } from '../types';
-import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
+import { RouterContextConsumer } from './RouterContextConsumer';
 
 type Props = {
   path: string,
@@ -18,21 +17,15 @@ type Props = {
 };
 
 const mapStateToProps = (state: State) => ({
-  location: state.router.location,
   collapsed: state.admin.collapsed
 });
 
-const getActionCreators = () => ({
-  push
-});
-
-const { props, connect } = withProps<Props>()(mapStateToProps, getActionCreators);
+const { props, connect } = withProps<Props>()(mapStateToProps);
 
 export const SidebarItem = connect(class extends Component<typeof props> {
   public render() {
     const { path, name, icon } = this.props;
-    const { location, collapsed } = this.props;
-    const { push } = this.props;
+    const { collapsed } = this.props;
 
     const styleSheet = StyleSheet.create({
       item: {
@@ -71,17 +64,27 @@ export const SidebarItem = connect(class extends Component<typeof props> {
     });
 
     return (
-      <Route path={path} exact={true} location={location || undefined}>
-        {({ match }) => (
-          <div
-            className={css(styleSheet.item, Boolean(match) && styleSheet.active)}
-            onClick={Boolean(match) ? undefined : handle(push, path)}
-          >
-            <FontAwesomeIcon icon={icon} className={css(styleSheet.itemIcon)}/>
-            <span className={css(styleSheet.itemText)}>{name}</span>
-          </div>
-        )}
-      </Route>
+      <RouterContextConsumer>
+        {({ history: { push } }) => {
+          const navigateTo = () => {
+            push(path);
+          };
+
+          return (
+            <Route path={path} exact={true}>
+              {({ match }) => (
+                <div
+                  className={css(styleSheet.item, Boolean(match) && styleSheet.active)}
+                  onClick={Boolean(match) ? undefined : navigateTo}
+                >
+                  <FontAwesomeIcon icon={icon} className={css(styleSheet.itemIcon)}/>
+                  <span className={css(styleSheet.itemText)}>{name}</span>
+                </div>
+              )}
+            </Route>
+          );
+        }}
+      </RouterContextConsumer>
     );
   }
 });

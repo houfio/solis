@@ -6,7 +6,7 @@ export const content = createModule(
   {
     openMenu: undefined,
     notifications: [],
-    breadcrumbs: true
+    breadcrumbs: Boolean(Number(localStorage.getItem('breadcrumbs')))
   },
   (createAction) => ({
     setOpenMenu: createAction<{ index?: number }>('SET_OPEN_MENU')(
@@ -47,9 +47,13 @@ export const content = createModule(
     ),
     toggleBreadcrumbs: createAction('TOGGLE_BREADCRUMBS')(
       () => ({}),
-      (_, { breadcrumbs }) => ({
-        breadcrumbs: !breadcrumbs
-      })
+      (_, { breadcrumbs }) => {
+        localStorage.setItem('breadcrumbs', breadcrumbs ? '0' : '1');
+
+        return {
+          breadcrumbs: !breadcrumbs
+        };
+      }
     )
   })
 );

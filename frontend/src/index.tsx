@@ -8,16 +8,16 @@ import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import 'whatwg-fetch';
 
+import { RouterContextProvider } from './components/RouterContextProvider';
 import { Root } from './containers/Root';
 import { content } from './modules/content';
 import { createStore } from './utils/createStore';
 
 import introspectionQueryResultData from './fragmentTypes.json';
 
-const { store, history } = createStore();
+const { store } = createStore();
 
 const client = new ApolloClient({
   link: ApolloLink.from([
@@ -43,9 +43,9 @@ const client = new ApolloClient({
 render(
   <ApolloProvider client={client}>
     <Provider store={store}>
-      <ConnectedRouter history={history}>
+      <RouterContextProvider>
         <Root/>
-      </ConnectedRouter>
+      </RouterContextProvider>
     </Provider>
   </ApolloProvider>,
   document.getElementById('root')

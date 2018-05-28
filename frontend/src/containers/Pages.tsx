@@ -1,28 +1,23 @@
 import { faPlus } from '@fortawesome/fontawesome-free-solid/faPlus';
 import { css, StyleSheet } from 'aphrodite/no-important';
-import gql from 'graphql-tag';
 import * as React from 'react';
 import { Component } from 'react';
 import { Query } from 'react-apollo';
-import { push } from 'react-router-redux';
 
-import { Action } from '../components/Action';
+import { AdminAction } from '../components/AdminAction';
 import { AdminPage } from '../components/AdminPage';
 import { Heading } from '../components/Heading';
+import { RouterContextConsumer } from '../components/RouterContextConsumer';
 import { PHONE, PURPLE, PURPLE_ACCENT } from '../constants';
-import { handle } from '../utils/handle';
+import { PagesQuery } from '../schema/__generated__/PagesQuery';
 import { withProps } from '../utils/withProps';
 
-const getActionCreators = () => ({
-  push
-});
+import query from '../schema/pages.graphql';
 
-const { props, connect } = withProps()(undefined, getActionCreators);
+const { props, connect } = withProps()();
 
 export const Pages = connect(class extends Component<typeof props> {
   public render() {
-    const { push } = this.props;
-
     const stylesheet = StyleSheet.create({
       header: {
         padding: '2rem',
@@ -42,50 +37,51 @@ export const Pages = connect(class extends Component<typeof props> {
     });
 
     return (
-      <Query
-        query={gql`
-          {
-            pages {
-              id
-              name
-            }
-          }
-        `}
-      >
+      <Query<PagesQuery> query={query}>
         {({ data, loading, error }) => {
           if (loading) {
             return 'loading haha';
-          } else if (error) {
+          } else if (error || !data) {
             console.log(error);
 
             return false;
           }
 
           return (
-            <AdminPage
-              title="Pagina's"
-              actions={[
-                <Action key="0" icon={faPlus}/>
-              ]}
-            >
-              {data.pages.map((page: {
-                id: string,
-                name: string
-              }) => (
-                <div
-                  key={page.id}
-                  className={css(stylesheet.header)}
-                  onClick={handle(push, `/admin/pages/${page.id}`)}
+            <RouterContextConsumer>
+              {({ history: { push } }) => (
+                <AdminPage
+                  title="Pagina's"
+                  actions={[
+                    <AdminAction key="0" icon={faPlus}/>
+                  ]}
                 >
-                  <Heading
-                    text={page.name}
-                    light={true}
-                    breakpoints={{ [ PHONE ]: 'thin' }}
-                    styles={[ stylesheet.heading ]}
-                  />
-                </div>
-              ))}
-            </AdminPage>
+                  {data.pages.map((page: {
+                    id: string,
+                    name: string
+                  }) => {
+                    const navigateTo = () => {
+                      push(`/admin/pages/${page.id}`);
+                    };
+
+                    return (
+                      <div
+                        key={page.id}
+                        className={css(stylesheet.header)}
+                        onClick={navigateTo}
+                      >
+                        <Heading
+                          text={page.name}
+                          light={true}
+                          breakpoints={{ [ PHONE ]: 'thin' }}
+                          styles={[ stylesheet.heading ]}
+                        />
+                      </div>
+                    );
+                  })}
+                </AdminPage>
+              )}
+            </RouterContextConsumer>
           );
         }}
       </Query>

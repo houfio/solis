@@ -25,7 +25,7 @@ export const Private = connect(class extends Component<typeof props> {
     const stylesheet = StyleSheet.create({
       main: {
         width: '100%',
-        paddingLeft: `calc(${collapsed ? '75px' : '300px'} - .5rem)`,
+        paddingLeft: collapsed ? '75px' : '300px',
         transition: 'padding .2s ease'
       }
     });

@@ -2,7 +2,6 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
-import { push } from 'react-router-redux';
 
 import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { content } from '../modules/content';
@@ -11,8 +10,10 @@ import { State } from '../types';
 import { forBreakpoint } from '../utils/forBreakpoint';
 import { handle } from '../utils/handle';
 import { withProps } from '../utils/withProps';
+import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { Menu } from './Menu';
+import { RouterContextConsumer } from './RouterContextConsumer';
 
 import logo from '../assets/logo.png';
 import text from '../assets/text.png';
@@ -25,8 +26,7 @@ const mapStateToProps = (state: State) => ({
 
 const getActionCreators = () => ({
   setOpenMenu: content.setOpenMenu,
-  toggleBreadcrumbs: content.toggleBreadcrumbs,
-  push
+  toggleBreadcrumbs: content.toggleBreadcrumbs
 });
 
 const { props, connect } = withProps()(mapStateToProps, getActionCreators);
@@ -36,7 +36,7 @@ export const Navigation = connect(class extends Component<typeof props> {
 
   public render() {
     const { openMenu, breadcrumbs } = this.props;
-    const { setOpenMenu, toggleBreadcrumbs, push } = this.props;
+    const { setOpenMenu, toggleBreadcrumbs } = this.props;
 
     const openNode = openMenu !== undefined ? this.menuNodes[ openMenu ] : undefined;
 
@@ -164,7 +164,8 @@ export const Navigation = connect(class extends Component<typeof props> {
           width: '1.5rem',
           height: '4px',
           borderRadius: '4px',
-          backgroundColor: 'rgba(0, 0, 0, .9)'
+          backgroundColor: breadcrumbs ? 'rgba(0, 0, 0, .9)' : 'rgba(255, 255, 255, .9)',
+          transition: `background-color 0s linear ${breadcrumbs ? '.05' : '.1'}s`
         }
       }
     });
@@ -177,69 +178,78 @@ export const Navigation = connect(class extends Component<typeof props> {
           }
 
           return (
-            <>
-              <nav className={css(styleSheet.navigation)}>
-                <div className={css(styleSheet.bar)}>
-                  <Container styles={[ styleSheet.container ]}>
-                    <div className={css(styleSheet.brand)} onClick={handle(this.navigateTo, '/')}>
-                      <div className={css(styleSheet.image, styleSheet.logo)}/>
-                      <div className={css(styleSheet.image, styleSheet.text)}/>
-                    </div>
-                    <div className={css(styleSheet.push)}/>
-                    {[ ...data.menu ]
-                      .sort((a, b) => a.order - b.order)
-                      .map((item, index) => (
-                        <Fragment key={item.id}>
-                          <span
-                            className={css(
-                              styleSheet.item,
-                              openMenu === index && styleSheet.active
-                            )}
-                            onClick={handle(setOpenMenu, { index })}
-                          >
-                            {item.name}
-                          </span>
-                          <div
-                            ref={(node) => this.menuNodes[ index ] = node || undefined}
-                            className={css(
-                              styleSheet.menu,
-                              openMenu === index && styleSheet.open,
-                              Number(openMenu) > index && styleSheet.menuRight,
-                              Number(openMenu) < index && styleSheet.menuLeft
-                            )}
-                          >
-                            <Container>
-                              <Menu item={item} onClick={this.navigateTo}/>
-                            </Container>
+            <RouterContextConsumer>
+              {({ history: { push } }) => {
+                const navigateTo = (page: string) => {
+                  setOpenMenu({});
+                  push(page);
+                };
+
+                const navigateToAdmin = () => {
+                  push('/admin');
+                };
+
+                return (
+                  <>
+                    <nav className={css(styleSheet.navigation)}>
+                      <div className={css(styleSheet.bar)}>
+                        <Container styles={[ styleSheet.container ]}>
+                          <div className={css(styleSheet.brand)} onClick={handle(navigateTo, '/')}>
+                            <div className={css(styleSheet.image, styleSheet.logo)}/>
+                            <div className={css(styleSheet.image, styleSheet.text)}/>
                           </div>
-                        </Fragment>
-                      ))}
-                    {data.user && data.user.admin && (
-                      <span className={css(styleSheet.item)} onClick={handle(push, '/admin')}>Admin</span>
-                    )}
-                  </Container>
-                  <div
-                    className={css(styleSheet.backDrop)}
-                    style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
-                  />
-                  <div className={css(styleSheet.arrow)} onClick={handle(toggleBreadcrumbs, undefined)}/>
-                </div>
-              </nav>
-              <div
-                className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
-                onClick={handle(setOpenMenu, {})}
-              />
-            </>
+                          <div className={css(styleSheet.push)}/>
+                          {[ ...data.menu ]
+                            .sort((a, b) => a.order - b.order)
+                            .map((item, index) => (
+                              <Fragment key={item.id}>
+                                <span
+                                  className={css(
+                                    styleSheet.item,
+                                    openMenu === index && styleSheet.active
+                                  )}
+                                  onClick={handle(setOpenMenu, { index })}
+                                >
+                                  {item.name}
+                                </span>
+                                <div
+                                  ref={(node) => this.menuNodes[ index ] = node || undefined}
+                                  className={css(
+                                    styleSheet.menu,
+                                    openMenu === index && styleSheet.open,
+                                    Number(openMenu) > index && styleSheet.menuRight,
+                                    Number(openMenu) < index && styleSheet.menuLeft
+                                  )}
+                                >
+                                  <Container>
+                                    <Menu item={item} onClick={navigateTo}/>
+                                  </Container>
+                                </div>
+                              </Fragment>
+                            ))}
+                          {data.user && data.user.admin && (
+                            <span className={css(styleSheet.item)} onClick={navigateToAdmin}>Admin</span>
+                          )}
+                        </Container>
+                        <div
+                          className={css(styleSheet.backDrop)}
+                          style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
+                        />
+                        <div className={css(styleSheet.arrow)} onClick={handle(toggleBreadcrumbs, undefined)}/>
+                        <Breadcrumbs/>
+                      </div>
+                    </nav>
+                    <div
+                      className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
+                      onClick={handle(setOpenMenu, {})}
+                    />
+                  </>
+                );
+              }}
+            </RouterContextConsumer>
           );
         }}
       </Query>
     );
-  }
-
-  private navigateTo = (page: string) => {
-    const { setOpenMenu, push } = this.props;
-
-    setOpenMenu({});
-    push(page);
   }
 });

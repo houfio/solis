@@ -4,7 +4,6 @@ import { Component } from 'react';
 import { Query } from 'react-apollo';
 import { Redirect, Route } from 'react-router';
 
-import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Container } from '../components/Container';
 import { Footer } from '../components/Footer';
 import { Navigation } from '../components/Navigation';
@@ -31,20 +30,17 @@ export class Public extends Component {
           <>
             <Navigation/>
             <main className={css(styleSheet.main)}>
-              {loading || !data ? 'loading haha' : (
-                <>
-                  <Breadcrumbs pages={data.pages}/>
-                  <Container>
-                    {data.pages.map((page) => (
-                      <Route
-                        key={page.id}
-                        path={page.path}
-                        exact={true}
-                        render={this.renderPage(page)}
-                      />
-                    ))}
-                  </Container>
-                </>
+              {loading || !data || !data.pages ? 'loading haha' : (
+                <Container>
+                  {data.pages.map((page) => (
+                    <Route
+                      key={page.id}
+                      path={page.path}
+                      exact={true}
+                      render={this.renderPage(page)}
+                    />
+                  ))}
+                </Container>
               )}
             </main>
             <Footer/>

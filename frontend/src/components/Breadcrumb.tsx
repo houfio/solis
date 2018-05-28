@@ -1,28 +1,22 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Component } from 'react';
-import { push } from 'react-router-redux';
 
 import { BLUE, RED } from '../constants';
-import { PublicQuery_pages } from '../schema/__generated__/PublicQuery';
-import { handle } from '../utils/handle';
+import { BreadcrumbsQuery_pages } from '../schema/__generated__/BreadcrumbsQuery';
 import { withProps } from '../utils/withProps';
+import { RouterContextConsumer } from './RouterContextConsumer';
 
 type Props = {
-  page?: PublicQuery_pages,
+  page?: BreadcrumbsQuery_pages,
   last: boolean
 };
 
-const getActionCreators = () => ({
-  push
-});
-
-const { props, connect } = withProps<Props>()(undefined, getActionCreators);
+const { props, connect } = withProps<Props>()();
 
 export const Breadcrumb = connect(class extends Component<typeof props> {
   public render() {
     const { page, last } = this.props;
-    const { push } = this.props;
 
     const styleSheet = StyleSheet.create({
       breadcrumb: {
@@ -46,17 +40,27 @@ export const Breadcrumb = connect(class extends Component<typeof props> {
     });
 
     return (
-      <span className={css(styleSheet.breadcrumb)}>
-        <a
-          className={css(
-            !last && page && styleSheet.link,
-            !page && styleSheet.unknown
-          )}
-          onClick={page ? handle(push, page.path) : undefined}
-        >
-          {page ? page.name : 'Onbekend'}
-        </a>
-      </span>
+      <RouterContextConsumer>
+        {({ history: { push } }) => {
+          const navigateTo = () => {
+            push(page!.path);
+          };
+
+          return (
+            <span className={css(styleSheet.breadcrumb)}>
+              <a
+                className={css(
+                  !last && page && styleSheet.link,
+                  !page && styleSheet.unknown
+                )}
+                onClick={page ? navigateTo : undefined}
+              >
+                {page ? page.name : 'Onbekend'}
+              </a>
+            </span>
+          );
+        }}
+      </RouterContextConsumer>
     );
   }
 });

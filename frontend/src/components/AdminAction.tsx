@@ -11,7 +11,7 @@ type Props = {
   color?: string
 };
 
-export const Action = ({ icon, onClick, color = PURPLE }: Props) => {
+export const AdminAction = ({ icon, onClick, color = PURPLE }: Props) => {
   const styleSheet = StyleSheet.create({
     action: {
       display: 'flex',

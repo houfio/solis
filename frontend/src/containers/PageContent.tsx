@@ -5,7 +5,6 @@ import { Query } from 'react-apollo';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { RouteComponentProps } from 'react-router';
-import { push } from 'react-router-redux';
 
 import { AdminPage } from '../components/AdminPage';
 import { BlockDrag } from '../components/BlockDrag';
@@ -23,11 +22,7 @@ type Params = {
   id: string
 };
 
-const getActionCreators = () => ({
-  push
-});
-
-const { props, connect } = withProps<{}, RouteComponentProps<Params>>()(undefined, getActionCreators);
+const { props, connect } = withProps<{}, RouteComponentProps<Params>>()();
 
 export const PageContent = DragDropContext(HTML5Backend)(connect(class extends Component<typeof props> {
   public render() {

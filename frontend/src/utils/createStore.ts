@@ -1,5 +1,3 @@
-import { createBrowserHistory } from 'history';
-import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { AnyAction, applyMiddleware, combineReducers, createStore as createReduxStore } from 'redux';
 import { createLogger } from 'redux-logger';
 
@@ -8,7 +6,6 @@ import { content } from '../modules/content';
 import { Module, State } from '../types';
 
 export const createStore = () => {
-  const history = createBrowserHistory();
   const modules = [
     content,
     admin
@@ -16,7 +13,6 @@ export const createStore = () => {
 
   const store = createReduxStore(
     combineReducers<State>({
-      router: routerReducer,
       ...modules.reduce(
         (previous, current) => ({
           ...previous,
@@ -37,7 +33,6 @@ export const createStore = () => {
       )
     } as any),
     applyMiddleware(
-      routerMiddleware(history),
       ...process.env.NODE_ENV === 'production' ? [] : [
         createLogger({
           collapsed: true
@@ -47,7 +42,6 @@ export const createStore = () => {
   );
 
   return {
-    store,
-    history
+    store
   };
 };

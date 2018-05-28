@@ -5,11 +5,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Query } from 'react-apollo';
 import { RouteComponentProps } from 'react-router';
-import { push } from 'react-router-redux';
 
-import { Action } from '../components/Action';
+import { AdminAction } from '../components/AdminAction';
 import { AdminPage } from '../components/AdminPage';
 import { PageSettings } from '../components/PageSettings';
+import { RouterContextConsumer } from '../components/RouterContextConsumer';
 import { GREEN, RED } from '../constants';
 import { content } from '../modules/content';
 import { PageQuery, PageQueryVariables } from '../schema/__generated__/PageQuery';
@@ -23,8 +23,7 @@ type Params = {
 };
 
 const getActionCreators = () => ({
-  addNotification: content.addNotification,
-  push
+  addNotification: content.addNotification
 });
 
 const { props, connect } = withProps<{}, RouteComponentProps<Params>>()(undefined, getActionCreators);
@@ -32,41 +31,49 @@ const { props, connect } = withProps<{}, RouteComponentProps<Params>>()(undefine
 export const Page = connect(class extends Component<typeof props> {
   public render() {
     const { match: { params: { id } } } = this.props;
-    const { push, addNotification } = this.props;
+    const { addNotification } = this.props;
 
     return (
       <Query<PageQuery, PageQueryVariables> query={query} variables={{ id }}>
-        {({ data, loading }) => {
-          if (loading || !data) {
-            return 'loading haha';
-          } else if (!data.page) {
-            push('/admin/pages');
+        {({ data, loading }) => (
+          <RouterContextConsumer>
+            {({ history: { push } }) => {
+              if (loading || !data) {
+                return <span>loading haha</span>;
+              } else if (!data.page) {
+                push('/admin/pages');
 
-            return;
-          }
+                return null;
+              }
 
-          return (
-            <AdminPage
-              title="Pagina"
-              actions={[
-                <Action
-                  key="0"
-                  icon={faSave}
-                  onClick={handle(addNotification, () => ({
-                    id: Date.now(),
-                    text: 'Opgeslagen',
-                    timeout: 1000
-                  }))}
-                  color={GREEN}
-                />,
-                <Action key="1" icon={faArrowsAlt} onClick={handle(push, `/admin/pages/${id}/content`)}/>,
-                <Action key="2" icon={faTrash} color={RED}/>
-              ]}
-            >
-              <PageSettings page={data.page}/>
-            </AdminPage>
-          );
-        }}
+              const navigateTo = () => {
+                push(`/admin/pages/${id}/content`);
+              };
+
+              return (
+                <AdminPage
+                  title="Pagina"
+                  actions={[
+                    <AdminAction
+                      key="0"
+                      icon={faSave}
+                      onClick={handle(addNotification, () => ({
+                        id: Date.now(),
+                        text: 'Opgeslagen',
+                        timeout: 1000
+                      }))}
+                      color={GREEN}
+                    />,
+                    <AdminAction key="1" icon={faArrowsAlt} onClick={navigateTo}/>,
+                    <AdminAction key="2" icon={faTrash} color={RED}/>
+                  ]}
+                >
+                  <PageSettings page={data.page}/>
+                </AdminPage>
+              );
+            }}
+          </RouterContextConsumer>
+        )}
       </Query>
     );
   }

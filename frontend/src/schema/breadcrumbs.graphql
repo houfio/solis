@@ -1,0 +1,6 @@
+query BreadcrumbsQuery {
+  pages {
+    name
+    path
+  }
+}

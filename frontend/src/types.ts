@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { RouterState } from 'react-router-redux';
 import { Action as ReduxAction } from 'redux';
 
 import { BREAKPOINTS } from './constants';
@@ -9,7 +8,6 @@ import {
 } from './schema/__generated__/ContentPageQuery';
 
 export type State = {
-  router: RouterState,
   content: {
     openMenu?: number,
     notifications: Notification[],
