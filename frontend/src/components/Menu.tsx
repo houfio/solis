@@ -25,7 +25,7 @@ export const Menu = connect(class extends Component<typeof props> {
     const styleSheet = StyleSheet.create({
       category: {
         display: 'flex',
-        marginBottom: '2rem',
+        margin: '1rem 0',
         flexDirection: 'column'
       },
       link: {

@@ -26,13 +26,13 @@ export class Public extends Component {
 
     return (
       <Query<PublicQuery> query={query}>
-        {({ data, loading }) => (
+        {({ data, error, loading }) => (
           <>
             <Navigation/>
             <main className={css(styleSheet.main)}>
-              {loading || !data || !data.pages ? 'loading haha' : (
+              {loading ? 'loading haha' : error ? 'error' : (
                 <Container>
-                  {data.pages.map((page) => (
+                  {data!.pages.map((page) => (
                     <Route
                       key={page.id}
                       path={page.path}

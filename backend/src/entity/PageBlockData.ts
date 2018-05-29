@@ -13,7 +13,7 @@ export class PageBlockData {
   public block!: Promise<PageBlock | undefined>;
 
   @ManyToOne(() => Page, { nullable: true })
-  public target?: Promise<Page>;
+  public target!: Promise<Page | undefined>;
 
   @Column({ nullable: true })
   public text?: string;

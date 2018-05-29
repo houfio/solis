@@ -34,8 +34,8 @@ bootstrap({
   },
   customResolvers: {
     PageBlockData: {
-      __resolveType(obj: PageBlockData) {
-        if (obj.target) {
+      __resolveType: async (obj: PageBlockData) => {
+        if (await obj.target) {
           return 'Button';
         } else if (obj.text) {
           return 'Text';

@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Component } from 'react';
 
 import { BLUE, RED } from '../constants';
-import { BreadcrumbsQuery_pages } from '../schema/__generated__/BreadcrumbsQuery';
+import { NavigationQuery_pages } from '../schema/__generated__/NavigationQuery';
 import { withProps } from '../utils/withProps';
 import { RouterContextConsumer } from './RouterContextConsumer';
 
 type Props = {
-  page?: BreadcrumbsQuery_pages,
+  page?: NavigationQuery_pages,
   last: boolean
 };
 

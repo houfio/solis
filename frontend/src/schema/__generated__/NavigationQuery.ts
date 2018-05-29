@@ -41,9 +41,16 @@ export interface NavigationQuery_menu {
   columns: NavigationQuery_menu_columns[];
 }
 
+export interface NavigationQuery_pages {
+  __typename: "Page";
+  name: string;
+  path: string;
+}
+
 export interface NavigationQuery {
   user: NavigationQuery_user | null;
   menu: NavigationQuery_menu[];
+  pages: NavigationQuery_pages[];
 }
 
 //==============================================================

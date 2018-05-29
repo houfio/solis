@@ -20,4 +20,8 @@ query NavigationQuery {
       }
     }
   }
+  pages {
+    name
+    path
+  }
 }

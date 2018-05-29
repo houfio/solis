@@ -118,7 +118,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         width: '100%',
         opacity: 0,
         left: 0,
-        top: '5rem',
+        top: '4rem',
         paddingTop: '.5rem',
         zIndex: 3,
         transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
@@ -154,7 +154,7 @@ export const Navigation = connect(class extends Component<typeof props> {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        transform: breadcrumbs ? 'translateY(3.125rem)' : '',
+        transform: breadcrumbs ? 'translateY(3.0625rem)' : '',
         height: '1rem',
         cursor: 'pointer',
         transition: 'transform .2s ease',
@@ -236,7 +236,7 @@ export const Navigation = connect(class extends Component<typeof props> {
                           style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
                         />
                         <div className={css(styleSheet.arrow)} onClick={handle(toggleBreadcrumbs, undefined)}/>
-                        <Breadcrumbs/>
+                        <Breadcrumbs pages={data.pages}/>
                       </div>
                     </nav>
                     <div
