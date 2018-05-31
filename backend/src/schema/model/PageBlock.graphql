@@ -4,7 +4,7 @@ type PageBlock {
   data: PageBlockData!
   parent: PageBlock
   type: String!
-  order: Int!
+  order: Int
   parentData: Int
   hidden: Boolean!
 }

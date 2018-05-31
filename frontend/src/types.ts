@@ -28,11 +28,20 @@ export type Breakpoint = keyof typeof BREAKPOINTS;
 
 export type RendererProps<T extends ContentPageQuery_page_blocks_data> = {
   data: T,
+  children: RenderChild[],
   drop: (data?: number) => ReactNode | undefined
 };
 
-export type ContentBlockRenderer =
-  (block: ContentPageQuery_page_blocks, drop?: (data?: number) => ReactNode | undefined) => ReactNode;
+export type RenderChild = {
+  data: number,
+  render: () => ReactNode
+};
+
+export type ContentBlockRenderer = (
+  block: ContentPageQuery_page_blocks,
+  children?: ContentPageQuery_page_blocks[],
+  drop?: (data?: number) => ReactNode | undefined
+) => ReactNode;
 
 export type Map<U, B> = (payload: U) => B;
 
@@ -44,7 +53,7 @@ export type CreateAction<P> =
   <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<B, P>) => Action<U, B>;
 
 export type Actions = {
-  [type: string]: Action<any, any>
+  [ type: string ]: Action<any, any>
 };
 
 export type Reducers<P, A> = {

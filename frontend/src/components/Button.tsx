@@ -1,7 +1,7 @@
 import { css, CSSProperties, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
-import { BLACK, BLUE, BLUE_ACCENT, DARK_BLUE, DARK_BLUE_ACCENT, DARK_GRAY, GRAY, WHITE } from '../constants';
+import { BLACK, BLUE, BLUE_ACCENT, DARK_BLUE, DARK_BLUE_ACCENT, DARK_GRAY, GRAY, WHITE, YELLOW } from '../constants';
 import { ColorType } from '../types';
 
 type Props = {
@@ -11,31 +11,31 @@ type Props = {
   styles?: StyleDeclaration
 };
 
-const buttonStyles: { [T in ColorType]: CSSProperties } = {
-  primary: {
-    color: WHITE,
-    backgroundColor: BLUE,
-    ':hover': {
-      backgroundColor: BLUE_ACCENT
-    }
-  },
-  secondary: {
-    color: WHITE,
-    backgroundColor: DARK_BLUE,
-    ':hover': {
-      backgroundColor: DARK_BLUE_ACCENT
-    }
-  },
-  tertiary: {
-    color: BLACK,
-    backgroundColor: GRAY,
-    ':hover': {
-      backgroundColor: DARK_GRAY
-    }
-  }
-};
-
 export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) => {
+  const buttonStyles: { [T in ColorType]: CSSProperties } = {
+    primary: {
+      color: YELLOW,
+      backgroundColor: BLUE,
+      ':hover': {
+        backgroundColor: BLUE_ACCENT
+      }
+    },
+    secondary: {
+      color: WHITE,
+      backgroundColor: DARK_BLUE,
+      ':hover': {
+        backgroundColor: DARK_BLUE_ACCENT
+      }
+    },
+    tertiary: {
+      color: BLACK,
+      backgroundColor: GRAY,
+      ':hover': {
+        backgroundColor: DARK_GRAY
+      }
+    }
+  };
+
   const styleSheet = StyleSheet.create({
     button: {
       display: 'inline-block',

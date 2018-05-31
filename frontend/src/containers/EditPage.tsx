@@ -24,7 +24,7 @@ type Params = {
 
 const { props, connect } = withProps<{}, RouteComponentProps<Params>>()();
 
-export const PageContent = DragDropContext(HTML5Backend)(connect(class extends Component<typeof props> {
+export const EditPage = DragDropContext(HTML5Backend)(connect(class extends Component<typeof props> {
   public render() {
     const { match: { params: { id } } } = this.props;
     const { push } = this.props;

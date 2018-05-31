@@ -36,8 +36,9 @@ export const ContentPage = connect(class extends Component<typeof props> {
                 .sort((a, b) => a.order - b.order)
                 .map((block) => {
                   const renderer = findByKey(block.type, BLOCK_RENDERERS);
+                  const children = data.page!.blocks.filter((b) => b.parent && b.parent.id === block.id);
 
-                  return renderer(block);
+                  return renderer(block, children);
                 })}
             </>
           );
