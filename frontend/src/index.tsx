@@ -7,26 +7,23 @@ import 'normalize.css';
 import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 import 'whatwg-fetch';
 
-import { RouterContextProvider } from './components/RouterContextProvider';
 import { Root } from './containers/Root';
-import { content } from './modules/content';
-import { createStore } from './utils/createStore';
+import { AdminProvider } from './context/admin';
+import { ContentProvider } from './context/content';
+import { RouterProvider } from './context/router';
 
 import introspectionQueryResultData from './fragmentTypes.json';
 
-const { store } = createStore();
-
 const client = new ApolloClient({
   link: ApolloLink.from([
-    onError(({ graphQLErrors }) => {
-      store.dispatch(content.addNotification({
+    onError(({}) => {
+      /*store.dispatch(content.addNotification({
         id: Date.now(),
         text: graphQLErrors && graphQLErrors.length ? graphQLErrors[0].message : 'Netwerkfout',
         timeout: 5000
-      }));
+      }));*/
     }),
     new BatchHttpLink({
       uri: '/api',
@@ -42,11 +39,13 @@ const client = new ApolloClient({
 
 render(
   <ApolloProvider client={client}>
-    <Provider store={store}>
-      <RouterContextProvider>
-        <Root/>
-      </RouterContextProvider>
-    </Provider>
+    <RouterProvider>
+      <AdminProvider>
+        <ContentProvider>
+          <Root/>
+        </ContentProvider>
+      </AdminProvider>
+    </RouterProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );

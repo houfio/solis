@@ -1,22 +1,11 @@
 import { ReactNode } from 'react';
-import { Action as ReduxAction } from 'redux';
+import { Action, Motive } from 'react-motive';
 
 import { BREAKPOINTS } from './constants';
 import {
   ContentPageQuery_page_blocks,
   ContentPageQuery_page_blocks_data
 } from './schema/__generated__/ContentPageQuery';
-
-export type State = {
-  content: {
-    openMenu?: number,
-    notifications: Notification[],
-    breadcrumbs: boolean
-  },
-  admin: {
-    collapsed: boolean
-  }
-};
 
 export type ColorType = 'primary' | 'secondary' | 'tertiary';
 
@@ -43,33 +32,8 @@ export type ContentBlockRenderer = (
   drop?: (data?: number) => ReactNode | undefined
 ) => ReactNode;
 
-export type Map<U, B> = (payload: U) => B;
+export type Module<S, I, A> = Motive<S, I> & { actions: A };
 
-export type Reduce<M, P> = (payload: M, state: P) => Partial<P>;
-
-export type Action<U, Y> = (payload?: U) => ReduxAction & Y;
-
-export type CreateAction<P> =
-  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<B, P>) => Action<U, B>;
-
-export type Actions = {
-  [ type: string ]: Action<any, any>
-};
-
-export type Reducers<P, A> = {
-  [T in keyof A]: Reduce<any, P>;
-};
-
-export type Module<N extends keyof State = keyof State, A extends Actions = Actions> = A & {
-  name: N,
-  initialState: State[N],
-  reducers: Reducers<State[N], A>
-};
-
-export type Notification = {
-  id: number,
-  text: string,
-  timeout: number,
-  color?: ColorType,
-  dismissed?: boolean
+export type Actions<S, I> = {
+  [ action: string ]: (...props: any[]) => Action<S, I>
 };

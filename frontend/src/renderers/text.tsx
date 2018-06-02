@@ -1,26 +1,23 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Component } from 'react';
 
 import { WHITE } from '../constants';
 import { ContentPageQuery_page_blocks_data_Text } from '../schema/__generated__/ContentPageQuery';
 import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
 
-export const text = createRenderer(class extends Component<RendererProps<ContentPageQuery_page_blocks_data_Text>> {
-  public render() {
-    const { data: { text, type } } = this.props;
+type Props = RendererProps<ContentPageQuery_page_blocks_data_Text>;
 
-    const styleSheet = StyleSheet.create({
-      light: {
-        color: WHITE
-      }
-    });
+export const text = createRenderer(({ data: { text, type } }: Props) => {
+  const styleSheet = StyleSheet.create({
+    light: {
+      color: WHITE
+    }
+  });
 
-    return (
-      <div className={css(type === 1 && styleSheet.light)}>
-        {text}
-      </div>
-    );
-  }
+  return (
+    <div className={css(type === 1 && styleSheet.light)}>
+      {text}
+    </div>
+  );
 });
