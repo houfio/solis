@@ -1,4 +1,4 @@
-import { css, StyleDeclaration, StyleSheet } from 'aphrodite/no-important';
+import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
 import { PHONE, TABLET_LANDSCAPE } from '../constants';
@@ -10,52 +10,47 @@ import { Row } from './Row';
 
 type Props = {
   item: NavigationQuery_menu,
-  onClick: (path: string) => void,
-  styles?: StyleDeclaration
+  onClick: (path: string) => void
 };
 
-export const Menu = ({ item, onClick, styles = [] }: Props) => {
-  const styleSheet = StyleSheet.create({
-    category: {
-      display: 'flex',
-      margin: '1rem 0',
-      flexDirection: 'column'
-    },
-    link: {
-      cursor: 'pointer',
-      transition: 'opacity .2s ease',
-      ':hover': {
-        opacity: .5
-      }
+const styleSheet = StyleSheet.create({
+  category: {
+    display: 'flex',
+    margin: '1rem 0',
+    flexDirection: 'column'
+  },
+  link: {
+    cursor: 'pointer',
+    transition: 'opacity .2s ease',
+    ':hover': {
+      opacity: .5
     }
-  });
+  }
+});
 
-  return (
-    <Row styles={styles}>
-      {[ ...item.columns ]
-        .sort((a, b) => a.order - b.order)
-        .map((column) => (
-          <Column
-            key={column.id}
-            breakpoints={{ [ PHONE ]: 6, [ TABLET_LANDSCAPE ]: 3 }}
-            styles={[ styleSheet.category ]}
-          >
-            <Heading text={column.name} light={true} breakpoints={{ [ PHONE ]: 'thin' }}/>
-            {[ ...column.targets ]
-              .sort((a, b) => a.order - b.order)
-              .map((target) => {
-                return (
-                  <a
-                    key={target.id}
-                    className={css(styleSheet.link)}
-                    onClick={handle(onClick, target.target.path)}
-                  >
-                    {target.target.name}
-                  </a>
-                );
-              })}
-          </Column>
-        ))}
-    </Row>
-  );
-};
+export const Menu = ({ item, onClick }: Props) => (
+  <Row>
+    {[ ...item.columns ]
+      .sort((a, b) => a.order - b.order)
+      .map((column) => (
+        <Column
+          key={column.id}
+          breakpoints={{ [ PHONE ]: 6, [ TABLET_LANDSCAPE ]: 3 }}
+          styles={[ styleSheet.category ]}
+        >
+          <Heading text={column.name} light={true} breakpoints={{ [ PHONE ]: 'thin' }}/>
+          {[ ...column.targets ]
+            .sort((a, b) => a.order - b.order)
+            .map((target) => (
+              <a
+                key={target.id}
+                className={css(styleSheet.link)}
+                onClick={handle(onClick, target.target.path)}
+              >
+                {target.target.name}
+              </a>
+            ))}
+        </Column>
+      ))}
+  </Row>
+);

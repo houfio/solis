@@ -2,13 +2,14 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Fragment } from 'react';
 import { Query } from 'react-apollo';
+import { Dispatch } from 'react-motive';
 
 import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { contentActions, ContentConsumer } from '../context/content';
 import { RouterConsumer } from '../context/router';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
+import { Push } from '../types';
 import { forBreakpoint } from '../utils/forBreakpoint';
-import { handle } from '../utils/handle';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { Menu } from './Menu';
@@ -18,6 +19,30 @@ import text from '../assets/text.png';
 import query from '../schema/navigation.graphql';
 
 let menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
+
+const navigateTo = (dispatch: Dispatch<any, any>, push: Push) => (page: string) => {
+  setOpenMenu(dispatch)();
+  push(page);
+};
+
+const setOpenMenu = (dispatch: Dispatch<any, any>, index?: number) => () => {
+  dispatch(contentActions.setOpenMenu(index));
+};
+
+const navigateToPage = (dispatch: Dispatch<any, any>, push: Push, page: string) => () => {
+  navigateTo(dispatch, push)(page);
+};
+
+const toggleBreadcrumbs = (dispatch: Dispatch<any, any>) => () => {
+  dispatch(contentActions.toggleBreadcrumbs());
+};
+
+const setMenuNode = (index: number) => (node: HTMLElement | null) => {
+  menuNodes = {
+    ...menuNodes,
+    [ index ]: node || undefined
+  };
+};
 
 export const Navigation = () => (
   <ContentConsumer>
@@ -163,88 +188,67 @@ export const Navigation = () => (
 
             return (
               <RouterConsumer>
-                {({ history: { push } }) => {
-                  const navigateTo = (page: string) => {
-                    setOpenMenu()();
-                    push(page);
-                  };
-
-                  const setOpenMenu = (index?: number) => () => {
-                    dispatch(contentActions.setOpenMenu(index));
-                  };
-
-                  const navigateToAdmin = () => {
-                    push('/admin');
-                  };
-
-                  const toggleBreadcrumbs = () => {
-                    dispatch(contentActions.toggleBreadcrumbs());
-                  };
-
-                  const setMenuNode = (index: number) => (node: HTMLElement | null) => {
-                    menuNodes = {
-                      ...menuNodes,
-                      [ index ]: node || undefined
-                    };
-                  };
-
-                  return (
-                    <>
-                      <nav className={css(styleSheet.navigation)}>
-                        <div className={css(styleSheet.bar)}>
-                          <Container styles={[ styleSheet.container ]}>
-                            <div className={css(styleSheet.brand)} onClick={handle(navigateTo, '/')}>
-                              <div className={css(styleSheet.image, styleSheet.logo)}/>
-                              <div className={css(styleSheet.image, styleSheet.text)}/>
-                            </div>
-                            <div className={css(styleSheet.push)}/>
-                            {[ ...data.menu ]
-                              .sort((a, b) => a.order - b.order)
-                              .map((item, index) => (
-                                <Fragment key={item.id}>
+                {({ history: { push } }) => (
+                  <>
+                    <nav className={css(styleSheet.navigation)}>
+                      <div className={css(styleSheet.bar)}>
+                        <Container styles={[ styleSheet.container ]}>
+                          <div className={css(styleSheet.brand)} onClick={navigateToPage(dispatch, push, '/')}>
+                            <div className={css(styleSheet.image, styleSheet.logo)}/>
+                            <div className={css(styleSheet.image, styleSheet.text)}/>
+                          </div>
+                          <div className={css(styleSheet.push)}/>
+                          {[ ...data.menu ]
+                            .sort((a, b) => a.order - b.order)
+                            .map((item, index) => (
+                              <Fragment key={item.id}>
                                 <span
                                   className={css(
                                     styleSheet.item,
                                     openMenu === index && styleSheet.active
                                   )}
-                                  onClick={setOpenMenu(index)}
+                                  onClick={setOpenMenu(dispatch, index)}
                                 >
                                   {item.name}
                                 </span>
-                                  <div
-                                    ref={setMenuNode(index)}
-                                    className={css(
-                                      styleSheet.menu,
-                                      openMenu === index && styleSheet.open,
-                                      Number(openMenu) > index && styleSheet.menuRight,
-                                      Number(openMenu) < index && styleSheet.menuLeft
-                                    )}
-                                  >
-                                    <Container>
-                                      <Menu item={item} onClick={navigateTo}/>
-                                    </Container>
-                                  </div>
-                                </Fragment>
-                              ))}
-                            {data.user && data.user.admin && (
-                              <span className={css(styleSheet.item)} onClick={navigateToAdmin}>Admin</span>
-                            )}
-                          </Container>
-                          <div
-                            className={css(styleSheet.backDrop)}
-                            style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
-                          />
-                          <div className={css(styleSheet.arrow)} onClick={toggleBreadcrumbs}/>
-                          <Breadcrumbs pages={data.pages}/>
-                        </div>
-                      </nav>
-                      <div
-                        className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
-                        onClick={setOpenMenu()}
-                      />
-                    </>
-                  );
-                }}
+                                <div
+                                  ref={setMenuNode(index)}
+                                  className={css(
+                                    styleSheet.menu,
+                                    openMenu === index && styleSheet.open,
+                                    Number(openMenu) > index && styleSheet.menuRight,
+                                    Number(openMenu) < index && styleSheet.menuLeft
+                                  )}
+                                >
+                                  <Container>
+                                    <Menu item={item} onClick={navigateTo(dispatch, push)}/>
+                                  </Container>
+                                </div>
+                              </Fragment>
+                            ))}
+                          {data.user && data.user.admin && (
+                            <span
+                              className={css(styleSheet.item)}
+                              onClick={navigateToPage(dispatch, push, '/admin')}
+                            >
+                              Admin
+                            </span>
+                          )}
+                        </Container>
+                        <div
+                          className={css(styleSheet.backDrop)}
+                          style={{ height: openNode ? `${openNode.scrollHeight}px` : 0 }}
+                        />
+                        <div className={css(styleSheet.arrow)} onClick={toggleBreadcrumbs(dispatch)}/>
+                        <Breadcrumbs pages={data.pages}/>
+                      </div>
+                    </nav>
+                    <div
+                      className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
+                      onClick={setOpenMenu(dispatch)}
+                    />
+                  </>
+                )}
               </RouterConsumer>
             );
           }}

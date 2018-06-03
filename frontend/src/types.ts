@@ -37,3 +37,5 @@ export type Module<S, I, A> = Motive<S, I> & { actions: A };
 export type Actions<S, I> = {
   [ action: string ]: (...props: any[]) => Action<S, I>
 };
+
+export type Push = (location: string) => void;

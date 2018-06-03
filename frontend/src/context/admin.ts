@@ -1,6 +1,6 @@
-import { createModule } from '../utils/createModule';
+import { createContext } from '../utils/createContext';
 
-type DefaultState = {
+type State = {
   collapsed: boolean
 };
 
@@ -8,7 +8,7 @@ export const {
   Provider: AdminProvider,
   Consumer: AdminConsumer,
   actions: adminActions
-} = createModule<DefaultState>({
+} = createContext<State>({
   collapsed: Boolean(Number(localStorage.getItem('collapsed')))
 })({
   toggleCollapsed: () => ({ collapsed }) => {

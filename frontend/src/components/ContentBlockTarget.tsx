@@ -1,11 +1,8 @@
-import { faArrowsAlt } from '@fortawesome/fontawesome-free-solid/faArrowsAlt';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { ComponentType } from 'react';
 import { ConnectDropTarget, DropTarget } from 'react-dnd';
 
-import { BLUE, DARK_GRAY, WHITE } from '../constants';
+import { PURPLE, PURPLE_ACCENT, WHITE } from '../constants';
 
 type Props = {
   pageId: string,
@@ -15,11 +12,11 @@ type Props = {
 };
 
 type Context = {
-  connectDropTarget: ConnectDropTarget,
-  isOver: boolean
+  connectDropTarget?: ConnectDropTarget,
+  isOver?: boolean
 };
 
-export const DropZone = DropTarget(
+export const ContentBlockTarget = DropTarget(
   'content',
   {
     /*drop: (props: Props, monitor) => {
@@ -41,18 +38,18 @@ export const DropZone = DropTarget(
     zone: {
       display: 'flex',
       justifyContent: 'center',
-      padding: '1rem',
-      margin: '.5rem',
-      borderRadius: '.5rem',
       color: WHITE,
-      backgroundColor: isOver ? BLUE : DARK_GRAY,
-      transition: 'all .2s ease'
+      padding: '1rem',
+      borderRadius: '.5rem',
+      background: `linear-gradient(145deg, ${PURPLE} 0%, ${PURPLE_ACCENT} 100%)`,
+      opacity: isOver ? .8 : 1,
+      transition: 'opacity .2s ease'
     }
   });
 
-  return connectDropTarget(
+  return connectDropTarget && connectDropTarget(
     <div className={css(styleSheet.zone)}>
-      <FontAwesomeIcon icon={faArrowsAlt} size="lg"/>
+      drop
     </div>
   );
-}) as any as ComponentType<Props>;
+});

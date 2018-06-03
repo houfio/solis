@@ -8,17 +8,15 @@ type Props = {
   tag?: string
 };
 
-export const Row = ({ children, styles = [], tag: Tag = 'div' }: Props) => {
-  const styleSheet = StyleSheet.create({
-    row: {
-      display: 'flex',
-      flexWrap: 'wrap'
-    }
-  });
+const styleSheet = StyleSheet.create({
+  row: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  }
+});
 
-  return (
-    <Tag className={css(styleSheet.row, styles)}>
-      {children}
-    </Tag>
-  );
-};
+export const Row = ({ children, styles = [], tag: Tag = 'div' }: Props) => (
+  <Tag className={css(styleSheet.row, styles)}>
+    {children}
+  </Tag>
+);

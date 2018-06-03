@@ -1,6 +1,6 @@
-import { createModule } from '../utils/createModule';
+import { createContext } from '../utils/createContext';
 
-type DefaultState = {
+type State = {
   openMenu?: number,
   breadcrumbs: boolean
 };
@@ -9,7 +9,7 @@ export const {
   Provider: ContentProvider,
   Consumer: ContentConsumer,
   actions: contentActions
-} = createModule<DefaultState>({
+} = createContext<State>({
   openMenu: undefined,
   breadcrumbs: Boolean(Number(localStorage.getItem('breadcrumbs')))
 })({

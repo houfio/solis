@@ -11,6 +11,7 @@ import { PageSettings } from '../components/PageSettings';
 import { GREEN, RED } from '../constants';
 import { RouterConsumer } from '../context/router';
 import { PageQuery, PageQueryVariables } from '../schema/__generated__/PageQuery';
+import { Push } from '../types';
 
 import query from '../schema/page.graphql';
 
@@ -19,6 +20,10 @@ type Params = {
 };
 
 type Props = RouteComponentProps<Params>;
+
+const navigateTo = (push: Push, id: string) => () => {
+  push(`/admin/pages/${id}/content`);
+};
 
 export const Page = ({ match: { params: { id } } }: Props) => (
   <Query<PageQuery, PageQueryVariables> query={query} variables={{ id }}>
@@ -33,10 +38,6 @@ export const Page = ({ match: { params: { id } } }: Props) => (
             return null;
           }
 
-          const navigateTo = () => {
-            push(`/admin/pages/${id}/content`);
-          };
-
           return (
             <AdminPage
               title="Pagina"
@@ -46,7 +47,7 @@ export const Page = ({ match: { params: { id } } }: Props) => (
                   icon={faSave}
                   color={GREEN}
                 />,
-                <AdminAction key="1" icon={faArrowsAlt} onClick={navigateTo}/>,
+                <AdminAction key="1" icon={faArrowsAlt} onClick={navigateTo(push, id)}/>,
                 <AdminAction key="2" icon={faTrash} color={RED}/>
               ]}
             >

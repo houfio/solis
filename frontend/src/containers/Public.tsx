@@ -13,6 +13,14 @@ import { ContentPage } from './ContentPage';
 
 import query from '../schema/public.graphql';
 
+const styleSheet = StyleSheet.create({
+  main: {
+    position: 'relative',
+    flex: '1',
+    marginTop: '4.5rem'
+  }
+});
+
 const renderPage = (page: PublicQuery_pages) => () => {
   for (const routeGuard of page.guards) {
     const guard = GUARDS[ routeGuard.type as PageGuardType ];
@@ -27,37 +35,27 @@ const renderPage = (page: PublicQuery_pages) => () => {
   return <ContentPage page={page}/>;
 };
 
-export const Public = () => {
-  const styleSheet = StyleSheet.create({
-    main: {
-      position: 'relative',
-      flex: '1',
-      marginTop: '4.5rem'
-    }
-  });
-
-  return (
-    <Query<PublicQuery> query={query}>
-      {({ data, error, loading }) => (
-        <>
-          <Navigation/>
-          <main className={css(styleSheet.main)}>
-            {loading ? 'loading haha' : error ? 'error' : (
-              <Container>
-                {data!.pages.map((page) => (
-                  <Route
-                    key={page.id}
-                    path={page.path}
-                    exact={true}
-                    render={renderPage(page)}
-                  />
-                ))}
-              </Container>
-            )}
-          </main>
-          <Footer/>
-        </>
-      )}
-    </Query>
-  );
-};
+export const Public = () => (
+  <Query<PublicQuery> query={query}>
+    {({ data, error, loading }) => (
+      <>
+        <Navigation/>
+        <main className={css(styleSheet.main)}>
+          {loading ? 'loading haha' : error ? 'error' : (
+            <Container>
+              {data!.pages.map((page) => (
+                <Route
+                  key={page.id}
+                  path={page.path}
+                  exact={true}
+                  render={renderPage(page)}
+                />
+              ))}
+            </Container>
+          )}
+        </main>
+        <Footer/>
+      </>
+    )}
+  </Query>
+);
