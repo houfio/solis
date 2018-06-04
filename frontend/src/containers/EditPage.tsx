@@ -71,7 +71,7 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
                   <div className={css(styleSheet.page)}>
                     <ContentBlockTarget pageId={data.page.id} order={0}/>
                     {[ ...data.page.blocks ]
-                      .sort((a, b) => a.order - b.order)
+                      .sort((a, b) => a.order! - b.order!)
                       .map((block) => {
                         const renderer = findByKey(block.type, BLOCK_RENDERERS);
 
@@ -82,7 +82,7 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
                         return (
                           <Fragment key={block.id}>
                             {renderer(block as any)}
-                            <ContentBlockTarget pageId={data.page!.id} order={block.order + 1}/>
+                            <ContentBlockTarget pageId={data.page!.id} order={block.order! + 1}/>
                           </Fragment>
                         );
                       })}

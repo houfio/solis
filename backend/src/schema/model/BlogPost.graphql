@@ -1,5 +1,6 @@
 type BlogPost {
   id: ID!
+  author: User!
   tags: [BlogTag!]!
   title: String!
   content: String!

@@ -9,6 +9,7 @@ import { Navigation } from '../components/Navigation';
 import { GUARDS } from '../constants';
 import { PublicQuery, PublicQuery_pages } from '../schema/__generated__/PublicQuery';
 import { PageGuardType } from '../types';
+import { BlogPost } from './BlogPost';
 import { ContentPage } from './ContentPage';
 
 import query from '../schema/public.graphql';
@@ -51,6 +52,7 @@ export const Public = () => (
                   render={renderPage(page)}
                 />
               ))}
+              <Route path="/blog/:id" exact={true} component={BlogPost}/>
             </Container>
           )}
         </main>

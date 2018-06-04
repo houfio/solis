@@ -49,7 +49,7 @@ export interface PageContentQuery_page_blocks {
   __typename: "PageBlock";
   id: string;
   type: string;
-  order: number;
+  order: number | null;
   data: PageContentQuery_page_blocks_data;
 }
 

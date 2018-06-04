@@ -26,5 +26,5 @@ export const Container = ({ children, styles = [], tag: Tag = 'div' }: Props) =>
     <Tag className={css(styleSheet.container, styles)}>
       {children}
     </Tag>
-  )
+  );
 };

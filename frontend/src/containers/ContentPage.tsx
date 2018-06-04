@@ -25,7 +25,7 @@ export const ContentPage = ({ page }: Props) => (
           <Helmet title={`${page.name} / Jong Nederland`}/>
           {[ ...data.page.blocks ]
             .filter((block) => !block.parent)
-            .sort((a, b) => a.order - b.order)
+            .sort((a, b) => a.order! - b.order!)
             .map((block) => {
               const renderer = findByKey(block.type, BLOCK_RENDERERS);
               const children = data.page!.blocks.filter((b) => b.parent && b.parent.id === block.id);

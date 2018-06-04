@@ -59,7 +59,7 @@ export interface ContentPageQuery_page_blocks {
   __typename: "PageBlock";
   id: string;
   type: string;
-  order: number;
+  order: number | null;
   parent: ContentPageQuery_page_blocks_parent | null;
   parentData: number | null;
   data: ContentPageQuery_page_blocks_data;
