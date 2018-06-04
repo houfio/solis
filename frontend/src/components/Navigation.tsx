@@ -4,18 +4,16 @@ import { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { Dispatch } from 'react-motive';
 
-import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
+import { BLACK, BLUE, DARK_BLUE, WHITE } from '../constants';
 import { contentActions, ContentConsumer } from '../context/content';
 import { RouterConsumer } from '../context/router';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { Push } from '../types';
-import { forBreakpoint } from '../utils/forBreakpoint';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { Menu } from './Menu';
 
 import logo from '../assets/logo.png';
-import text from '../assets/text.png';
 import query from '../schema/navigation.graphql';
 
 let menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
@@ -87,16 +85,6 @@ export const Navigation = () => (
           backgroundImage: `url(${logo})`,
           width: '3rem',
           height: '3rem'
-        },
-        text: {
-          display: 'none',
-          marginLeft: '1rem',
-          backgroundImage: `url(${text})`,
-          height: '3rem',
-          width: '7rem',
-          ...forBreakpoint(TABLET_LANDSCAPE, {
-            display: 'block'
-          })
         },
         push: {
           flex: '1'
@@ -195,7 +183,6 @@ export const Navigation = () => (
                         <Container styles={[ styleSheet.container ]}>
                           <div className={css(styleSheet.brand)} onClick={navigateToPage(dispatch, push, '/')}>
                             <div className={css(styleSheet.image, styleSheet.logo)}/>
-                            <div className={css(styleSheet.image, styleSheet.text)}/>
                           </div>
                           <div className={css(styleSheet.push)}/>
                           {[ ...data.menu ]
