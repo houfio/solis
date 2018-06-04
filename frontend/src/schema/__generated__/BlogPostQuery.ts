@@ -7,11 +7,6 @@
 // GraphQL query operation: BlogPostQuery
 // ====================================================
 
-export interface BlogPostQuery_post_author {
-  __typename: "User";
-  email: string;
-}
-
 export interface BlogPostQuery_post_tags {
   __typename: "BlogTag";
   tag: string;
@@ -19,7 +14,6 @@ export interface BlogPostQuery_post_tags {
 
 export interface BlogPostQuery_post {
   __typename: "BlogPost";
-  author: BlogPostQuery_post_author;
   tags: BlogPostQuery_post_tags[];
   title: string;
   content: string;
