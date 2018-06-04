@@ -11,18 +11,20 @@ type Props = {
   tag?: string
 };
 
-const styleSheet = StyleSheet.create({
-  container: {
-    margin: '0 auto',
-    padding: '0 1rem',
-    ...forBreakpoints(BREAKPOINTS, (value) => ({
-      width: 'calc(' + (value !== '0' ? value + ' - 1rem' : '100%') + ' - 2rem)'
-    }))
-  }
-});
+export const Container = ({ children, styles = [], tag: Tag = 'div' }: Props) => {
+  const styleSheet = StyleSheet.create({
+    container: {
+      margin: '0 auto',
+      padding: '0 1rem',
+      ...forBreakpoints(BREAKPOINTS, (value) => ({
+        width: 'calc(' + (value !== '0' ? value + ' - 1rem' : '100%') + ' - 2rem)'
+      }))
+    }
+  });
 
-export const Container = ({ children, styles = [], tag: Tag = 'div' }: Props) => (
-  <Tag className={css(styleSheet.container, styles)}>
-    {children}
-  </Tag>
-);
+  return (
+    <Tag className={css(styleSheet.container, styles)}>
+      {children}
+    </Tag>
+  )
+};

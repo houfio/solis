@@ -11,39 +11,41 @@ type Props = {
   styles?: StyleDeclaration
 };
 
-const styleSheet = StyleSheet.create({
-  button: {
-    display: 'inline-block',
-    padding: '.75rem 1rem',
-    cursor: 'pointer',
-    borderRadius: '2.5rem',
-    transition: 'background-color .2s ease'
-  },
-  ...{
-    primary: {
-      color: WHITE,
-      backgroundColor: BLUE,
-      ':hover': {
-        backgroundColor: BLUE_ACCENT
-      }
+export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) => {
+  const styleSheet = StyleSheet.create({
+    button: {
+      display: 'inline-block',
+      padding: '.75rem 1rem',
+      cursor: 'pointer',
+      borderRadius: '2.5rem',
+      transition: 'background-color .2s ease'
     },
-    secondary: {
-      color: WHITE,
-      backgroundColor: DARK_BLUE,
-      ':hover': {
-        backgroundColor: DARK_BLUE_ACCENT
+    ...{
+      primary: {
+        color: WHITE,
+        backgroundColor: BLUE,
+        ':hover': {
+          backgroundColor: BLUE_ACCENT
+        }
+      },
+      secondary: {
+        color: WHITE,
+        backgroundColor: DARK_BLUE,
+        ':hover': {
+          backgroundColor: DARK_BLUE_ACCENT
+        }
+      },
+      tertiary: {
+        color: BLACK,
+        backgroundColor: GRAY,
+        ':hover': {
+          backgroundColor: DARK_GRAY
+        }
       }
-    },
-    tertiary: {
-      color: BLACK,
-      backgroundColor: GRAY,
-      ':hover': {
-        backgroundColor: DARK_GRAY
-      }
-    }
-  } as { [T in ColorType]: CSSProperties }
-});
+    } as { [T in ColorType]: CSSProperties }
+  });
 
-export const Button = ({ text, type = 'primary', onClick, styles = [] }: Props) => (
-  <span className={css(styleSheet.button, styleSheet[ type ], styles)} onClick={onClick}>{text}</span>
-);
+  return (
+    <span className={css(styleSheet.button, styleSheet[ type ], styles)} onClick={onClick}>{text}</span>
+  );
+};
