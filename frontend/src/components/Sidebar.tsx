@@ -5,19 +5,15 @@ import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 
 import { DARK_BLUE, TURQUOISE_ACCENT, WHITE } from '../constants';
-import { adminActions, AdminConsumer } from '../context/admin';
+import { AdminConsumer } from '../context/admin';
 import { SidebarItem } from './SidebarItem';
 
 import logo from '../assets/logo.png';
 import text from '../assets/text.png';
 
-const toggleCollapsed = () => () => {
-  adminActions.toggleCollapsed();
-};
-
 export const Sidebar = () => (
   <AdminConsumer>
-    {({ collapsed }) => {
+    {({ collapsed }, { toggleCollapsed }) => {
       const styleSheet = StyleSheet.create({
         sidebar: {
           position: 'fixed',
@@ -101,7 +97,7 @@ export const Sidebar = () => (
             </div>
             <SidebarItem path="/" name="Terug naar site" icon={faSignOutAlt}/>
           </div>
-          <div className={css(styleSheet.arrow)} onClick={toggleCollapsed()}/>
+          <div className={css(styleSheet.arrow)} onClick={toggleCollapsed}/>
         </nav>
       );
     }}

@@ -18,20 +18,12 @@ import query from '../schema/navigation.graphql';
 let menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
 
 const navigateTo = (push: Push) => (page: string) => {
-  setOpenMenu()();
+  contentActions.setOpenMenu(undefined);
   push(page);
-};
-
-const setOpenMenu = (index?: number) => () => {
-  contentActions.setOpenMenu(index);
 };
 
 const navigateToPage = (push: Push, page: string) => () => {
   navigateTo(push)(page);
-};
-
-const toggleBreadcrumbs = () => {
-  contentActions.toggleBreadcrumbs();
 };
 
 const setMenuNode = (index: number) => (node: HTMLElement | null) => {
@@ -43,7 +35,7 @@ const setMenuNode = (index: number) => (node: HTMLElement | null) => {
 
 export const Navigation = () => (
   <ContentConsumer>
-    {({ openMenu, breadcrumbs }) => {
+    {({ openMenu, breadcrumbs }, { setOpenMenu, toggleBreadcrumbs }) => {
       const openNode = openMenu !== undefined ? menuNodes[ openMenu ] : undefined;
 
       const styleSheet = StyleSheet.create({
@@ -193,7 +185,7 @@ export const Navigation = () => (
                                     styleSheet.item,
                                     openMenu === index && styleSheet.active
                                   )}
-                                  onClick={setOpenMenu(index)}
+                                  onClick={setOpenMenu.e(index)}
                                 >
                                   {item.name}
                                 </span>
@@ -231,7 +223,7 @@ export const Navigation = () => (
                     </nav>
                     <div
                       className={css(styleSheet.shadow, openMenu !== undefined && styleSheet.open)}
-                      onClick={setOpenMenu()}
+                      onClick={setOpenMenu.e(undefined)}
                     />
                   </>
                 )}
