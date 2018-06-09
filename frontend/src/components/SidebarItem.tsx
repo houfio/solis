@@ -16,7 +16,7 @@ type Props = {
 
 export const SidebarItem = ({ path, name, icon }: Props) => (
   <AdminConsumer>
-    {({ state: { collapsed } }) => {
+    {({ collapsed }) => {
       const styleSheet = StyleSheet.create({
         item: {
           display: 'flex',

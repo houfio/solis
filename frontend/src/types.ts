@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Action, Motive } from 'react-motive';
 
 import { BREAKPOINTS } from './constants';
 import {
@@ -31,11 +30,5 @@ export type ContentBlockRenderer = (
   children?: ContentPageQuery_page_blocks[],
   drop?: (data?: number) => ReactNode | undefined
 ) => ReactNode;
-
-export type Module<S, I, A> = Motive<S, I> & { actions: A };
-
-export type Actions<S, I> = {
-  [ action: string ]: (...props: any[]) => Action<S, I>
-};
 
 export type Push = (location: string) => void;

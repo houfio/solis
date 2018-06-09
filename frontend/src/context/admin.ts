@@ -1,4 +1,4 @@
-import { createContext } from '../utils/createContext';
+import { createDakpan } from 'dakpan';
 
 type State = {
   collapsed: boolean
@@ -8,7 +8,7 @@ export const {
   Provider: AdminProvider,
   Consumer: AdminConsumer,
   actions: adminActions
-} = createContext<State>({
+} = createDakpan<State>({
   collapsed: Boolean(Number(localStorage.getItem('collapsed')))
 })({
   toggleCollapsed: () => ({ collapsed }) => {

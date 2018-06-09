@@ -12,7 +12,7 @@ import { Pages } from './Pages';
 
 export const Private = () => (
   <AdminConsumer>
-    {({ state: { collapsed } }) => {
+    {({ collapsed }) => {
       const stylesheet = StyleSheet.create({
         main: {
           width: '100%',

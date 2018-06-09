@@ -15,7 +15,7 @@ type Props = {
 
 export const AdminPage = ({ title, actions, padding = true, children }: Props) => (
   <AdminConsumer>
-    {({ state: { collapsed } }) => {
+    {({ collapsed }) => {
       const stylesheet = StyleSheet.create({
         header: {
           position: 'fixed',

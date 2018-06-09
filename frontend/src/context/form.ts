@@ -1,4 +1,4 @@
-import { createContext } from '../utils/createContext';
+import { createDakpan } from 'dakpan';
 
 type State = {
   fields: Field[]
@@ -14,7 +14,7 @@ export const {
   Provider: FormProvider,
   Consumer: FormConsumer,
   actions: formActions
-} = createContext<State>({
+} = createDakpan<State>({
   fields: []
 })({
   registerField: (name: string, initial: any) => ({ fields }) => ({

@@ -15,7 +15,7 @@ type Props = {
 
 export const Breadcrumbs = ({ pages }: Props) => (
   <ContentConsumer>
-    {({ state: { breadcrumbs } }) => {
+    {({ breadcrumbs }) => {
       const styleSheet = StyleSheet.create({
         breadcrumbs: {
           position: 'absolute',

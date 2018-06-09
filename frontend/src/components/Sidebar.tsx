@@ -3,7 +3,6 @@ import { faColumns } from '@fortawesome/fontawesome-free-solid/faColumns';
 import { faSignOutAlt } from '@fortawesome/fontawesome-free-solid/faSignOutAlt';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Dispatch } from 'react-motive';
 
 import { DARK_BLUE, TURQUOISE_ACCENT, WHITE } from '../constants';
 import { adminActions, AdminConsumer } from '../context/admin';
@@ -12,13 +11,13 @@ import { SidebarItem } from './SidebarItem';
 import logo from '../assets/logo.png';
 import text from '../assets/text.png';
 
-const toggleCollapsed = (dispatch: Dispatch<any, any>) => () => {
-  dispatch(adminActions.toggleCollapsed());
+const toggleCollapsed = () => () => {
+  adminActions.toggleCollapsed();
 };
 
 export const Sidebar = () => (
   <AdminConsumer>
-    {({ state: { collapsed }, dispatch }) => {
+    {({ collapsed }) => {
       const styleSheet = StyleSheet.create({
         sidebar: {
           position: 'fixed',
@@ -102,7 +101,7 @@ export const Sidebar = () => (
             </div>
             <SidebarItem path="/" name="Terug naar site" icon={faSignOutAlt}/>
           </div>
-          <div className={css(styleSheet.arrow)} onClick={toggleCollapsed(dispatch)}/>
+          <div className={css(styleSheet.arrow)} onClick={toggleCollapsed()}/>
         </nav>
       );
     }}

@@ -1,4 +1,4 @@
-import { createContext } from '../utils/createContext';
+import { createDakpan } from 'dakpan';
 
 type State = {
   openMenu?: number,
@@ -9,7 +9,7 @@ export const {
   Provider: ContentProvider,
   Consumer: ContentConsumer,
   actions: contentActions
-} = createContext<State>({
+} = createDakpan<State>({
   openMenu: undefined,
   breadcrumbs: Boolean(Number(localStorage.getItem('breadcrumbs')))
 })({
