@@ -10,9 +10,6 @@ export class Token {
   @ManyToOne(() => User, (user) => user.tokens)
   public user!: Promise<User>;
 
-  @Column({ default: true })
-  public active!: boolean;
-
   @Column()
   public creationDate!: Date;
 
@@ -24,4 +21,7 @@ export class Token {
 
   @Column({ nullable: true })
   public lastUsed?: Date;
+
+  @Column({ default: false })
+  public deleted!: boolean;
 }

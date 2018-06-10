@@ -8,7 +8,7 @@ import { PostCreate } from '../argument/PostCreate';
 import { Posts } from '../argument/Posts';
 import { PostUpdate } from '../argument/PostUpdate';
 import { TagCreate } from '../argument/TagCreate';
-import { Admin } from '../decorator/Admin';
+import { Authenticated } from '../decorator/Authenticated';
 import { Validate } from '../decorator/Validate';
 import { BlogPost } from '../entity/BlogPost';
 import { BlogTag } from '../entity/BlogTag';
@@ -60,7 +60,7 @@ export class BlogController {
 
     return true;
   })
-  @Admin()
+  @Authenticated(true)
   public async createPost(args: PostCreate) {
     const post = new BlogPost();
     post.title = args.title;
@@ -79,7 +79,7 @@ export class BlogController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(true, false)
   public async deletePost({ id }: Identifier) {
     await this.entityManager.update(BlogPost, id, {
       deleted: true
@@ -92,7 +92,7 @@ export class BlogController {
   @Validate<PostUpdate>((obj) => {
     return !(obj.input.title && isLength(obj.input.title, 1, 255));
   })
-  @Admin()
+  @Authenticated(true)
   public async updatePost(args: PostUpdate) {
     const post = await this.entityManager.findOne(BlogPost, { id: args.id, deleted: false });
 
@@ -107,7 +107,7 @@ export class BlogController {
   @Validate<TagCreate>((obj) => {
     return isLength(obj.tag, 1, 32);
   })
-  @Admin()
+  @Authenticated(true)
   public async createTag(args: TagCreate) {
     const post = await this.entityManager.findOne(BlogPost, { id: args.id, deleted: false });
 
@@ -120,7 +120,7 @@ export class BlogController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(true, false)
   public async deleteTag({ id }: Identifier) {
     await this.entityManager.update(BlogTag, id, {
       deleted: true

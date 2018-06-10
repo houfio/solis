@@ -21,7 +21,7 @@ bootstrap({
       const repo = getRepository(Token);
       const token = await repo.findOne(action.request.headers.authorization);
 
-      if (!token || !token.active) {
+      if (!token || token.deleted) {
         throw new Error('Unauthorized');
       }
 

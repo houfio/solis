@@ -7,7 +7,7 @@ import { Controller, CurrentRequest, Mutation, Query } from 'vesper';
 import { Identifier } from '../argument/Identifier';
 import { UserLogin } from '../argument/UserLogin';
 import { UserRegister } from '../argument/UserRegister';
-import { Admin } from '../decorator/Admin';
+import { Authenticated } from '../decorator/Authenticated';
 import { Validate } from '../decorator/Validate';
 import { Token } from '../entity/Token';
 import { User } from '../entity/User';
@@ -42,7 +42,7 @@ export class UserController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(false)
   public async deleteUser({ id }: Identifier) {
     const user = await this.entityManager.findOne(User, id);
 
@@ -51,7 +51,7 @@ export class UserController {
     }
 
     for (const token of await user.tokens) {
-      token.active = false;
+      token.deleted = true;
 
       await this.entityManager.save(token);
     }
@@ -94,13 +94,10 @@ export class UserController {
 
   @Mutation()
   @Validate(undefined, false)
+  @Authenticated(false)
   public async deleteToken({ id }: Identifier) {
-    if (!this.currentUser) {
-      return false;
-    }
-
     await this.entityManager.update(Token, { id, user: Promise.resolve(this.currentUser) }, {
-      active: false
+      deleted: true
     });
 
     return true;

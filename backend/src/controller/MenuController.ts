@@ -10,7 +10,7 @@ import { ItemCreate } from '../argument/ItemCreate';
 import { ItemUpdate } from '../argument/ItemUpdate';
 import { TargetCreate } from '../argument/TargetCreate';
 import { TargetUpdate } from '../argument/TargetUpdate';
-import { Admin } from '../decorator/Admin';
+import { Authenticated } from '../decorator/Authenticated';
 import { Validate } from '../decorator/Validate';
 import { MenuColumn } from '../entity/MenuColumn';
 import { MenuItem } from '../entity/MenuItem';
@@ -36,7 +36,7 @@ export class MenuController {
   @Validate<ItemCreate>((obj) => {
     return isLength(obj.name, 1, 255);
   })
-  @Admin()
+  @Authenticated(true)
   public async createItem(args: ItemCreate) {
     const item = new MenuItem();
     item.name = args.name;
@@ -50,7 +50,7 @@ export class MenuController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(true, false)
   public async deleteItem({ id }: Identifier) {
     await this.entityManager.update(MenuItem, id, {
       deleted: true
@@ -63,7 +63,7 @@ export class MenuController {
   @Validate<ItemUpdate>((obj) => {
     return !obj.input.name || isLength(obj.input.name, 1, 255);
   })
-  @Admin()
+  @Authenticated(true)
   public async updateItem(args: ItemUpdate) {
     const item = await this.entityManager.findOne(MenuItem, { id: args.id, deleted: false });
 
@@ -80,7 +80,7 @@ export class MenuController {
   @Validate<ColumnCreate>((obj) => {
     return isLength(obj.name, 1, 255);
   })
-  @Admin()
+  @Authenticated(true)
   public async createColumn(args: ColumnCreate) {
     const item = await this.entityManager.findOne(MenuItem, { id: args.id, deleted: false });
 
@@ -100,7 +100,7 @@ export class MenuController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(true, false)
   public async deleteColumn({ id }: Identifier) {
     await this.entityManager.update(MenuColumn, id, {
       deleted: true
@@ -113,7 +113,7 @@ export class MenuController {
   @Validate<ColumnUpdate>((obj) => {
     return !obj.input.name || isLength(obj.input.name, 1, 255);
   })
-  @Admin()
+  @Authenticated(true)
   public async updateColumn(args: ColumnUpdate) {
     const column = await this.entityManager.findOne(MenuColumn, { id: args.id, deleted: false });
 
@@ -130,7 +130,7 @@ export class MenuController {
   @Validate<TargetCreate>((obj) => {
     return isUUID(obj.target, 4);
   })
-  @Admin()
+  @Authenticated(true)
   public async createTarget(args: TargetCreate) {
     const column = await this.entityManager.findOne(MenuColumn, { id: args.id, deleted: false });
     const page = await this.entityManager.findOne(Page, { id: args.target, deleted: false });
@@ -151,7 +151,7 @@ export class MenuController {
 
   @Mutation()
   @Validate(undefined, false)
-  @Admin(false)
+  @Authenticated(true, false)
   public async deleteTarget({ id }: Identifier) {
     await this.entityManager.update(MenuTarget, id, {
       deleted: true
@@ -164,7 +164,7 @@ export class MenuController {
   @Validate<TargetUpdate>((obj) => {
     return !obj.input.target || isUUID(obj.input.target, 4);
   })
-  @Admin()
+  @Authenticated(true)
   public async updateTarget(args: TargetUpdate) {
     const target = await this.entityManager.findOne(MenuTarget, { id: args.id, deleted: false });
 
