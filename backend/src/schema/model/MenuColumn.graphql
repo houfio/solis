@@ -5,3 +5,8 @@ type MenuColumn {
   name: String!
   order: Int!
 }
+
+input MenuColumnInput {
+  name: String
+  order: Int
+}

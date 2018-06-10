@@ -19,4 +19,7 @@ export class MenuColumn {
 
   @Column()
   public order!: number;
+
+  @Column({ default: false })
+  public deleted!: boolean;
 }

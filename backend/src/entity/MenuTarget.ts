@@ -16,4 +16,7 @@ export class MenuTarget {
 
   @Column()
   public order!: number;
+
+  @Column({ default: false })
+  public deleted!: boolean;
 }

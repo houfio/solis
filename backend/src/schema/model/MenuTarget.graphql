@@ -4,3 +4,8 @@ type MenuTarget {
   target: Page!
   order: Int!
 }
+
+input MenuTargetInput {
+  target: ID
+  order: Int
+}

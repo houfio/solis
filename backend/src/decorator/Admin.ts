@@ -2,7 +2,7 @@ import { ContainerInstance } from 'typedi';
 
 import { User } from '../entity/User';
 
-export const Admin = (fail?: any): MethodDecorator => {
+export const Admin = (fail: any = null): MethodDecorator => {
   return (_, __, descriptor: TypedPropertyDescriptor<any>) => {
     const func = descriptor.value;
 

@@ -25,4 +25,7 @@ export class Page {
 
   @Column()
   public hidden!: boolean;
+
+  @Column({ default: false })
+  public deleted!: boolean;
 }

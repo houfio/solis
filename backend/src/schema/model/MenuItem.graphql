@@ -5,3 +5,9 @@ type MenuItem {
   order: Int!
   hidden: Boolean!
 }
+
+input MenuItemInput {
+  name: String
+  order: Int
+  hidden: Boolean
+}
