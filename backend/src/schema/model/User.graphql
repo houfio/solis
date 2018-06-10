@@ -10,3 +10,7 @@ type User {
   creationDate: Date!
   approved: Boolean!
 }
+
+input UserInput {
+  email: String!
+}

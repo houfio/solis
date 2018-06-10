@@ -10,6 +10,10 @@ type Mutation {
     password: String!
   ): User
   deleteUser(id: ID!): Boolean!
+  updateUser(
+    id: ID!
+    input: UserInput!
+  ): User
   createToken(
     email: String!
     password: String!

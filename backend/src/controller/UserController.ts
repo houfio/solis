@@ -7,10 +7,12 @@ import { Controller, CurrentRequest, Mutation, Query } from 'vesper';
 import { Identifier } from '../argument/Identifier';
 import { UserLogin } from '../argument/UserLogin';
 import { UserRegister } from '../argument/UserRegister';
+import { UserUpdate } from '../argument/UserUpdate';
 import { Authenticated } from '../decorator/Authenticated';
 import { Validate } from '../decorator/Validate';
 import { Token } from '../entity/Token';
 import { User } from '../entity/User';
+import { updateObject } from '../util/updateObject';
 
 @Controller()
 export class UserController {
@@ -61,6 +63,19 @@ export class UserController {
     await this.entityManager.save(user);
 
     return true;
+  }
+
+  @Mutation()
+  @Validate<UserUpdate>(undefined, false)
+  @Authenticated(false)
+  public async updateUser(args: UserUpdate) {
+    const user = await this.entityManager.findOne(User, { id: args.id, deleted: false });
+
+    if (!user) {
+      return false;
+    }
+
+    return this.entityManager.save(updateObject(user, args.input));
   }
 
   @Mutation()
