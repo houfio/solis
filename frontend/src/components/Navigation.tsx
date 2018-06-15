@@ -3,13 +3,16 @@ import * as React from 'react';
 import { Fragment } from 'react';
 import { Query } from 'react-apollo';
 
-import { BLACK, BLUE, DARK_BLUE, WHITE } from '../constants';
+import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { contentActions, ContentConsumer } from '../context/content';
+import { HamburgerProvider } from '../context/hamburger';
 import { RouterConsumer } from '../context/router';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { Push } from '../types';
+import { forBreakpoint } from '../utils/forBreakpoint';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
+import { Hamburger } from './Hamburger';
 import { Menu } from './Menu';
 
 import logo from '../assets/logo.png';
@@ -81,13 +84,17 @@ export const Navigation = () => (
           flex: '1'
         },
         item: {
-          display: 'inline-block',
+          display: 'none',
           padding: '.5rem 1rem',
           margin: '1.5rem 0 .5rem 0',
           cursor: 'pointer',
           lineHeight: 1,
           transition: 'all .2s ease',
           borderRadius: '2rem',
+          whiteSpace: 'nowrap',
+          ...forBreakpoint(TABLET_LANDSCAPE, {
+            display: 'inline-block'
+          }),
           ':hover': {
             color: BLACK,
             backgroundColor: 'rgba(255, 255, 255, .75)'
@@ -212,6 +219,9 @@ export const Navigation = () => (
                               Admin
                             </span>
                           )}
+                          <HamburgerProvider>
+                            <Hamburger/>
+                          </HamburgerProvider>
                         </Container>
                         <div
                           className={css(styleSheet.backDrop)}

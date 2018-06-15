@@ -13,11 +13,11 @@ export class Token {
   @Column()
   public creationDate!: Date;
 
-  @Column()
-  public userAgent!: string;
+  @Column({ nullable: true })
+  public userAgent?: string;
 
-  @Column()
-  public ipAddress!: string;
+  @Column({ nullable: true })
+  public ipAddress?: string;
 
   @Column({ nullable: true })
   public lastUsed?: Date;
