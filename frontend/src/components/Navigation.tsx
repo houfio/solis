@@ -5,11 +5,11 @@ import { Query } from 'react-apollo';
 
 import { BLACK, BLUE, DARK_BLUE, TABLET_LANDSCAPE, WHITE } from '../constants';
 import { contentActions, ContentConsumer } from '../context/content';
-import { HamburgerProvider } from '../context/hamburger';
 import { RouterConsumer } from '../context/router';
 import { NavigationQuery } from '../schema/__generated__/NavigationQuery';
 import { Push } from '../types';
 import { forBreakpoint } from '../utils/forBreakpoint';
+import { Arrow } from './Arrow';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { Hamburger } from './Hamburger';
@@ -18,7 +18,7 @@ import { Menu } from './Menu';
 import logo from '../assets/logo.png';
 import query from '../schema/navigation.graphql';
 
-let menuNodes: { [ key: number ]: HTMLElement | undefined } = {};
+let menuNodes: { [key: number]: HTMLElement | undefined } = {};
 
 const navigateTo = (push: Push) => (page: string) => {
   contentActions.setOpenMenu(undefined);
@@ -32,14 +32,18 @@ const navigateToPage = (push: Push, page: string) => () => {
 const setMenuNode = (index: number) => (node: HTMLElement | null) => {
   menuNodes = {
     ...menuNodes,
-    [ index ]: node || undefined
+    [index]: node || undefined
   };
+};
+
+const toggleMobileMenu = (openNode: HTMLElement | undefined) => () => {
+  contentActions.setOpenMenu(openNode ? undefined : -1);
 };
 
 export const Navigation = () => (
   <ContentConsumer>
     {({ openMenu, breadcrumbs }, { setOpenMenu, toggleBreadcrumbs }) => {
-      const openNode = openMenu !== undefined ? menuNodes[ openMenu ] : undefined;
+      const openNode = openMenu !== undefined ? menuNodes[openMenu] : undefined;
 
       const styleSheet = StyleSheet.create({
         navigation: {
@@ -62,11 +66,7 @@ export const Navigation = () => (
           alignItems: 'center',
           padding: '0 1rem',
           margin: '1rem 0 0 -1rem',
-          cursor: 'pointer',
-          transition: 'opacity .2s ease',
-          ':hover': {
-            opacity: .5
-          }
+          cursor: 'pointer'
         },
         image: {
           flexShrink: 0,
@@ -86,7 +86,7 @@ export const Navigation = () => (
         item: {
           display: 'none',
           padding: '.5rem 1rem',
-          margin: '1.5rem 0 .5rem 0',
+          margin: '1.5rem .25rem .5rem .25rem',
           cursor: 'pointer',
           lineHeight: 1,
           transition: 'all .2s ease',
@@ -102,6 +102,12 @@ export const Navigation = () => (
           ':last-of-type': {
             marginRight: '-1rem'
           }
+        },
+        hamburger: {
+          marginTop: '1.75rem',
+          ...forBreakpoint(TABLET_LANDSCAPE, {
+            display: 'none'
+          })
         },
         active: {
           color: BLACK,
@@ -162,6 +168,32 @@ export const Navigation = () => (
             backgroundColor: breadcrumbs ? 'rgba(0, 0, 0, .9)' : 'rgba(255, 255, 255, .9)',
             transition: `background-color 0s linear ${breadcrumbs ? '.05' : '.1'}s`
           }
+        },
+        mobileList: {
+          display: 'flex',
+          flexDirection: 'column'
+        },
+        mobileItem: {
+          padding: '1rem 0',
+          cursor: 'pointer',
+          transition: 'padding-left .2s ease',
+          ':hover': {
+            paddingLeft: '.5rem'
+          }
+        },
+        mobileArrow: {
+          visibility: 'hidden',
+          opacity: 0,
+          transition: 'visibility 0s linear .2s, opacity .2s ease, padding-left .2s ease',
+          marginTop: '1.75rem',
+          ':hover': {
+            paddingLeft: '.5rem'
+          }
+        },
+        mobileArrowVisible: {
+          visibility: 'visible',
+          opacity: 1,
+          transition: 'opacity .2s ease, padding-left .2s ease'
         }
       });
 
@@ -178,12 +210,44 @@ export const Navigation = () => (
                   <>
                     <nav className={css(styleSheet.navigation)}>
                       <div className={css(styleSheet.bar)}>
-                        <Container styles={[ styleSheet.container ]}>
+                        <Container styles={[styleSheet.container]}>
                           <div className={css(styleSheet.brand)} onClick={navigateToPage(push, '/')}>
                             <div className={css(styleSheet.image, styleSheet.logo)}/>
                           </div>
+                          <Arrow
+                            onClick={setOpenMenu.e(-1)}
+                            styles={[
+                              styleSheet.mobileArrow,
+                              openMenu !== undefined && openMenu !== -1 && styleSheet.mobileArrowVisible
+                            ]}
+                          />
                           <div className={css(styleSheet.push)}/>
-                          {[ ...data.menu ]
+                          <div
+                            ref={setMenuNode(-1)}
+                            className={css(
+                              styleSheet.menu,
+                              openMenu === -1 && styleSheet.open,
+                              Number(openMenu) > -1 && styleSheet.menuRight,
+                              Number(openMenu) < -1 && styleSheet.menuLeft
+                            )}
+                          >
+                            <Container>
+                              <div className={css(styleSheet.mobileList)}>
+                                {[...data.menu]
+                                  .sort((a, b) => a.order - b.order)
+                                  .map((item, index) => (
+                                    <span
+                                      key={item.id}
+                                      onClick={setOpenMenu.e(index)}
+                                      className={css(styleSheet.mobileItem)}
+                                    >
+                                      {item.name}
+                                    </span>
+                                  ))}
+                              </div>
+                            </Container>
+                          </div>
+                          {[...data.menu]
                             .sort((a, b) => a.order - b.order)
                             .map((item, index) => (
                               <Fragment key={item.id}>
@@ -219,9 +283,11 @@ export const Navigation = () => (
                               Admin
                             </span>
                           )}
-                          <HamburgerProvider>
-                            <Hamburger/>
-                          </HamburgerProvider>
+                          <Hamburger
+                            active={Boolean(openNode)}
+                            onToggle={toggleMobileMenu(openNode)}
+                            styles={styleSheet.hamburger}
+                          />
                         </Container>
                         <div
                           className={css(styleSheet.backDrop)}
