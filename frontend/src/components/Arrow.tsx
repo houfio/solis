@@ -17,7 +17,7 @@ const bar: CSSProperties = {
 
 const styleSheet = StyleSheet.create({
   arrow: {
-    width: '1rem',
+    width: '1.5rem',
     height: '1.5rem',
     cursor: 'pointer',
   },

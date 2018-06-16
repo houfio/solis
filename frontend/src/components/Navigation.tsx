@@ -64,9 +64,12 @@ export const Navigation = () => (
         brand: {
           display: 'flex',
           alignItems: 'center',
-          padding: '0 1rem',
-          margin: '1rem 0 0 -1rem',
-          cursor: 'pointer'
+          marginTop: '1rem',
+          cursor: 'pointer',
+          ...forBreakpoint(TABLET_LANDSCAPE, {
+            padding: '0 1rem',
+            margin: '1rem 0 0 -1rem'
+          }),
         },
         image: {
           flexShrink: 0,
@@ -104,10 +107,7 @@ export const Navigation = () => (
           }
         },
         hamburger: {
-          marginTop: '1.75rem',
-          ...forBreakpoint(TABLET_LANDSCAPE, {
-            display: 'none'
-          })
+          marginTop: '1.75rem'
         },
         active: {
           color: BLACK,
@@ -194,6 +194,11 @@ export const Navigation = () => (
           visibility: 'visible',
           opacity: 1,
           transition: 'opacity .2s ease, padding-left .2s ease'
+        },
+        mobileOnly: {
+          ...forBreakpoint(TABLET_LANDSCAPE, {
+            display: 'none'
+          })
         }
       });
 
@@ -211,16 +216,18 @@ export const Navigation = () => (
                     <nav className={css(styleSheet.navigation)}>
                       <div className={css(styleSheet.bar)}>
                         <Container styles={[styleSheet.container]}>
-                          <div className={css(styleSheet.brand)} onClick={navigateToPage(push, '/')}>
-                            <div className={css(styleSheet.image, styleSheet.logo)}/>
-                          </div>
                           <Arrow
                             onClick={setOpenMenu.e(-1)}
                             styles={[
                               styleSheet.mobileArrow,
+                              styleSheet.mobileOnly,
                               openMenu !== undefined && openMenu !== -1 && styleSheet.mobileArrowVisible
                             ]}
                           />
+                          <div className={css(styleSheet.push, styleSheet.mobileOnly)}/>
+                          <div className={css(styleSheet.brand)} onClick={navigateToPage(push, '/')}>
+                            <div className={css(styleSheet.image, styleSheet.logo)}/>
+                          </div>
                           <div className={css(styleSheet.push)}/>
                           <div
                             ref={setMenuNode(-1)}
@@ -244,6 +251,14 @@ export const Navigation = () => (
                                       {item.name}
                                     </span>
                                   ))}
+                                {data.user && data.user.admin && (
+                                  <span
+                                    onClick={navigateToPage(push, '/admin')}
+                                    className={css(styleSheet.mobileItem)}
+                                  >
+                                    Admin
+                                  </span>
+                                )}
                               </div>
                             </Container>
                           </div>
@@ -286,7 +301,7 @@ export const Navigation = () => (
                           <Hamburger
                             active={Boolean(openNode)}
                             onToggle={toggleMobileMenu(openNode)}
-                            styles={styleSheet.hamburger}
+                            styles={[styleSheet.hamburger, styleSheet.mobileOnly]}
                           />
                         </Container>
                         <div
