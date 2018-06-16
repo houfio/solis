@@ -26,6 +26,6 @@ export class PageBlock {
   @Column({ nullable: true })
   public parentData?: number;
 
-  @Column()
-  public hidden!: boolean;
+  @Column({ default: false })
+  public deleted!: boolean;
 }

@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "nodemailer": "^4.6.7",
     "pg": "^7.4.3",
     "validator": "^10.3.0",
     "vesper": "^0.1.9"
   },
   "devDependencies": {
     "@types/bcrypt": "^2.0.0",
+    "@types/nodemailer": "^4.6.0",
     "@types/validator": "^9.4.1",
     "copyfiles": "^2.0.0",
     "nodemon": "^1.17.5",

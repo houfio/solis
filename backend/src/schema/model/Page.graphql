@@ -7,3 +7,10 @@ type Page {
   type: String
   hidden: Boolean!
 }
+
+input PageInput {
+  name: String!
+  path: String!
+  type: String
+  hidden: Boolean!
+}

@@ -6,5 +6,11 @@ type PageBlock {
   type: String!
   order: Int
   parentData: Int
-  hidden: Boolean!
+}
+
+input PageBlockInput {
+  parent: ID
+  parentData: Int
+  order: Int
+  data: String
 }

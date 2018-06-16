@@ -19,7 +19,7 @@ type Mutation {
     input: BlogPostInput!
   ): BlogPost
   createTag(
-    id: ID!,
+    id: ID!
     tag: String!
   ): BlogTag
   deleteTag(id: ID!): Boolean!
