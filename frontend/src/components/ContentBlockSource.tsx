@@ -8,7 +8,8 @@ import { Heading } from './Heading';
 
 type Props = {
   type: string,
-  data: any
+  data: any,
+  fields: any
 };
 
 type Context = {
@@ -19,7 +20,10 @@ type Context = {
 export const ContentBlockSource = DragSource(
   'content',
   {
-    beginDrag: (props: Props) => props
+    beginDrag: ({ type, fields }: Props) => ({
+      type,
+      fields
+    })
   },
   (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
@@ -44,7 +48,7 @@ export const ContentBlockSource = DragSource(
 
     return connectDragSource && connectDragSource(
       <div className={css(styleSheet.block)}>
-        <Heading text={type} breakpoints={{ [ PHONE ]: 'thin' }}/>
+        <Heading text={type} breakpoints={{ [PHONE]: 'thin' }}/>
         {renderer({ data } as any)}
       </div>
     );

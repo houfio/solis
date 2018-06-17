@@ -52,3 +52,25 @@ export const BREAKPOINTS = {
   [DESKTOP]: '1200px',
   [BIG_DESKTOP]: '1600px'
 };
+
+export const blockPreviews = {
+  text: {
+    fields: {
+      text: 'string',
+      type: 'type'
+    },
+    preview: {
+      text: 'Tekst'
+    }
+  },
+  button: {
+    fields: {
+      text: 'string',
+      type: 'number',
+      target: 'page'
+    },
+    preview: {
+      text: 'Knop'
+    }
+  }
+};

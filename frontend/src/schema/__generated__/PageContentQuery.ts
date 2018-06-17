@@ -7,8 +7,14 @@
 // GraphQL query operation: PageContentQuery
 // ====================================================
 
+export interface PageContentQuery_page_blocks_parent {
+  __typename: "PageBlock";
+  id: string;
+}
+
 export interface PageContentQuery_page_blocks_data_Text {
   __typename: "Text";
+  id: string;
   text: string;
   type: number;
 }
@@ -20,6 +26,7 @@ export interface PageContentQuery_page_blocks_data_Button_target {
 
 export interface PageContentQuery_page_blocks_data_Button {
   __typename: "Button";
+  id: string;
   text: string;
   type: number;
   target: PageContentQuery_page_blocks_data_Button_target;
@@ -27,17 +34,20 @@ export interface PageContentQuery_page_blocks_data_Button {
 
 export interface PageContentQuery_page_blocks_data_Image {
   __typename: "Image";
+  id: string;
   image: string;
 }
 
 export interface PageContentQuery_page_blocks_data_Column {
   __typename: "Column";
+  id: string;
   size: number;
   breakpoint: number;
 }
 
 export interface PageContentQuery_page_blocks_data_Hero {
   __typename: "Hero";
+  id: string;
   image: string;
   type: number;
   height: number;
@@ -50,6 +60,8 @@ export interface PageContentQuery_page_blocks {
   id: string;
   type: string;
   order: number | null;
+  parent: PageContentQuery_page_blocks_parent | null;
+  parentData: number | null;
   data: PageContentQuery_page_blocks_data;
 }
 

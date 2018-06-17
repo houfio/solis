@@ -5,7 +5,12 @@ query PageContentQuery($id: ID!) {
       id
       type
       order
+      parent {
+        id
+      }
+      parentData
       data {
+        id
         ... on Text {
           text
           type

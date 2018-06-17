@@ -1,9 +1,11 @@
+import { faArrowsAlt } from '@fortawesome/fontawesome-free-solid/faArrowsAlt';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
 import { Mutation, MutationFn } from 'react-apollo';
 import { ConnectDropTarget, DropTarget } from 'react-dnd';
 
-import { PURPLE, PURPLE_ACCENT, WHITE } from '../constants';
+import { GRAY, PURPLE } from '../constants';
 import { BlockTargetMutation, BlockTargetMutationVariables } from '../schema/__generated__/BlockTargetMutation';
 
 import mutation from '../schema/blockTarget.graphql';
@@ -52,18 +54,18 @@ const Component = DropTarget(
     zone: {
       display: 'flex',
       justifyContent: 'center',
-      color: WHITE,
       padding: '1rem',
       borderRadius: '.5rem',
-      background: `linear-gradient(145deg, ${PURPLE} 0%, ${PURPLE_ACCENT} 100%)`,
-      opacity: isOver ? .8 : 1,
-      transition: 'opacity .2s ease'
+      border: `1px solid ${isOver ? PURPLE : GRAY}`,
+      color: isOver ? PURPLE : GRAY,
+      transition: 'all .2s ease',
+      margin: '1rem 0'
     }
   });
 
   return connectDropTarget && connectDropTarget(
     <div className={css(styleSheet.zone)}>
-      drop
+      <FontAwesomeIcon icon={faArrowsAlt}/>
     </div>
   );
 });

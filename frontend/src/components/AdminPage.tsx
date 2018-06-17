@@ -26,7 +26,8 @@ export const AdminPage = ({ title, actions, padding = true, children }: Props) =
           backgroundColor: WHITE,
           lineHeight: 1,
           height: '8rem',
-          transition: 'width .2s ease'
+          transition: 'width .2s ease',
+          zIndex: 10
         },
         heading: {
           flex: 1

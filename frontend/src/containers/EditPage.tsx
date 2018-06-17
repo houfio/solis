@@ -11,7 +11,7 @@ import { Column } from '../components/Column';
 import { ContentBlockSource } from '../components/ContentBlockSource';
 import { ContentBlockTarget } from '../components/ContentBlockTarget';
 import { Row } from '../components/Row';
-import { BLOCK_RENDERERS, PHONE, WHITE } from '../constants';
+import { BLOCK_RENDERERS, blockPreviews, GRAY, PHONE, WHITE } from '../constants';
 import { RouterConsumer } from '../context/router';
 import { PageContentQuery, PageContentQueryVariables } from '../schema/__generated__/PageContentQuery';
 import { findByKey } from '../utils/findByKey';
@@ -33,6 +33,11 @@ const styleSheet = StyleSheet.create({
   },
   page: {
     position: 'relative'
+  },
+  block: {
+    borderRadius: '.5rem',
+    border: `1px solid ${GRAY}`,
+    padding: '1rem'
   }
 });
 
@@ -54,24 +59,14 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
               <Row>
                 <Column breakpoints={{ [PHONE]: 3 }}>
                   <div className={css(styleSheet.sidebar)}>
-                    <ContentBlockSource type="text" data={{ text: 'tekst', type: 0 }}/>
-                    <ContentBlockSource
-                      type="button"
-                      data={{
-                        text: 'knop',
-                        type: 0,
-                        target: '0e04c7d8-ce3b-46cf-a526-6fe584a8015e'
-                      }}
-                    />
-                    <ContentBlockSource type="column" data={{ size: 3, breakpoint: 0 }}/>
-                    <ContentBlockSource
-                      type="hero"
-                      data={{
-                        image: 'https://images.pexels.com/photos/113338/pexels-photo-113338.jpeg?w=1920',
-                        type: 0,
-                        height: 50
-                      }}
-                    />
+                    {Object.entries(blockPreviews).map(([key, value]) => (
+                      <ContentBlockSource
+                        key={key}
+                        type={key}
+                        data={value.preview}
+                        fields={value.fields}
+                      />
+                    ))}
                   </div>
                 </Column>
                 <Column breakpoints={{ [PHONE]: 9 }}>
@@ -81,6 +76,7 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
                       .sort((a, b) => a.order! - b.order!)
                       .map((block) => {
                         const renderer = findByKey(block.type, BLOCK_RENDERERS);
+                        const children = data.page!.blocks.filter((b) => b.parent && b.parent.id === block.id);
 
                         if (!renderer) {
                           return false;
@@ -88,7 +84,11 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
 
                         return (
                           <Fragment key={block.id}>
-                            {renderer(block as any)}
+                            <div className={css(styleSheet.block)}>
+                              {renderer(block as any, children, (order) => (
+                                <ContentBlockTarget pageId={data.page!.id} order={order}/>
+                              ))}
+                            </div>
                             <ContentBlockTarget pageId={data.page!.id} order={block.order! + 1}/>
                           </Fragment>
                         );

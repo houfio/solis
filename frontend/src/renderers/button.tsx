@@ -8,11 +8,13 @@ import { createRenderer } from '../utils/createRenderer';
 
 type Props = RendererProps<ContentPageQuery_page_blocks_data_Button>;
 
-export const button = createRenderer(({ data: { text, type, target: { path } } }: Props) => (
+export const button = createRenderer(({ data: { text, type, target } }: Props) => (
   <RouterConsumer>
     {({ history: { push } }) => {
       const navigateTo = () => {
-        push(path);
+        if (target) {
+          push(target.path);
+        }
       };
 
       return (
