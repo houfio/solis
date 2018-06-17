@@ -1,8 +1,12 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
+import { Mutation, MutationFn } from 'react-apollo';
 import { ConnectDropTarget, DropTarget } from 'react-dnd';
 
 import { PURPLE, PURPLE_ACCENT, WHITE } from '../constants';
+import { BlockTargetMutation, BlockTargetMutationVariables } from '../schema/__generated__/BlockTargetMutation';
+
+import mutation from '../schema/blockTarget.graphql';
 
 type Props = {
   pageId: string,
@@ -13,21 +17,31 @@ type Props = {
 
 type Context = {
   connectDropTarget?: ConnectDropTarget,
-  isOver?: boolean
+  isOver?: boolean,
+  mutate?: MutationFn<BlockTargetMutation, BlockTargetMutationVariables>
 };
 
-export const ContentBlockTarget = DropTarget(
+const Component = DropTarget(
   'content',
   {
-    /*drop: (props: Props, monitor) => {
+    drop: (props: Props & Context, monitor) => {
       const { pageId, order, parentId, parentData } = props;
 
       if (monitor) {
-        const { type, data } = monitor.getItem() as any;
+        const { type, data } = monitor.getItem();
 
-        setContentBlock({ blockType: type, data, pageId, order, parentId, parentData });
+        props.mutate!({
+          variables: {
+            id: pageId,
+            type,
+            parent: parentId,
+            parentData,
+            order,
+            data: JSON.stringify(data)
+          }
+        });
       }
-    }*/
+    }
   },
   (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
@@ -53,3 +67,11 @@ export const ContentBlockTarget = DropTarget(
     </div>
   );
 });
+
+export const ContentBlockTarget = (props: Props) => (
+  <Mutation<BlockTargetMutation, BlockTargetMutationVariables> mutation={mutation}>
+    {(mutate) => (
+      <Component {...props} mutate={mutate}/>
+    )}
+  </Mutation>
+);

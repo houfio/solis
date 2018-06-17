@@ -52,25 +52,32 @@ export const EditPage = DragDropContext(HTML5Backend)(({ match: { params: { id }
           return (
             <AdminPage title="Pagina inhoud" padding={false}>
               <Row>
-                <Column breakpoints={{ [ PHONE ]: 3 }}>
+                <Column breakpoints={{ [PHONE]: 3 }}>
                   <div className={css(styleSheet.sidebar)}>
-                    <ContentBlockSource type="text" data={{ text: 'tekst', mode: 0 }}/>
-                    <ContentBlockSource type="button" data={{ text: 'knop', type: 0, target: 0 }}/>
+                    <ContentBlockSource type="text" data={{ text: 'tekst', type: 0 }}/>
+                    <ContentBlockSource
+                      type="button"
+                      data={{
+                        text: 'knop',
+                        type: 0,
+                        target: '0e04c7d8-ce3b-46cf-a526-6fe584a8015e'
+                      }}
+                    />
                     <ContentBlockSource type="column" data={{ size: 3, breakpoint: 0 }}/>
                     <ContentBlockSource
                       type="hero"
                       data={{
                         image: 'https://images.pexels.com/photos/113338/pexels-photo-113338.jpeg?w=1920',
-                        alignment: 0,
+                        type: 0,
                         height: 50
                       }}
                     />
                   </div>
                 </Column>
-                <Column breakpoints={{ [ PHONE ]: 9 }}>
+                <Column breakpoints={{ [PHONE]: 9 }}>
                   <div className={css(styleSheet.page)}>
                     <ContentBlockTarget pageId={data.page.id} order={0}/>
-                    {[ ...data.page.blocks ]
+                    {[...data.page.blocks]
                       .sort((a, b) => a.order! - b.order!)
                       .map((block) => {
                         const renderer = findByKey(block.type, BLOCK_RENDERERS);

@@ -14,7 +14,9 @@ import { Page } from '../entity/Page';
 import { PageBlock } from '../entity/PageBlock';
 import { PageBlockData } from '../entity/PageBlockData';
 import { User } from '../entity/User';
+import { incrementOrder } from '../util/incrementOrder';
 import { updateObject } from '../util/updateObject';
+import { updateOrder } from '../util/updateOrder';
 
 @Controller()
 export class PageController {
@@ -87,8 +89,15 @@ export class PageController {
   })
   @Authenticated(true)
   public async createBlock(args: BlockCreate) {
+    const page = await this.entityManager.findOne(Page, { id: args.id, deleted: false });
+
+    if (!page) {
+      return null;
+    }
+
     const block = new PageBlock();
 
+    block.page = Promise.resolve(page);
     block.type = args.type;
 
     if (args.parent) {
@@ -105,6 +114,8 @@ export class PageController {
       block.parentData = args.parentData;
     } else {
       block.order = args.order;
+
+      await incrementOrder(this.entityManager, PageBlock, args.order!);
     }
 
     const saved = await this.entityManager.save(block);
@@ -114,7 +125,7 @@ export class PageController {
 
     await this.entityManager.save(data);
 
-    return saved;
+    return this.entityManager.findOne(PageBlock, saved.id);
   }
 
   @Mutation()
@@ -159,13 +170,15 @@ export class PageController {
       block.parent = Promise.resolve(parent);
       block.parentData = args.input.parentData;
     } else {
+      await updateOrder(this.entityManager, PageBlock, block.order!, args.input.order!);
+
       block.order = args.input.order;
     }
 
     if (args.input.data) {
-      const data = await block.data;
-
-      await this.entityManager.save()
+      await this.entityManager.save(updateObject(await block.data, JSON.parse(args.input.data)));
     }
+
+    return this.entityManager.save(block);
   }
 }

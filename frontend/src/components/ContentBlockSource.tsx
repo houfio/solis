@@ -19,9 +19,7 @@ type Context = {
 export const ContentBlockSource = DragSource(
   'content',
   {
-    beginDrag: () => {
-      return {};
-    }
+    beginDrag: (props: Props) => props
   },
   (connect, monitor) => ({
     connectDragSource: connect.dragSource(),

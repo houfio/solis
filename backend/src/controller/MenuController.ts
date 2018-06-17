@@ -1,5 +1,5 @@
 import { Inject } from 'typedi';
-import { EntityManager, LessThan, Not, ObjectType } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { isLength, isUUID } from 'validator';
 import { Controller, Mutation, Query } from 'vesper';
 
@@ -17,7 +17,9 @@ import { MenuItem } from '../entity/MenuItem';
 import { MenuTarget } from '../entity/MenuTarget';
 import { Page } from '../entity/Page';
 import { User } from '../entity/User';
+import { incrementOrder } from '../util/incrementOrder';
 import { updateObject } from '../util/updateObject';
+import { updateOrder } from '../util/updateOrder';
 
 @Controller()
 export class MenuController {
@@ -43,7 +45,7 @@ export class MenuController {
     item.order = args.order;
     item.hidden = args.hidden;
 
-    await this.incrementOrder(MenuItem, args.order);
+    await incrementOrder(this.entityManager, MenuItem, args.order);
 
     return this.entityManager.save(item);
   }
@@ -70,7 +72,7 @@ export class MenuController {
     if (!item) {
       return null;
     } else if (args.input.order !== undefined) {
-      await this.updateOrder(MenuItem, item.order, args.input.order);
+      await updateOrder(this.entityManager, MenuItem, item.order, args.input.order);
     }
 
     return this.entityManager.save(updateObject(item, args.input));
@@ -93,7 +95,7 @@ export class MenuController {
     column.order = args.order;
     column.item = Promise.resolve(item);
 
-    await this.incrementOrder(MenuColumn, args.order);
+    await incrementOrder(this.entityManager, MenuColumn, args.order);
 
     return this.entityManager.save(column);
   }
@@ -120,7 +122,7 @@ export class MenuController {
     if (!column) {
       return null;
     } else if (args.input.order !== undefined) {
-      await this.updateOrder(MenuColumn, column.order, args.input.order);
+      await updateOrder(this.entityManager, MenuColumn, column.order, args.input.order);
     }
 
     return this.entityManager.save(updateObject(column, args.input));
@@ -144,7 +146,7 @@ export class MenuController {
     target.order = args.order;
     target.column = Promise.resolve(column);
 
-    await this.incrementOrder(MenuTarget, args.order);
+    await incrementOrder(this.entityManager, MenuTarget, args.order);
 
     return this.entityManager.save(target);
   }
@@ -171,7 +173,7 @@ export class MenuController {
     if (!target) {
       return null;
     } else if (args.input.order !== undefined) {
-      await this.updateOrder(MenuTarget, target.order, args.input.order);
+      await updateOrder(this.entityManager, MenuTarget, target.order, args.input.order);
     }
 
     if (args.input.target) {
@@ -185,29 +187,5 @@ export class MenuController {
     }
 
     return this.entityManager.save(updateObject(target, { order: args.input.order }));
-  }
-
-  private async incrementOrder(entity: ObjectType<{ order: number }>, order: number) {
-    await this.entityManager.increment(entity, { order: Not(LessThan(order)) }, 'order', 1);
-  }
-
-  private async updateOrder(entity: ObjectType<{ order: number }>, current: number, updated: number) {
-    const count = await this.entityManager.count(entity);
-
-    updated = Math.max(0, Math.min(count - 1, updated));
-
-    if (updated > current) {
-      await this.entityManager.createQueryBuilder()
-        .update(entity)
-        .where('order > :old and order <= :new', { old: current, new: updated })
-        .set({ order: () => '"order" - 1' })
-        .execute();
-    } else if (updated < current) {
-      await this.entityManager.createQueryBuilder()
-        .update(entity)
-        .where('order < :old and order >= :new', { old: current, new: updated })
-        .set({ order: () => '"order" + 1' })
-        .execute();
-    }
   }
 }
