@@ -1,0 +1,26 @@
+type Query {
+  posts(
+    limit: Int
+    offset: Int
+    tag: String
+  ): [BlogPost!]!
+  post(id: ID!): BlogPost
+}
+
+type Mutation {
+  createPost(
+    title: String!
+    content: String!
+    tags: [String!]!
+  ): BlogPost
+  deletePost(id: ID!): Boolean!
+  updatePost(
+    id: ID!
+    input: BlogPostInput!
+  ): BlogPost
+  createTag(
+    id: ID!
+    tag: String!
+  ): BlogTag
+  deleteTag(id: ID!): Boolean!
+}

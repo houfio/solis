@@ -1,0 +1,8 @@
+type ContactData {
+  id: ID!
+  user: User
+  firstName: String!
+  lastName: String!
+  zipCode: String!
+  houseNumber: String!
+}

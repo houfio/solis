@@ -1,0 +1,16 @@
+type Page {
+  id: ID!
+  guards: [PageGuard!]!
+  blocks: [PageBlock!]!
+  name: String!
+  path: String!
+  type: String
+  hidden: Boolean!
+}
+
+input PageInput {
+  name: String!
+  path: String!
+  type: String
+  hidden: Boolean!
+}

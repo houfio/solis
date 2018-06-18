@@ -1,51 +1,23 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Component } from 'react';
-import * as ReactMarkdown from 'react-markdown';
 
-import { Heading } from '../components/Heading';
-import { PHONE } from '../constants';
+import { WHITE } from '../constants';
+import { ContentPageQuery_page_blocks_data_Text } from '../schema/__generated__/ContentPageQuery';
 import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
 
-export const text = createRenderer(class extends Component<RendererProps<'text'>> {
-  public render() {
-    const { data: { text, mode } } = this.props;
+type Props = RendererProps<ContentPageQuery_page_blocks_data_Text>;
 
-    const styleSheet = StyleSheet.create({
-      light: {
-        color: '#FFFFFF'
-      }
-    });
+export const text = createRenderer(({ data: { text, type } }: Props) => {
+  const styleSheet = StyleSheet.create({
+    light: {
+      color: WHITE
+    }
+  });
 
-    return (
-      <ReactMarkdown
-        source={text}
-        allowedTypes={[
-          'root',
-          'paragraph',
-          'strong',
-          'link',
-          'image',
-          'list',
-          'listItem',
-          'heading'
-        ]}
-        renderers={{
-          root: ({ children }) => (
-            <div className={css(mode === 1 && styleSheet.light)}>
-              {children}
-            </div>
-          ),
-          heading: ({ children, level }) => {
-            const type = level === 1 ? 'bold' : level === 2 ? 'thin' : 'subtle';
-
-            return (
-              <Heading text={children} light={mode === 1} breakpoints={{ [PHONE]: type }}/>
-            );
-          }
-        }}
-      />
-    );
-  }
+  return (
+    <div className={css(type === 1 && styleSheet.light)}>
+      {text}
+    </div>
+  );
 });

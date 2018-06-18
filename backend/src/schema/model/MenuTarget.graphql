@@ -1,0 +1,11 @@
+type MenuTarget {
+  id: ID!
+  column: MenuColumn!
+  target: Page!
+  order: Int!
+}
+
+input MenuTargetInput {
+  target: ID
+  order: Int
+}

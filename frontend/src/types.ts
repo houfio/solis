@@ -1,97 +1,34 @@
 import { ReactNode } from 'react';
-import { RouterState } from 'react-router-redux';
-import { Action as ReduxAction } from 'redux';
-import { FormState } from 'redux-form';
 
-import { ContentBlock, ContentBlockTypes } from './api/ContentBlock';
-import { Menu } from './api/Menu';
-import { Page } from './api/Page';
 import { BREAKPOINTS } from './constants';
+import {
+  ContentPageQuery_page_blocks,
+  ContentPageQuery_page_blocks_data
+} from './schema/__generated__/ContentPageQuery';
 
-export type State = {
-  router: RouterState,
-  form: FormState,
-  auth: {
-    token?: string
-  },
-  content: {
-    pages?: Page[],
-    contentBlocks: {
-      [id: number]: ContentBlock[]
-    },
-    menus?: Menu[],
-    openMenu?: number
-  },
-  http: {
-    queue: {
-      [T in Queue['queue']]?: number
-    }
-  }
-};
+export type ColorType = 'primary' | 'secondary' | 'tertiary';
 
-export type Token = {
-  token: string
-};
+export type HeadingType = 'bold' | 'thin' | 'subtle';
 
-export type Queue = {
-  queue: 'all' | 'page'
-};
-
-export type ButtonTypes = 'primary' | 'secondary';
-
-export type HeadingTypes = 'bold' | 'thin' | 'subtle';
+export type PageGuardType = 'auth' | 'no_auth';
 
 export type Breakpoint = keyof typeof BREAKPOINTS;
 
-export type ApiResponse<T> = {
-  success: boolean,
-  data?: T,
-  code?: number,
-  message?: string
+export type RendererProps<T extends ContentPageQuery_page_blocks_data> = {
+  data: T,
+  children: RenderChild[],
+  drop: (data?: number) => ReactNode | undefined
 };
 
-export type RendererProps<T extends keyof ContentBlockTypes> = {
-  data: ContentBlockTypes[T],
-  children: ContentBlockChild[]
-};
-
-export type ContentBlockRenderer<T extends keyof ContentBlockTypes> = (block: ContentBlock<T>) => ReactNode;
-
-export type ContentBlockChild = {
+export type RenderChild = {
   data: number,
-  order: number,
   render: () => ReactNode
 };
 
-export type Map<U, B> = (payload: U) => B;
+export type ContentBlockRenderer = (
+  block: ContentPageQuery_page_blocks,
+  children?: ContentPageQuery_page_blocks[],
+  drop?: (data?: number) => ReactNode | undefined
+) => ReactNode;
 
-export type Reduce<M, P> = (payload: M, state: P) => Partial<P>;
-
-export type Action<U, Y> = (payload?: U) => ReduxAction & Y;
-
-export type AsyncPayload<T> = {
-  promise: Promise<T>
-};
-
-export type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
-export type PromisePayload<B> = B extends AsyncPayload<infer T> ? Omit<B, keyof AsyncPayload<T>> & T : B;
-
-export type DispatchedPromise<B> = B extends AsyncPayload<infer T> ? Promise<T> : B;
-
-export type CreateAction<P> =
-  <U>(type: string) => <B>(map: Map<U, B>, reduce: Reduce<PromisePayload<B>, P>) => Action<U, DispatchedPromise<B>>;
-
-export type Actions = {
-  [type: string]: Action<any, any>
-};
-
-export type Reducers<P, A> = {
-  [T in keyof A]: Reduce<any, P>;
-};
-
-export type Module<N extends keyof State = keyof State, A extends Actions = Actions> = A & {
-  name: N,
-  initialState: State[N],
-  reducers: Reducers<State[N], A>
-};
+export type Push = (location: string) => void;

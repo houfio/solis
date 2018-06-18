@@ -1,0 +1,9 @@
+query PageQuery($id: ID!) {
+  page(id: $id) {
+    id
+    name
+    path
+    type
+    hidden
+  }
+}

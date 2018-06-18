@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"INTERFACE","name":"PageBlockData","possibleTypes":[{"name":"Text"},{"name":"Button"},{"name":"Image"},{"name":"Column"},{"name":"Hero"}]}]}}

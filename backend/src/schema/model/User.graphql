@@ -1,0 +1,16 @@
+type User {
+  id: ID!
+  contactData: ContactData
+  tokens: [Token!]!
+  posts: [BlogPost!]!
+  admin: Boolean!
+  membershipId: Int!
+  membershipSection: String!
+  email: String!
+  creationDate: Date!
+  approved: Boolean!
+}
+
+input UserInput {
+  email: String!
+}

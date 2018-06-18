@@ -1,51 +1,29 @@
 import * as React from 'react';
-import { Component } from 'react';
-import { push } from 'react-router-redux';
 
 import { Button } from '../components/Button';
-import { RendererProps, State } from '../types';
+import { RouterConsumer } from '../context/router';
+import { ContentPageQuery_page_blocks_data_Button } from '../schema/__generated__/ContentPageQuery';
+import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
-import { findByValue } from '../utils/findByValue';
-import { withProps } from '../utils/withProps';
 
-const mapStateToProps = (state: State) => ({
-  pages: state.content.pages
-});
+type Props = RendererProps<ContentPageQuery_page_blocks_data_Button>;
 
-const getActionCreators = () => ({
-  push
-});
+export const button = createRenderer(({ data: { text, type, target } }: Props) => (
+  <RouterConsumer>
+    {({ history: { push } }) => {
+      const navigateTo = () => {
+        if (target) {
+          push(target.path);
+        }
+      };
 
-const { props, connect } = withProps<RendererProps<'button'>>()(mapStateToProps, getActionCreators);
-
-export const button = createRenderer(connect(class extends Component<typeof props> {
-  public render() {
-    const { data: { text, type } } = this.props;
-
-    return (
-      <Button
-        text={text}
-        type={type === 0 ? 'primary' : 'secondary'}
-        onClick={this.navigateToTarget}
-      />
-    );
-  }
-
-  private navigateToTarget = () => {
-    const { data: { target } } = this.props;
-    const { pages } = this.props;
-    const { push } = this.props;
-
-    if (!pages) {
-      return;
-    }
-
-    const page = findByValue(target, 'id', pages);
-
-    if (!page) {
-      return;
-    }
-
-    push(page.path);
-  }
-}));
+      return (
+        <Button
+          text={text}
+          type={type === 0 ? 'primary' : 'secondary'}
+          onClick={navigateTo}
+        />
+      );
+    }}
+  </RouterConsumer>
+));

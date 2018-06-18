@@ -1,0 +1,15 @@
+query PublicQuery {
+  pages {
+    id
+    name
+    path
+    type
+    guards {
+      id
+      type
+      target {
+        path
+      }
+    }
+  }
+}

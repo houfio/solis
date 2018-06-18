@@ -1,0 +1,32 @@
+mutation BlockTargetMutation($id: ID!, $type: String!, $parent: ID, $parentData: Int, $order: Int, $data: String!) {
+  createBlock(id: $id, type: $type, parent: $parent, parentData: $parentData, order: $order, data: $data) {
+    id
+    type
+    order
+    data {
+      ... on Text {
+        text
+        type
+      }
+      ... on Button {
+        text
+        type
+        target {
+          path
+        }
+      }
+      ... on Image {
+        image
+      }
+      ... on Column {
+        size
+        breakpoint
+      }
+      ... on Hero {
+        image
+        type
+        height
+      }
+    }
+  }
+}

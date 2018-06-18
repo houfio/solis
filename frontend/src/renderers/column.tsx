@@ -1,48 +1,30 @@
 import * as React from 'react';
-import { Component } from 'react';
 
 import { Column } from '../components/Column';
 import { Row } from '../components/Row';
 import { BREAKPOINTS } from '../constants';
-import { Breakpoint, RendererProps } from '../types';
+import { ContentPageQuery_page_blocks_data_Column } from '../schema/__generated__/ContentPageQuery';
+import { RendererProps } from '../types';
 import { createRenderer } from '../utils/createRenderer';
+import { findByIndex } from '../utils/findByIndex';
+import { findByValue } from '../utils/findByValue';
 
-export const column = createRenderer(class extends Component<RendererProps<'column'>> {
-  public render() {
-    const { children, data: { size, breakpoint } } = this.props;
+type Props = RendererProps<ContentPageQuery_page_blocks_data_Column>;
 
-    let breakpointIndex = breakpoint;
-    const breakpoints = Object.keys(BREAKPOINTS);
+export const column = createRenderer(({ data: { size, breakpoint }, children, drop }: Props) => {
+  const [ namedBreakpoint ] = findByIndex(breakpoint, BREAKPOINTS);
 
-    if (breakpointIndex >= breakpoints.length) {
-      breakpointIndex = 0;
-    }
+  return (
+    <Row>
+      {Array.from(new Array(size)).map((_, index) => {
+        const child = findByValue(index, 'data', children);
 
-    const namedBreakpoint = BREAKPOINTS[breakpoints[breakpointIndex] as Breakpoint];
-    const childSize = 12 / size;
-    let lastColumn = 0;
-
-    return (
-      <Row>
-        {children
-          .sort((a, b) => a.order - b.order)
-          .map((child) => {
-            const index = child.data;
-            let offset = 0;
-
-            if (index - 1 > lastColumn) {
-              offset = (index - lastColumn - 1) * childSize;
-            }
-
-            lastColumn = index;
-
-            return (
-              <Column key={index} breakpoints={{ [namedBreakpoint]: { size: childSize, offset } }}>
-                {child.render()}
-              </Column>
-            );
-          })}
-      </Row>
-    );
-  }
+        return (
+          <Column key={index} breakpoints={{ [ namedBreakpoint ]: 12 / size }}>
+            {child ? child.render() : drop(index)}
+          </Column>
+        );
+      })}
+    </Row>
+  );
 });

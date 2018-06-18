@@ -1,0 +1,10 @@
+query BlogPostQuery($id: ID!) {
+  post(id: $id) {
+    tags {
+      tag
+    }
+    title
+    content
+    creationDate
+  }
+}

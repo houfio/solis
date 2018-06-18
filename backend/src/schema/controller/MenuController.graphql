@@ -1,0 +1,36 @@
+type Query {
+  menu: [MenuItem!]!
+}
+
+type Mutation {
+  createItem(
+    name: String!
+    order: Int!
+    hidden: Boolean!
+  ): MenuItem
+  deleteItem(id: ID!): Boolean!
+  updateItem(
+    id: ID!
+    input: MenuItemInput!
+  ): MenuItem
+  createColumn(
+    id: ID!
+    name: String!
+    order: Int!
+  ): MenuColumn
+  deleteColumn(id: ID!): Boolean!
+  updateColumn(
+    id: ID!
+    input: MenuColumnInput!
+  ): MenuColumn
+  createTarget(
+    id: ID!
+    target: ID!
+    order: Int!
+  ): MenuTarget
+  deleteTarget(id: ID!): Boolean!
+  updateTarget(
+    id: ID!
+    input: MenuTargetInput!
+  ): MenuTarget
+}

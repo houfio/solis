@@ -1,0 +1,31 @@
+type Query {
+  pages: [Page!]!
+  page(id: ID!): Page
+}
+
+type Mutation {
+  createPage(
+    name: String!
+    path: String!
+    type: String
+    hidden: Boolean!
+  ): Page
+  deletePage(id: ID!): Boolean!
+  updatePage(
+    id: ID!
+    input: PageInput!
+  ): Page
+  createBlock(
+    id: ID!
+    type: String!
+    parent: ID
+    parentData: Int
+    order: Int
+    data: String!
+  ): PageBlock
+  deleteBlock(id: ID!): Boolean!
+  updateBlock(
+    id: ID!
+    input: PageBlockInput!
+  ): PageBlock
+}

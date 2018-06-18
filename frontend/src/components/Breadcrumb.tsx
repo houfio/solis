@@ -1,61 +1,55 @@
 import { css, StyleSheet } from 'aphrodite/no-important';
 import * as React from 'react';
-import { Component } from 'react';
-import { push } from 'react-router-redux';
 
-import { Page } from '../api/Page';
-import { handle } from '../utils/handle';
-import { withProps } from '../utils/withProps';
+import { BLUE, RED } from '../constants';
+import { RouterConsumer } from '../context/router';
+import { NavigationQuery_pages } from '../schema/__generated__/NavigationQuery';
+import { Push } from '../types';
 
 type Props = {
-  last: boolean,
-  page?: Page
+  page?: NavigationQuery_pages,
+  last: boolean
 };
 
-const getActionCreators = () => ({
-  push
+const styleSheet = StyleSheet.create({
+  breadcrumb: {
+    ':not(:last-child)::after': {
+      content: '"/"',
+      padding: '0 .5rem',
+      color: BLUE,
+      fontWeight: 'bold'
+    }
+  },
+  link: {
+    cursor: 'pointer',
+    transition: 'opacity .2s ease',
+    ':hover': {
+      opacity: .5
+    }
+  },
+  unknown: {
+    color: RED
+  }
 });
 
-const { props, connect } = withProps<Props>()(undefined, getActionCreators);
+const navigateTo = (push: Push, path: string) => () => {
+  push(path);
+};
 
-export const Breadcrumb = connect(class extends Component<typeof props> {
-  public render() {
-    const { last, page } = this.props;
-    const { push } = this.props;
-
-    const styleSheet = StyleSheet.create({
-      breadcrumb: {
-        ':not(:last-child)::after': {
-          content: '"/"',
-          padding: '0 .5rem',
-          color: '#1976D2',
-          fontWeight: 'bold'
-        }
-      },
-      link: {
-        cursor: 'pointer',
-        transition: 'color .2s ease',
-        ':hover': {
-          color: 'rgba(0, 0, 0, .5)'
-        }
-      },
-      unknown: {
-        color: '#FF3232'
-      }
-    });
-
-    return (
+export const Breadcrumb = ({ page, last }: Props) => (
+  <RouterConsumer>
+    {({ history: { push } }) => (
       <span className={css(styleSheet.breadcrumb)}>
         <a
           className={css(
             !last && page && styleSheet.link,
             !page && styleSheet.unknown
           )}
-          onClick={page ? handle(push, page.path) : undefined}
+          onClick={page ? navigateTo(push, page.path) : undefined}
         >
           {page ? page.name : 'Onbekend'}
         </a>
       </span>
-    );
-  }
-});
+    )}
+  </RouterConsumer>
+);

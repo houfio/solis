@@ -1,0 +1,22 @@
+type Query {
+  user: User
+}
+
+type Mutation {
+  createUser(
+    membershipId: Int!
+    membershipSection: String!
+    email: String!
+    password: String!
+  ): User
+  deleteUser(id: ID!): Boolean!
+  updateUser(
+    id: ID!
+    input: UserInput!
+  ): User
+  createToken(
+    email: String!
+    password: String!
+  ): Token
+  deleteToken(id: ID!): Boolean!
+}
