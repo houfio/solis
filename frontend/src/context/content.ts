@@ -2,16 +2,19 @@ import { createDakpan } from 'dakpan';
 
 type State = {
   openMenu?: number,
-  breadcrumbs: boolean
+  breadcrumbs: boolean,
+  modal?: 'login' |'register'
 };
 
 export const {
   Provider: ContentProvider,
   Consumer: ContentConsumer,
-  actions: contentActions
+  actions: contentActions,
+  withDakpan: withContent
 } = createDakpan<State>({
   openMenu: undefined,
-  breadcrumbs: Boolean(Number(localStorage.getItem('breadcrumbs')))
+  breadcrumbs: Boolean(Number(localStorage.getItem('breadcrumbs'))),
+  modal: undefined
 })({
   setOpenMenu: (index?: number) => ({ openMenu }) => ({
     openMenu: openMenu === index ? undefined : index
@@ -22,5 +25,8 @@ export const {
     return {
       breadcrumbs: !breadcrumbs
     };
-  }
+  },
+  setOpenModal: (modal?: 'login' | 'register') => () => ({
+    modal
+  })
 });

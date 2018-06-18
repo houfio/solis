@@ -14,6 +14,7 @@ import { Breadcrumbs } from './Breadcrumbs';
 import { Container } from './Container';
 import { Hamburger } from './Hamburger';
 import { Menu } from './Menu';
+import { TopBar } from './TopBar';
 
 import logo from '../assets/logo.png';
 import query from '../schema/navigation.graphql';
@@ -119,7 +120,7 @@ export const Navigation = () => (
           width: '100%',
           opacity: 0,
           left: 0,
-          top: '4rem',
+          top: '6rem',
           paddingTop: '.5rem',
           zIndex: 3,
           transition: 'opacity .2s ease, transform .2s ease, visibility 0s linear .2s'
@@ -214,6 +215,7 @@ export const Navigation = () => (
                 {({ history: { push } }) => (
                   <>
                     <nav className={css(styleSheet.navigation)}>
+                      <TopBar/>
                       <div className={css(styleSheet.bar)}>
                         <Container styles={[styleSheet.container]}>
                           <Arrow
